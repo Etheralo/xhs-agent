@@ -1,0 +1,194 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - link "Paper to Post 首页" [ref=e4] [cursor=pointer]:
+      - /url: "#"
+      - generic [ref=e5]:
+        - text: P
+        - generic [ref=e6]: →
+        - text: P
+      - generic [ref=e7]:
+        - strong [ref=e8]: Paper→Post
+        - generic [ref=e9]: AI Safety 编辑台
+    - navigation "主导航" [ref=e10]:
+      - button "⌂ 内容工作台" [ref=e11] [cursor=pointer]:
+        - generic [ref=e12]: ⌂
+        - generic [ref=e13]: 内容工作台
+      - button "◎ 审核队列 3" [ref=e14] [cursor=pointer]:
+        - generic [ref=e15]: ◎
+        - generic [ref=e16]: 审核队列
+        - generic [ref=e17]: "3"
+      - button "↗ 发布中心" [ref=e18] [cursor=pointer]:
+        - generic [ref=e19]: ↗
+        - generic [ref=e20]: 发布中心
+      - button "≋ 运行记录" [ref=e21] [cursor=pointer]:
+        - generic [ref=e22]: ≋
+        - generic [ref=e23]: 运行记录
+    - generic [ref=e24]:
+      - paragraph [ref=e25]: 内容状态
+      - button "等待审核 3" [ref=e26] [cursor=pointer]:
+        - text: 等待审核
+        - generic [ref=e28]: "3"
+      - button "已批准 0" [ref=e29] [cursor=pointer]:
+        - text: 已批准
+        - generic [ref=e31]: "0"
+      - button "已发布 0" [ref=e32] [cursor=pointer]:
+        - text: 已发布
+        - generic [ref=e34]: "0"
+    - generic [ref=e35]:
+      - generic [ref=e38]:
+        - strong [ref=e39]: 本机引擎已连接
+        - generic [ref=e40]: 规则模式
+      - button "配置状态 ›" [ref=e41] [cursor=pointer]:
+        - text: 配置状态
+        - generic [ref=e42]: ›
+  - main [ref=e43]:
+    - generic [ref=e44]:
+      - generic [ref=e45]:
+        - generic [ref=e46]: 编辑部
+        - generic [ref=e47]: /
+        - strong [ref=e48]: 内容工作台
+      - generic [ref=e49]:
+        - generic [ref=e50]: 数据已同步
+        - button "ST" [ref=e52]
+    - generic [ref=e53]:
+      - generic [ref=e54]:
+        - generic [ref=e55]:
+          - paragraph [ref=e56]: EDITORIAL WORKSPACE · 08/09
+          - heading "今天，值得讲哪篇论文？" [level=1] [ref=e57]
+          - paragraph [ref=e58]: 从可信来源找到论文，把复杂研究变成读者真正看得懂的内容。
+        - generic [ref=e59]:
+          - generic [ref=e60]: 今日建议
+          - strong [ref=e61]: 先看证据，再写观点
+      - generic [ref=e62]:
+        - generic [ref=e63]:
+          - generic [ref=e64]: ⌕
+          - generic [ref=e65]: 搜索 arXiv
+          - textbox "搜索 arXiv" [ref=e66]:
+            - /placeholder: 搜索标题、作者或关键词，例如 Prompt Injection
+          - button "搜索 arXiv↵" [ref=e67] [cursor=pointer]
+        - generic [ref=e68]:
+          - paragraph [ref=e69]:
+            - text: 也可以让 Agent 自动扫描最近
+            - strong [ref=e70]: 7 天
+            - text: 的 AI Safety 论文
+          - generic [ref=e71]:
+            - button "运行示例" [ref=e72] [cursor=pointer]
+            - button "✦ 扫描并生成" [ref=e73] [cursor=pointer]
+      - region "内容概览" [ref=e74]:
+        - article [ref=e75]:
+          - generic [ref=e76]: 文
+          - generic [ref=e77]:
+            - generic [ref=e78]: 论文库
+            - strong [ref=e79]: "3"
+            - emphasis [ref=e80]: 全部候选
+        - article [ref=e81]:
+          - generic [ref=e82]: 待
+          - generic [ref=e83]:
+            - generic [ref=e84]: 等待审核
+            - strong [ref=e85]: "3"
+            - emphasis [ref=e86]: 需要人工确认
+        - article [ref=e87]:
+          - generic [ref=e88]: 稿
+          - generic [ref=e89]:
+            - generic [ref=e90]: 已生成内容
+            - strong [ref=e91]: "3"
+            - emphasis [ref=e92]: 双渠道草稿
+        - article [ref=e93]:
+          - generic [ref=e94]: 发
+          - generic [ref=e95]:
+            - generic [ref=e96]: 已发布
+            - strong [ref=e97]: "0"
+            - emphasis [ref=e98]: 人工确认完成
+      - generic [ref=e99]:
+        - generic [ref=e100]:
+          - generic [ref=e101]:
+            - generic [ref=e102]:
+              - paragraph [ref=e103]: PAPER LIBRARY
+              - heading "候选论文" [level=2] [ref=e104]
+            - button "刷新论文库" [ref=e105] [cursor=pointer]: ↻
+          - generic [ref=e106]:
+            - generic [ref=e107]:
+              - generic [ref=e108]: ⌕
+              - textbox "筛选当前论文库" [ref=e109]
+            - combobox "按状态筛选" [ref=e110]:
+              - option "全部状态" [selected]
+              - option "待筛选"
+              - option "待核验"
+              - option "等待审核"
+              - option "已批准"
+              - option "已发布"
+              - option "已拒绝"
+          - generic [ref=e111]:
+            - 'button "01 · demo.00003 等待审核 Constructed Demo: Region-Grounded Safety Checks for Vision-Language Models This constructed example studies visual jailbreaks in vision-language models. It grounds safety decisions in image regions and text spans before response generation. The synthetic demo reduces attack success from 62% to 19% while retaining 88% benign task accuracy. 多模态安全 2026年7月20日 内容分 56" [ref=e112] [cursor=pointer]':
+              - generic [ref=e113]:
+                - generic [ref=e114]: 01 · demo.00003
+                - generic [ref=e115]: 等待审核
+              - 'heading "Constructed Demo: Region-Grounded Safety Checks for Vision-Language Models" [level=3] [ref=e116]'
+              - paragraph [ref=e117]: This constructed example studies visual jailbreaks in vision-language models. It grounds safety decisions in image regions and text spans before response generation. The synthetic demo reduces attack success from 62% to 19% while retaining 88% benign task accuracy.
+              - generic [ref=e118]:
+                - strong [ref=e119]: 多模态安全
+                - generic [ref=e120]: 2026年7月20日
+                - generic [ref=e121]: 内容分 56
+            - 'button "02 · demo.00002 等待审核 Constructed Demo: Canary Queries for Detecting Retrieval Poisoning This constructed example studies retrieval poisoning in RAG systems. It injects controlled canary queries and compares retrieved evidence before generation. The demo reports 83% detection at 4% false alarms in a synthetic benchmark. RAG 与记忆安全 2026年7月28日 内容分 54" [ref=e122] [cursor=pointer]':
+              - generic [ref=e123]:
+                - generic [ref=e124]: 02 · demo.00002
+                - generic [ref=e125]: 等待审核
+              - 'heading "Constructed Demo: Canary Queries for Detecting Retrieval Poisoning" [level=3] [ref=e126]'
+              - paragraph [ref=e127]: This constructed example studies retrieval poisoning in RAG systems. It injects controlled canary queries and compares retrieved evidence before generation. The demo reports 83% detection at 4% false alarms in a synthetic benchmark.
+              - generic [ref=e128]:
+                - strong [ref=e129]: RAG 与记忆安全
+                - generic [ref=e130]: 2026年7月28日
+                - generic [ref=e131]: 内容分 54
+            - 'button "03 · demo.00001 等待审核 Constructed Demo: Source-Aware Prompt Firewall for Tool-Using Agents This constructed example studies indirect prompt injection in tool-using agents. It labels instructions by source and checks the label before each sensitive tool call. In a synthetic evaluation, the example records 91% blocked attacks versus a 54% baseline. 越狱与提示注入 2026年8月1日 内容分 54" [ref=e132] [cursor=pointer]':
+              - generic [ref=e133]:
+                - generic [ref=e134]: 03 · demo.00001
+                - generic [ref=e135]: 等待审核
+              - 'heading "Constructed Demo: Source-Aware Prompt Firewall for Tool-Using Agents" [level=3] [ref=e136]'
+              - paragraph [ref=e137]: This constructed example studies indirect prompt injection in tool-using agents. It labels instructions by source and checks the label before each sensitive tool call. In a synthetic evaluation, the example records 91% blocked attacks versus a 54% baseline.
+              - generic [ref=e138]:
+                - strong [ref=e139]: 越狱与提示注入
+                - generic [ref=e140]: 2026年8月1日
+                - generic [ref=e141]: 内容分 54
+        - complementary [ref=e142]:
+          - generic [ref=e143]:
+            - generic [ref=e144]:
+              - generic [ref=e145]:
+                - generic [ref=e146]: demo.00003
+                - generic [ref=e147]: 等待审核
+              - 'heading "Constructed Demo: Region-Grounded Safety Checks for Vision-Language Models" [level=2] [ref=e148]'
+              - paragraph [ref=e149]: Demo Author D、Demo Author E
+              - generic [ref=e150]:
+                - generic [ref=e151]: 发表 2026年7月20日
+                - generic [ref=e152]: 内容分 56
+                - generic [ref=e153]: 来源 Constructed Demo Venue
+              - generic [ref=e154]:
+                - link "查看原文" [ref=e155] [cursor=pointer]:
+                  - /url: https://example.invalid/demo.00003.pdf
+                - button "复制小红书文案" [ref=e156] [cursor=pointer]
+                - button "内容已生成" [disabled] [ref=e157]
+            - tablist [ref=e158]:
+              - button "论文概览" [ref=e159] [cursor=pointer]
+              - button "小红书 6" [ref=e160] [cursor=pointer]
+              - button "公众号" [ref=e161] [cursor=pointer]
+              - button "来源证据" [ref=e162] [cursor=pointer]
+            - generic [ref=e163]:
+              - paragraph [ref=e164]: ABSTRACT
+              - paragraph [ref=e165]: This constructed example studies visual jailbreaks in vision-language models. It grounds safety decisions in image regions and text spans before response generation. The synthetic demo reduces attack success from 62% to 19% while retaining 88% benign task accuracy.
+              - generic [ref=e166]:
+                - generic [ref=e167]:
+                  - generic [ref=e168]: 研究问题
+                  - strong [ref=e169]: 多模态安全
+                - generic [ref=e170]:
+                  - generic [ref=e171]: 核心方法
+                  - strong [ref=e172]: 生成后显示方法摘要
+                - generic [ref=e173]:
+                  - generic [ref=e174]: 来源状态
+                  - strong [ref=e175]: 构造演示内容
+                - generic [ref=e176]:
+                  - generic [ref=e177]: 可追溯事实
+                  - strong [ref=e178]: 4 条页码引用
+              - generic [ref=e179]: 自动校验已通过 · 10 项检查
+              - generic [ref=e180]:
+                - heading "草稿已准备好" [level=4] [ref=e181]
+                - paragraph [ref=e182]: 完成 7 项人工检查后，一次性批准并生成双渠道发布包。
+                - button "一键准备发布" [ref=e183] [cursor=pointer]

@@ -1,0 +1,149 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - link "Paper to Post 首页" [ref=e4] [cursor=pointer]:
+      - /url: "#"
+      - generic [ref=e5]:
+        - strong [ref=e6]: Paper→Post
+        - generic [ref=e7]: AI 论文编辑台
+    - navigation "主导航" [ref=e8]:
+      - button "内容工作台" [ref=e9] [cursor=pointer]
+      - button "审核队列 3" [ref=e11] [cursor=pointer]:
+        - generic [ref=e12]: 审核队列
+        - generic [ref=e13]: "3"
+      - button "发布中心" [ref=e14] [cursor=pointer]
+      - button "运行记录" [ref=e16] [cursor=pointer]
+    - generic [ref=e18]:
+      - generic [ref=e21]:
+        - strong [ref=e22]: 本机引擎
+        - generic [ref=e23]: kimi-k2.5 已配置
+      - button "查看配置状态" [ref=e24] [cursor=pointer]: ⚙
+  - main [ref=e25]:
+    - generic [ref=e26]:
+      - generic [ref=e27]:
+        - strong [ref=e28]: 内容工作台
+        - generic [ref=e29]: 搜索论文，查看 AI 生成过程与完整内容
+      - generic [ref=e30]: 数据已同步
+    - region "内容概览" [ref=e32]:
+      - article [ref=e33]:
+        - generic [ref=e34]: 已入库
+        - strong [ref=e35]: "2"
+        - emphasis [ref=e36]: 等待生成
+      - article [ref=e37]:
+        - generic [ref=e38]: 已生成内容
+        - strong [ref=e39]: "3"
+        - emphasis [ref=e40]: 等待审核
+      - article [ref=e41]:
+        - generic [ref=e42]: 已通过审核
+        - strong [ref=e43]: "2"
+        - emphasis [ref=e44]: 可以发布
+      - article [ref=e45]:
+        - generic [ref=e46]: 已发布
+        - strong [ref=e47]: "0"
+        - emphasis [ref=e48]: 确认完成
+    - generic [ref=e49]:
+      - generic [ref=e50]:
+        - generic [ref=e51]:
+          - paragraph [ref=e52]: DISCOVER
+          - heading "从论文到可发布内容" [level=1] [ref=e53]
+          - paragraph [ref=e54]: 搜索论文，或扫描最近 7 天的 AI Safety 研究。所有生成结果都需要人工审核。
+        - generic [ref=e55]:
+          - generic [ref=e56]:
+            - generic [ref=e57]: ⌕
+            - generic [ref=e58]: 搜索 arXiv
+            - textbox "搜索 arXiv" [ref=e59]:
+              - /placeholder: 搜索标题、作者或关键词
+            - button "搜索论文" [ref=e60] [cursor=pointer]
+          - generic [ref=e61]:
+            - generic [ref=e62]: 最新论文优先
+            - button "运行示例" [ref=e63] [cursor=pointer]
+            - button "✦ 扫描并生成" [ref=e64] [cursor=pointer]
+      - generic [ref=e65]:
+        - generic [ref=e66]:
+          - generic [ref=e67]:
+            - generic [ref=e68]:
+              - paragraph [ref=e69]: LIBRARY
+              - heading "候选论文" [level=2] [ref=e70]
+            - button "刷新论文库" [ref=e71] [cursor=pointer]: ↻
+          - generic [ref=e72]:
+            - generic [ref=e73]:
+              - generic [ref=e74]: ⌕
+              - textbox "筛选当前论文库" [ref=e75]
+            - combobox "按状态筛选" [ref=e76]:
+              - option "全部状态" [selected]
+              - option "已入库"
+              - option "已生成内容"
+              - option "已通过审核"
+              - option "已发布"
+          - generic [ref=e77]:
+            - button [ref=e78] [cursor=pointer]:
+              - generic [ref=e79]:
+                - generic [ref=e80]: 01 · 2608.05909
+                - generic [ref=e81]: 已生成内容
+              - 'heading "MMAligner: Safeguarding Multimodal Large Language Models through Representation Calibration" [level=3] [ref=e82]'
+              - paragraph [ref=e83]: "Multimodal large language models (MLLMs) often refuse unsafe text prompts yet generate harmful responses to semantically equivalent multimodal inputs. Existing defenses either rely on external guardrails, which add inference overhead without repairing intrinsic flaws, or safety fine-tuning, which treats alignment as black-box optimization and may sacrifice utility or require large multimodal datasets. To identify the cause of this safety disparity, we analyze MLLM representations geometrically. We find that safety mechanisms learned from text persist across modalities: a shared safety subspace and refusal boundary remain effective, and representations inside this boundary consistently trigger refusals. However, unsafe multimodal inputs undergo a representation shift that places most of them outside the boundary, allowing them to bypass the model's intrinsic safety mechanism. This indicates that multimodal safety degradation stems from representation misalignment rather than the absence of safety capability. Based on this finding, we propose MMAligner, a safeguarding method that calibrates unsafe multimodal representations into the pre-existing refusal region. MMAligner applies a hard lower bound to ensure refusal, a soft upper bound to avoid excessive modification, and a preservation objective for benign inputs. Experiments across multiple open-source MLLMs show that MMAligner raises the average refusal rate on unsafe multimodal inputs to 99% with less than 2% utility degradation and minimal training data, substantially improving the safety-utility trade-off over existing baselines. (*Due to the notification from arXiv, \"The Abstract field cannot be longer than 1,920 characters\", the Abstract that appeared is shortened.)"
+              - generic [ref=e84]:
+                - strong [ref=e85]: 多模态安全
+                - generic [ref=e86]: 2026年8月6日
+                - generic [ref=e87]: 内容分 61
+            - button [ref=e88] [cursor=pointer]:
+              - generic [ref=e89]:
+                - generic [ref=e90]: 02 · 2608.05430
+                - generic [ref=e91]: 已通过审核
+              - heading "Robust Context-Aware Detection of Malicious Instructions in Text" [level=3] [ref=e92]
+              - paragraph [ref=e93]: The remarkable instruction-following ability of modern LLMs has enabled their practical use as the minds of agents that can autonomously complete increasingly complex tasks. Therein, however, also lies their vulnerability to attacks which embed malicious instructions in text, common variants of which are known as indirect prompt injection (IPI). A fundamental task in addressing this vulnerability is successful segmentation of a given text into benign and malicious sentences (if any). While a number of approaches for this task have been proposed, no detector combines query-relative detection at the segment level, and none are hardened against adaptive evasion attacks realizable in agentic executions. We address the former limitation by developing an approach for malicious sentence classification that is both context- and query-aware. Next, to harden the resulting classifier against evasion, we present two adversarial training methods. The first is directly adapted feature-space adversarial training (AT) in which evasions are approximated using projected-gradient-based optimization in the embedding space. The second simulates realizable evasion attacks in the AT loop through LLM-based paraphrasing. Crucially, we parametrize both AT variants to facilitate a smooth tradeoff between utility and attack robustness. In extensive experiments using indirect prompt injection benchmarks we show that the proposed approach outperforms state-of-the-art IPI defense baselines under static attacks, while in the case of adaptive attacks, our AT variants provide significantly higher utility, lower attack success rate, and often both. Finally, we show that the best AT parameters can depend intimately on the particular application domain. Consequently, domain-dependent tuning of malicious text detectors is likely necessary in practice. Our code is publicly available at https://github.com/tavia-liu/CAD.
+              - generic [ref=e94]:
+                - strong [ref=e95]: 越狱与提示注入
+                - generic [ref=e96]: 2026年8月6日
+                - generic [ref=e97]: 内容分 60
+            - 'button "03 · demo.00003 已生成内容 Constructed Demo: Region-Grounded Safety Checks for Vision-Language Models This constructed example studies visual jailbreaks in vision-language models. It grounds safety decisions in image regions and text spans before response generation. The synthetic demo reduces attack success from 62% to 19% while retaining 88% benign task accuracy. 多模态安全 2026年7月20日 内容分 56" [ref=e98] [cursor=pointer]':
+              - generic [ref=e99]:
+                - generic [ref=e100]: 03 · demo.00003
+                - generic [ref=e101]: 已生成内容
+              - 'heading "Constructed Demo: Region-Grounded Safety Checks for Vision-Language Models" [level=3] [ref=e102]'
+              - paragraph [ref=e103]: This constructed example studies visual jailbreaks in vision-language models. It grounds safety decisions in image regions and text spans before response generation. The synthetic demo reduces attack success from 62% to 19% while retaining 88% benign task accuracy.
+              - generic [ref=e104]:
+                - strong [ref=e105]: 多模态安全
+                - generic [ref=e106]: 2026年7月20日
+                - generic [ref=e107]: 内容分 56
+            - 'button "04 · demo.00002 已生成内容 Constructed Demo: Canary Queries for Detecting Retrieval Poisoning This constructed example studies retrieval poisoning in RAG systems. It injects controlled canary queries and compares retrieved evidence before generation. The demo reports 83% detection at 4% false alarms in a synthetic benchmark. RAG 与记忆安全 2026年7月28日 内容分 54" [ref=e108] [cursor=pointer]':
+              - generic [ref=e109]:
+                - generic [ref=e110]: 04 · demo.00002
+                - generic [ref=e111]: 已生成内容
+              - 'heading "Constructed Demo: Canary Queries for Detecting Retrieval Poisoning" [level=3] [ref=e112]'
+              - paragraph [ref=e113]: This constructed example studies retrieval poisoning in RAG systems. It injects controlled canary queries and compares retrieved evidence before generation. The demo reports 83% detection at 4% false alarms in a synthetic benchmark.
+              - generic [ref=e114]:
+                - strong [ref=e115]: RAG 与记忆安全
+                - generic [ref=e116]: 2026年7月28日
+                - generic [ref=e117]: 内容分 54
+            - 'button "05 · demo.00001 已通过审核 Constructed Demo: Source-Aware Prompt Firewall for Tool-Using Agents This constructed example studies indirect prompt injection in tool-using agents. It labels instructions by source and checks the label before each sensitive tool call. In a synthetic evaluation, the example records 91% blocked attacks versus a 54% baseline. 越狱与提示注入 2026年8月1日 内容分 54" [ref=e118] [cursor=pointer]':
+              - generic [ref=e119]:
+                - generic [ref=e120]: 05 · demo.00001
+                - generic [ref=e121]: 已通过审核
+              - 'heading "Constructed Demo: Source-Aware Prompt Firewall for Tool-Using Agents" [level=3] [ref=e122]'
+              - paragraph [ref=e123]: This constructed example studies indirect prompt injection in tool-using agents. It labels instructions by source and checks the label before each sensitive tool call. In a synthetic evaluation, the example records 91% blocked attacks versus a 54% baseline.
+              - generic [ref=e124]:
+                - strong [ref=e125]: 越狱与提示注入
+                - generic [ref=e126]: 2026年8月1日
+                - generic [ref=e127]: 内容分 54
+            - button [ref=e128] [cursor=pointer]:
+              - generic [ref=e129]:
+                - generic [ref=e130]: 06 · 2608.04755
+                - generic [ref=e131]: 已入库
+              - 'heading "\"Allow\" to Achieve, Over-Privileged Inadvertently: The Unintended Cost of Task-Completion-Driven Pop-up Decisions in Mobile GUI Agents" [level=3] [ref=e132]'
+              - paragraph [ref=e133]: Mobile GUI agents routinely encounter system permission dialogs during task execution, yet their ability to grant only permissions that are necessary for the delegated task remains largely unexamined. We present a systematic study of this capability, which we term Permission Literacy. We construct a four-level permission framework based on task relevance and privacy risk and validate the evaluated scenarios with three independent experts in GUI-agent safety. We inject Android-style permission popups into real GUI tasks and evaluate four frontier multimodal large language models using synchronized annotated screenshots and UI-tree hierarchies, making the requester, permission, justification, and available actions accessible to the agent. Beyond the main study, we conduct controlled interventions that separately vary task context and agent-visible requester identity. Under the same Calendar task, changing only the requester from Calendar to PiMusic reduces grants from 26/32 to 0/32, revealing a strong but task-conditioned App-Trust Bias. Holding a popup fixed while changing task context also substantially changes authorization decisions, revealing a systematic Task-Prior Override. Prompt interventions can reduce unnecessary grants, but their effectiveness is inconsistent across models and may come at the cost of suppressing legitimate grants. These results suggest that separating task execution from permission authorization is a promising design direction for future work.
+              - generic [ref=e134]:
+                - strong [ref=e135]: 隐私与数据泄露
+                - generic [ref=e136]: 2026年8月5日
+                - generic [ref=e137]: 内容分 52
+            - button [ref=e138] [cursor=pointer]:
+              - generic [ref=e139]:
+                - generic [ref=e140]: 07 · 2502.13141
+                - generic [ref=e141]: 已入库
+              - 'heading "UniGuardian: A Unified Defense for Detecting Prompt Injection, Backdoor Attacks and Adversarial Attacks in Large Language Models" [level=3] [ref=e142]'
+              - paragraph [ref=e143]: "Large Language Models (LLMs) are vulnerable to attacks like prompt injection, backdoor attacks, and adversarial attacks, which manipulate prompts or models to generate harmful outputs. In this paper, departing from traditional deep learning attack paradigms, we explore their intrinsic relationship and collectively term them Prompt Trigger Attacks (PTA). This raises a key question: Can we determine if a prompt is benign or poisoned? To address this, we propose UniGuardian, the first unified defense mechanism designed to detect prompt injection, backdoor attacks, and adversarial attacks in LLMs. Additionally, we introduce a single-forward strategy to optimize the detection pipeline, enabling simultaneous attack detection and text generation within a single forward pass. Our experiments confirm that UniGuardian accurately and efficiently identifies malicious prompts in LLMs."
+              - generic [ref=e144]:
+                - strong [ref=e145]: 越狱与提示注入
+                - generic [ref=e146]: 2025年2月19日
+                - generic [ref=e147]: 内容分 48
+        - article [ref=e148]:
+          - heading "正在读取内容" [level=3] [ref=e151]

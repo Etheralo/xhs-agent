@@ -1,0 +1,156 @@
+- generic [ref=f2e2]:
+  - banner [ref=f2e3]:
+    - link "Paper to Post 首页" [ref=f2e4] [cursor=pointer]:
+      - /url: "#"
+      - generic [ref=f2e5]:
+        - generic [ref=f2e6]: P
+        - generic [ref=f2e7]: →
+        - generic [ref=f2e8]: P
+      - generic [ref=f2e9]:
+        - strong [ref=f2e10]: Paper→Post
+        - generic [ref=f2e11]: AI 论文编辑台
+    - navigation "主导航" [ref=f2e12]:
+      - button "内容工作台" [ref=f2e13] [cursor=pointer]
+      - button "审核队列 0" [ref=f2e15] [cursor=pointer]:
+        - generic [ref=f2e16]: 审核队列
+        - generic [ref=f2e17]: "0"
+      - button "发布中心" [ref=f2e18] [cursor=pointer]
+      - button "运行记录" [ref=f2e20] [cursor=pointer]
+    - generic [ref=f2e22]:
+      - generic [ref=f2e25]:
+        - strong [ref=f2e26]: 本机引擎
+        - generic [ref=f2e27]: kimi-k2.5 已配置
+      - button "查看配置状态" [ref=f2e28] [cursor=pointer]: ⚙
+  - main [ref=f2e29]:
+    - generic [ref=f2e30]:
+      - generic [ref=f2e31]:
+        - strong [ref=f2e32]: 内容工作台
+        - generic [ref=f2e33]: 搜索论文，查看 AI 生成过程与完整内容
+      - generic [ref=f2e34]: 数据已同步
+    - region "内容概览" [ref=f2e36]:
+      - article [ref=f2e37]:
+        - generic [ref=f2e38]: 已入库
+        - strong [ref=f2e39]: "2"
+        - emphasis [ref=f2e40]: 等待生成
+      - article [ref=f2e41]:
+        - generic [ref=f2e42]: 已生成内容
+        - strong [ref=f2e43]: "0"
+        - emphasis [ref=f2e44]: 等待审核
+      - article [ref=f2e45]:
+        - generic [ref=f2e46]: 已通过审核
+        - strong [ref=f2e47]: "0"
+        - emphasis [ref=f2e48]: 可以发布
+      - article [ref=f2e49]:
+        - generic [ref=f2e50]: 已发布
+        - strong [ref=f2e51]: "0"
+        - emphasis [ref=f2e52]: 确认完成
+    - generic [ref=f2e53]:
+      - generic [ref=f2e54]:
+        - generic [ref=f2e55]:
+          - paragraph [ref=f2e56]: DISCOVER
+          - heading "从论文到可发布内容" [level=1] [ref=f2e57]
+          - paragraph [ref=f2e58]: 搜索论文，或扫描最近 7 天的 AI Safety 研究。所有生成结果都需要人工审核。
+        - generic [ref=f2e59]:
+          - generic [ref=f2e60]:
+            - generic [ref=f2e61]: ⌕
+            - generic [ref=f2e62]: 搜索 arXiv
+            - textbox "搜索 arXiv" [ref=f2e63]:
+              - /placeholder: 搜索标题、作者或关键词
+            - button "搜索论文" [ref=f2e64] [cursor=pointer]
+          - generic [ref=f2e65]:
+            - generic [ref=f2e66]: 最新论文优先
+            - button "运行示例" [ref=f2e67] [cursor=pointer]
+            - button "✦ 扫描并生成" [ref=f2e68] [cursor=pointer]
+      - generic [ref=f2e69]:
+        - generic [ref=f2e70]:
+          - generic [ref=f2e71]:
+            - generic [ref=f2e72]:
+              - paragraph [ref=f2e73]: LIBRARY
+              - heading "候选论文" [level=2] [ref=f2e74]
+            - button "刷新论文库" [ref=f2e75] [cursor=pointer]: ↻
+          - generic [ref=f2e76]:
+            - generic [ref=f2e77]:
+              - generic [ref=f2e78]: ⌕
+              - textbox "筛选当前论文库" [ref=f2e79]
+            - combobox "按状态筛选" [ref=f2e80]:
+              - option "全部状态" [selected]
+              - option "已入库"
+              - option "已生成内容"
+              - option "已通过审核"
+              - option "已发布"
+          - generic [ref=f2e81]:
+            - button "01 · 2608.99992 已入库 Unverified Source Reminder Preview Prompt injection safety for tool agents with a source reminder. 待分类 2026年8月10日 内容分 0" [ref=f2e163] [cursor=pointer]:
+              - generic [ref=f2e164]:
+                - generic [ref=f2e165]: 01 · 2608.99992
+                - generic [ref=f2e166]: 已入库
+              - heading "Unverified Source Reminder Preview" [level=3] [ref=f2e167]
+              - paragraph [ref=f2e168]: Prompt injection safety for tool agents with a source reminder.
+              - generic [ref=f2e169]:
+                - strong [ref=f2e170]: 待分类
+                - generic [ref=f2e171]: 2026年8月10日
+                - generic [ref=f2e172]: 内容分 0
+            - 'button "02 · demo.00001 已入库 Constructed Demo: Source-Aware Prompt Firewall for Tool-Using Agents This constructed example studies indirect prompt injection in tool-using agents. It labels instructions by source and checks the label before each sensitive tool call. In a synthetic evaluation, the example records 91% blocked attacks versus a 54% baseline. 越狱与提示注入 2026年8月1日 内容分 0" [ref=f2e173] [cursor=pointer]':
+              - generic [ref=f2e174]:
+                - generic [ref=f2e175]: 02 · demo.00001
+                - generic [ref=f2e176]: 已入库
+              - 'heading "Constructed Demo: Source-Aware Prompt Firewall for Tool-Using Agents" [level=3] [ref=f2e177]'
+              - paragraph [ref=f2e178]: This constructed example studies indirect prompt injection in tool-using agents. It labels instructions by source and checks the label before each sensitive tool call. In a synthetic evaluation, the example records 91% blocked attacks versus a 54% baseline.
+              - generic [ref=f2e179]:
+                - strong [ref=f2e180]: 越狱与提示注入
+                - generic [ref=f2e181]: 2026年8月1日
+                - generic [ref=f2e182]: 内容分 0
+        - article [ref=f2e102]:
+          - generic [ref=f2e183]:
+            - generic [ref=f2e184]:
+              - generic [ref=f2e185]:
+                - generic [ref=f2e186]: demo.00001
+                - generic [ref=f2e187]: 已入库
+              - 'heading "Constructed Demo: Source-Aware Prompt Firewall for Tool-Using Agents" [level=2] [ref=f2e188]'
+              - paragraph [ref=f2e189]: Demo Author A、Demo Author B
+              - generic [ref=f2e190]:
+                - generic [ref=f2e191]: 发表 2026年8月1日
+                - generic [ref=f2e192]: 内容分 0
+                - generic [ref=f2e193]: 来源 待核验
+              - generic [ref=f2e194]:
+                - link "查看原文" [ref=f2e195] [cursor=pointer]:
+                  - /url: https://example.invalid/demo.00001.pdf
+                - button "生成内容" [ref=f2e196] [cursor=pointer]
+            - generic [ref=f2e197]:
+              - generic [ref=f2e198]:
+                - strong [ref=f2e199]: AI 处理过程
+                - generic [ref=f2e200]: 0 条审计记录 · 每一步均可回溯
+              - generic [ref=f2e201]:
+                - generic [ref=f2e202]:
+                  - generic [ref=f2e203]: ✓
+                  - strong [ref=f2e204]: 论文入库
+                  - generic [ref=f2e205]: 示例数据
+                - generic [ref=f2e206]:
+                  - strong [ref=f2e208]: 内容生成
+                  - generic [ref=f2e209]: 等待生成
+                - generic [ref=f2e210]:
+                  - strong [ref=f2e212]: 内容审核
+                  - generic [ref=f2e213]: 尚未开始
+                - generic [ref=f2e214]:
+                  - strong [ref=f2e216]: 内容发布
+                  - generic [ref=f2e217]: 尚未发布
+            - tablist [ref=f2e218]:
+              - button "AI 解读" [ref=f2e219] [cursor=pointer]
+              - button "小红书全文 0" [ref=f2e220] [cursor=pointer]
+              - button "公众号全文" [ref=f2e221] [cursor=pointer]
+              - button "证据与记录" [ref=f2e222] [cursor=pointer]
+            - generic [ref=f2e223]:
+              - generic [ref=f2e224]:
+                - paragraph [ref=f2e225]: PAPER ABSTRACT
+                - heading "论文摘要" [level=3] [ref=f2e226]
+                - paragraph [ref=f2e227]: This constructed example studies indirect prompt injection in tool-using agents. It labels instructions by source and checks the label before each sensitive tool call. In a synthetic evaluation, the example records 91% blocked attacks versus a 54% baseline.
+              - generic [ref=f2e228]:
+                - paragraph [ref=f2e229]: AI FACT SHEET
+                - heading "AI 事实底稿" [level=3] [ref=f2e230]
+                - paragraph [ref=f2e231]: 以下信息从论文中抽取，是小红书与公众号内容的共同依据。
+                - generic [ref=f2e232]:
+                  - generic [ref=f2e233]:
+                    - generic [ref=f2e234]: 研究问题
+                    - strong [ref=f2e235]: 越狱与提示注入
+                  - generic [ref=f2e236]:
+                    - generic [ref=f2e237]: 核心方法
+                    - strong [ref=f2e238]: 生成后显示方法摘要

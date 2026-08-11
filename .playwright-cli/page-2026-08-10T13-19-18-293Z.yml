@@ -1,0 +1,282 @@
+- generic [active] [ref=f2e1]:
+  - generic [ref=f2e2]:
+    - banner [ref=f2e3]:
+      - link "Paper to Post 首页" [ref=f2e4] [cursor=pointer]:
+        - /url: "#"
+        - generic [ref=f2e5]:
+          - generic [ref=f2e6]: P
+          - generic [ref=f2e7]: →
+          - generic [ref=f2e8]: P
+        - generic [ref=f2e9]:
+          - strong [ref=f2e10]: Paper→Post
+          - generic [ref=f2e11]: AI 论文编辑台
+      - navigation "主导航" [ref=f2e12]:
+        - button "内容工作台" [ref=f2e13] [cursor=pointer]
+        - button "审核队列 1" [ref=f2e239] [cursor=pointer]:
+          - generic [ref=f2e16]: 审核队列
+          - generic [ref=f2e17]: "1"
+        - button "发布中心" [ref=f2e18] [cursor=pointer]
+        - button "运行记录" [ref=f2e20] [cursor=pointer]
+      - generic [ref=f2e22]:
+        - generic [ref=f2e25]:
+          - strong [ref=f2e26]: 本机引擎
+          - generic [ref=f2e27]: kimi-k2.5 已配置
+        - button "查看配置状态" [ref=f2e28] [cursor=pointer]: ⚙
+    - main [ref=f2e29]:
+      - generic [ref=f2e30]:
+        - generic [ref=f2e31]:
+          - strong [ref=f2e32]: 内容工作台
+          - generic [ref=f2e33]: 搜索论文，查看 AI 生成过程与完整内容
+        - generic [ref=f2e34]: 数据已同步
+      - region "内容概览" [ref=f2e36]:
+        - article [ref=f2e37]:
+          - generic [ref=f2e38]: 已入库
+          - strong [ref=f2e39]: "1"
+          - emphasis [ref=f2e40]: 等待生成
+        - article [ref=f2e41]:
+          - generic [ref=f2e42]: 已生成内容
+          - strong [ref=f2e43]: "1"
+          - emphasis [ref=f2e44]: 等待审核
+        - article [ref=f2e45]:
+          - generic [ref=f2e46]: 已通过审核
+          - strong [ref=f2e47]: "0"
+          - emphasis [ref=f2e48]: 可以发布
+        - article [ref=f2e49]:
+          - generic [ref=f2e50]: 已发布
+          - strong [ref=f2e51]: "0"
+          - emphasis [ref=f2e52]: 确认完成
+      - generic [ref=f2e53]:
+        - generic [ref=f2e54]:
+          - generic [ref=f2e55]:
+            - paragraph [ref=f2e56]: DISCOVER
+            - heading "从论文到可发布内容" [level=1] [ref=f2e57]
+            - paragraph [ref=f2e58]: 搜索论文，或扫描最近 7 天的 AI Safety 研究。所有生成结果都需要人工审核。
+          - generic [ref=f2e59]:
+            - generic [ref=f2e60]:
+              - generic [ref=f2e61]: ⌕
+              - generic [ref=f2e62]: 搜索 arXiv
+              - textbox "搜索 arXiv" [ref=f2e63]:
+                - /placeholder: 搜索标题、作者或关键词
+              - button "搜索论文" [ref=f2e64] [cursor=pointer]
+            - generic [ref=f2e65]:
+              - generic [ref=f2e66]: 最新论文优先
+              - button "运行示例" [ref=f2e67] [cursor=pointer]
+              - button "✦ 扫描并生成" [ref=f2e68] [cursor=pointer]
+        - generic [ref=f2e69]:
+          - generic [ref=f2e70]:
+            - generic [ref=f2e71]:
+              - generic [ref=f2e72]:
+                - paragraph [ref=f2e73]: LIBRARY
+                - heading "候选论文" [level=2] [ref=f2e74]
+              - button "刷新论文库" [ref=f2e75] [cursor=pointer]: ↻
+            - generic [ref=f2e76]:
+              - generic [ref=f2e77]:
+                - generic [ref=f2e78]: ⌕
+                - textbox "筛选当前论文库" [ref=f2e79]
+              - combobox "按状态筛选" [ref=f2e80]:
+                - option "全部状态" [selected]
+                - option "已入库"
+                - option "已生成内容"
+                - option "已通过审核"
+                - option "已发布"
+            - generic [ref=f2e81]:
+              - 'button "01 · demo.00001 已生成内容 Constructed Demo: Source-Aware Prompt Firewall for Tool-Using Agents This constructed example studies indirect prompt injection in tool-using agents. It labels instructions by source and checks the label before each sensitive tool call. In a synthetic evaluation, the example records 91% blocked attacks versus a 54% baseline. 越狱与提示注入 2026年8月1日 内容分 54" [ref=f2e240] [cursor=pointer]':
+                - generic [ref=f2e241]:
+                  - generic [ref=f2e242]: 01 · demo.00001
+                  - generic [ref=f2e243]: 已生成内容
+                - 'heading "Constructed Demo: Source-Aware Prompt Firewall for Tool-Using Agents" [level=3] [ref=f2e244]'
+                - paragraph [ref=f2e245]: This constructed example studies indirect prompt injection in tool-using agents. It labels instructions by source and checks the label before each sensitive tool call. In a synthetic evaluation, the example records 91% blocked attacks versus a 54% baseline.
+                - generic [ref=f2e246]:
+                  - strong [ref=f2e247]: 越狱与提示注入
+                  - generic [ref=f2e248]: 2026年8月1日
+                  - generic [ref=f2e249]: 内容分 54
+              - button "02 · 2608.99992 已入库 Unverified Source Reminder Preview Prompt injection safety for tool agents with a source reminder. 待分类 2026年8月10日 内容分 0" [ref=f2e250] [cursor=pointer]:
+                - generic [ref=f2e251]:
+                  - generic [ref=f2e252]: 02 · 2608.99992
+                  - generic [ref=f2e253]: 已入库
+                - heading "Unverified Source Reminder Preview" [level=3] [ref=f2e254]
+                - paragraph [ref=f2e255]: Prompt injection safety for tool agents with a source reminder.
+                - generic [ref=f2e256]:
+                  - strong [ref=f2e257]: 待分类
+                  - generic [ref=f2e258]: 2026年8月10日
+                  - generic [ref=f2e259]: 内容分 0
+          - article [ref=f2e102]:
+            - generic [ref=f2e260]:
+              - generic [ref=f2e261]:
+                - generic [ref=f2e262]:
+                  - generic [ref=f2e263]: demo.00001
+                  - generic [ref=f2e264]: 已生成内容
+                - 'heading "Constructed Demo: Source-Aware Prompt Firewall for Tool-Using Agents" [level=2] [ref=f2e265]'
+                - paragraph [ref=f2e266]: Demo Author A、Demo Author B
+                - generic [ref=f2e267]:
+                  - generic [ref=f2e268]: 发表 2026年8月1日
+                  - generic [ref=f2e269]: 内容分 54
+                  - generic [ref=f2e270]: 来源 待核验
+                - generic [ref=f2e271]:
+                  - link "查看原文" [ref=f2e272] [cursor=pointer]:
+                    - /url: https://example.invalid/demo.00001.pdf
+                  - button "复制小红书文案" [ref=f2e273] [cursor=pointer]
+                  - button "内容已生成" [disabled] [ref=f2e274]
+              - generic [ref=f2e275]:
+                - generic [ref=f2e276]:
+                  - strong [ref=f2e279]: AI 生成过程
+                  - generic [ref=f2e280]: 任务已完成
+                  - button "关闭生成过程" [ref=f2e281] [cursor=pointer]: ×
+                - generic [ref=f2e282]:
+                  - generic [ref=f2e283]:
+                    - generic [ref=f2e284]: "1"
+                    - generic [ref=f2e285]:
+                      - strong [ref=f2e286]: 任务排队
+                      - generic [ref=f2e287]: 任务已进入队列
+                  - generic [ref=f2e288]:
+                    - generic [ref=f2e289]: "2"
+                    - generic [ref=f2e290]:
+                      - strong [ref=f2e291]: 选题判断
+                      - generic [ref=f2e292]: 正在判断论文与选题的相关性
+                  - generic [ref=f2e293]:
+                    - generic [ref=f2e294]: "3"
+                    - generic [ref=f2e295]:
+                      - strong [ref=f2e296]: 来源提醒
+                      - generic [ref=f2e297]: 来源已核验
+                  - generic [ref=f2e298]:
+                    - generic [ref=f2e299]: "4"
+                    - generic [ref=f2e300]:
+                      - strong [ref=f2e301]: 读取论文
+                      - generic [ref=f2e302]: 正在读取论文并抽取事实
+                  - generic [ref=f2e303]:
+                    - generic [ref=f2e304]: "5"
+                    - generic [ref=f2e305]:
+                      - strong [ref=f2e306]: 事实抽取
+                      - generic [ref=f2e307]: 事实底稿已生成
+                  - generic [ref=f2e308]:
+                    - generic [ref=f2e309]: "6"
+                    - generic [ref=f2e310]:
+                      - strong [ref=f2e311]: 正文生成
+                      - generic [ref=f2e312]: 正在生成推文正文
+                  - generic [ref=f2e313]:
+                    - generic [ref=f2e314]: "7"
+                    - generic [ref=f2e315]:
+                      - strong [ref=f2e316]: 配图导出
+                      - generic [ref=f2e317]: 正在导出论文配图和内容文件
+                  - generic [ref=f2e318]:
+                    - generic [ref=f2e319]: "8"
+                    - generic [ref=f2e320]:
+                      - strong [ref=f2e321]: 自动检查
+                      - generic [ref=f2e322]: 自动检查已通过
+                  - generic [ref=f2e323]:
+                    - generic [ref=f2e324]: "9"
+                    - generic [ref=f2e325]:
+                      - strong [ref=f2e326]: 等待审核
+                      - generic [ref=f2e327]: 内容已生成，等待人工审核
+                - generic [ref=f2e328]:
+                  - generic [ref=f2e329]: 推文正文实时预览
+                  - generic [ref=f2e330]: "🛡️Agent 浏览网页时，网页里的恶意文字可能，怎么守住？ Agent 浏览网页时，网页里的恶意文字可能伪装成用户指令，诱导它调用发邮件、上传文件等敏感工具。 这篇论文用一个可检查的方法回应了这个问题。卡片里的结果均保留原文页码，编辑推演也与作者结论分开。 原文：arXiv demo.00001 #AISafety #AI安全 #越狱与提示注入 #科研"
+              - generic [ref=f2e331]:
+                - generic [ref=f2e332]:
+                  - strong [ref=f2e333]: AI 处理过程
+                  - generic [ref=f2e334]: 6 条审计记录 · 每一步均可回溯
+                - generic [ref=f2e335]:
+                  - generic [ref=f2e336]:
+                    - generic [ref=f2e337]: ✓
+                    - strong [ref=f2e338]: 论文入库
+                    - generic [ref=f2e339]: 示例数据
+                  - generic [ref=f2e340]:
+                    - generic [ref=f2e341]: ✓
+                    - strong [ref=f2e342]: 内容生成
+                    - generic [ref=f2e343]: 正文与配图已完成
+                  - generic [ref=f2e344]:
+                    - strong [ref=f2e346]: 内容审核
+                    - generic [ref=f2e347]: 等待人工确认
+                  - generic [ref=f2e348]:
+                    - strong [ref=f2e350]: 内容发布
+                    - generic [ref=f2e351]: 尚未发布
+              - tablist [ref=f2e352]:
+                - button "AI 解读" [ref=f2e353] [cursor=pointer]
+                - button "小红书全文 3" [ref=f2e354] [cursor=pointer]
+                - button "公众号全文" [ref=f2e355] [cursor=pointer]
+                - button "证据与记录" [ref=f2e356] [cursor=pointer]
+              - generic [ref=f2e357]:
+                - generic [ref=f2e358]:
+                  - paragraph [ref=f2e359]: PAPER ABSTRACT
+                  - heading "论文摘要" [level=3] [ref=f2e360]
+                  - paragraph [ref=f2e361]: This constructed example studies indirect prompt injection in tool-using agents. It labels instructions by source and checks the label before each sensitive tool call. In a synthetic evaluation, the example records 91% blocked attacks versus a 54% baseline.
+                - generic [ref=f2e362]:
+                  - paragraph [ref=f2e363]: AI FACT SHEET
+                  - heading "AI 事实底稿" [level=3] [ref=f2e364]
+                  - paragraph [ref=f2e365]: 以下信息从论文中抽取，是小红书与公众号内容的共同依据。
+                  - generic [ref=f2e366]:
+                    - generic [ref=f2e367]:
+                      - generic [ref=f2e368]: 研究问题
+                      - strong [ref=f2e369]: Agent 浏览网页时，网页里的恶意文字可能伪装成用户指令，诱导它调用发邮件、上传文件等敏感工具。
+                      - generic [ref=f2e370]: PDF 第 1 页
+                    - generic [ref=f2e372]:
+                      - generic [ref=f2e373]: 核心方法
+                      - strong [ref=f2e374]: 方法给每条指令保留来源标签，并在敏感工具真正执行前检查该来源是否有调用权限。
+                      - generic [ref=f2e375]: PDF 第 3 页
+                    - generic [ref=f2e377]:
+                      - generic [ref=f2e378]: 通俗解释
+                      - strong [ref=f2e379]: 像公司门禁卡：访客可以在大厅留言，但留言不会因此获得打开财务室的权限；系统在开门前再核对一次权限。
+                - generic [ref=f2e380]:
+                  - paragraph [ref=f2e381]: RESULTS
+                  - heading "论文结果" [level=3] [ref=f2e382]
+                  - list [ref=f2e383]:
+                    - listitem [ref=f2e384]:
+                      - text: 在构造的演示评测中，来源感知检查阻断了攻击样例。 91%，对照 54%
+                      - generic [ref=f2e385]: 证据：PDF 第 7 页
+                - generic [ref=f2e386]:
+                  - paragraph [ref=f2e387]: BOUNDARY
+                  - heading "作者观点与编辑推演" [level=3] [ref=f2e388]
+                  - generic [ref=f2e389]:
+                    - generic [ref=f2e390]:
+                      - heading "作者原文展望" [level=4] [ref=f2e391]
+                      - paragraph [ref=f2e392]: 演示作者建议扩大到更多工具类型和多轮任务。
+                    - generic [ref=f2e393]:
+                      - heading "编辑延伸判断" [level=4] [ref=f2e394]
+                      - paragraph [ref=f2e395]: 我们认为下一步应测试标签在长链路任务中是否会丢失。
+                - generic [ref=f2e396]:
+                  - paragraph [ref=f2e397]: UNCERTAINTIES
+                  - heading "不确定性与限制" [level=3] [ref=f2e398]
+                  - list [ref=f2e399]:
+                    - listitem [ref=f2e400]: 这是构造的离线演示论文和演示数字，不能作为真实研究结论发布。
+                - generic [ref=f2e401]:
+                  - paragraph [ref=f2e402]: VALIDATION
+                  - heading "自动校验" [level=3] [ref=f2e403]
+                  - generic [ref=f2e404]: 自动校验已通过 · 10 项检查
+                  - generic [ref=f2e405]:
+                    - generic [ref=f2e406]:
+                      - generic [ref=f2e407]: paper identity consistent
+                      - generic [ref=f2e408]: 通过
+                    - generic [ref=f2e409]:
+                      - generic [ref=f2e410]: venue evidence present
+                      - generic [ref=f2e411]: 通过
+                    - generic [ref=f2e412]:
+                      - generic [ref=f2e413]: core claims have pages
+                      - generic [ref=f2e414]: 通过
+                    - generic [ref=f2e415]:
+                      - generic [ref=f2e416]: results have pages
+                      - generic [ref=f2e417]: 通过
+                    - generic [ref=f2e418]:
+                      - generic [ref=f2e419]: six cards
+                      - generic [ref=f2e420]: 通过
+                    - generic [ref=f2e421]:
+                      - generic [ref=f2e422]: card text readable
+                      - generic [ref=f2e423]: 通过
+                    - generic [ref=f2e424]:
+                      - generic [ref=f2e425]: channel identity consistent
+                      - generic [ref=f2e426]: 通过
+                    - generic [ref=f2e427]:
+                      - generic [ref=f2e428]: result values consistent
+                      - generic [ref=f2e429]: 通过
+                    - generic [ref=f2e430]:
+                      - generic [ref=f2e431]: editorial boundary labeled
+                      - generic [ref=f2e432]: 通过
+                    - generic [ref=f2e433]:
+                      - generic [ref=f2e434]: wechat length
+                      - generic [ref=f2e435]: 通过
+                - generic [ref=f2e436]:
+                  - heading "草稿已准备好" [level=4] [ref=f2e437]
+                  - paragraph [ref=f2e438]: 完成 6 项人工检查后，批准内容并生成发布包。
+                  - button "开始内容审核" [ref=f2e439] [cursor=pointer]
+  - generic [ref=f2e440]:
+    - generic [ref=f2e441]: 生成任务已开始，你可以继续浏览论文库。
+    - generic [ref=f2e442]: 内容任务已完成。

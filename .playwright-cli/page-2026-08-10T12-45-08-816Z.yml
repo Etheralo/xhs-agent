@@ -1,0 +1,347 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - link "Paper to Post 首页" [ref=e4] [cursor=pointer]:
+      - /url: "#"
+      - generic [ref=e5]:
+        - generic [ref=e6]: P
+        - generic [ref=e7]: →
+        - generic [ref=e8]: P
+      - generic [ref=e9]:
+        - strong [ref=e10]: Paper→Post
+        - generic [ref=e11]: AI 论文编辑台
+    - navigation "主导航" [ref=e12]:
+      - button "内容工作台" [ref=e13] [cursor=pointer]
+      - button "审核队列 2" [ref=e15] [cursor=pointer]:
+        - generic [ref=e16]: 审核队列
+        - generic [ref=e17]: "2"
+      - button "发布中心" [ref=e18] [cursor=pointer]
+      - button "运行记录" [ref=e20] [cursor=pointer]
+    - generic [ref=e22]:
+      - generic [ref=e25]:
+        - strong [ref=e26]: 本机引擎
+        - generic [ref=e27]: kimi-k2.5 已配置
+      - button "查看配置状态" [ref=e28] [cursor=pointer]: ⚙
+  - main [ref=e29]:
+    - generic [ref=e30]:
+      - generic [ref=e31]:
+        - strong [ref=e32]: 内容工作台
+        - generic [ref=e33]: 搜索论文，查看 AI 生成过程与完整内容
+      - generic [ref=e34]: 数据已同步
+    - region "内容概览" [ref=e36]:
+      - article [ref=e37]:
+        - generic [ref=e38]: 论文库
+        - strong [ref=e39]: "11"
+        - emphasis [ref=e40]: 全部候选
+      - article [ref=e41]:
+        - generic [ref=e42]: 等待审核
+        - strong [ref=e43]: "2"
+        - emphasis [ref=e44]: 需要人工确认
+      - article [ref=e45]:
+        - generic [ref=e46]: 已生成
+        - strong [ref=e47]: "3"
+        - emphasis [ref=e48]: 内容草稿
+      - article [ref=e49]:
+        - generic [ref=e50]: 已发布
+        - strong [ref=e51]: "0"
+        - emphasis [ref=e52]: 确认完成
+      - generic "按状态查看" [ref=e53]:
+        - button "待审核 2" [ref=e54] [cursor=pointer]:
+          - text: 待审核
+          - generic [ref=e56]: "2"
+        - button "已批准 1" [ref=e57] [cursor=pointer]:
+          - text: 已批准
+          - generic [ref=e59]: "1"
+        - button "已发布 0" [ref=e60] [cursor=pointer]:
+          - text: 已发布
+          - generic [ref=e62]: "0"
+    - generic [ref=e63]:
+      - generic [ref=e64]:
+        - generic [ref=e65]:
+          - paragraph [ref=e66]: DISCOVER
+          - heading "从论文到可发布内容" [level=1] [ref=e67]
+          - paragraph [ref=e68]: 搜索论文，或扫描最近 7 天的 AI Safety 研究。所有生成结果都需要人工审核。
+        - generic [ref=e69]:
+          - generic [ref=e70]:
+            - generic [ref=e71]: ⌕
+            - generic [ref=e72]: 搜索 arXiv
+            - textbox "搜索 arXiv" [ref=e73]:
+              - /placeholder: 搜索标题、作者或关键词
+            - button "搜索论文" [ref=e74] [cursor=pointer]
+          - generic [ref=e75]:
+            - generic [ref=e76]: 最新论文优先
+            - button "运行示例" [ref=e77] [cursor=pointer]
+            - button "✦ 扫描并生成" [ref=e78] [cursor=pointer]
+      - generic [ref=e79]:
+        - generic [ref=e80]:
+          - generic [ref=e81]:
+            - generic [ref=e82]:
+              - paragraph [ref=e83]: LIBRARY
+              - heading "候选论文" [level=2] [ref=e84]
+            - button "刷新论文库" [ref=e85] [cursor=pointer]: ↻
+          - generic [ref=e86]:
+            - generic [ref=e87]:
+              - generic [ref=e88]: ⌕
+              - textbox "筛选当前论文库" [ref=e89]
+            - combobox "按状态筛选" [ref=e90]:
+              - option "全部状态" [selected]
+              - option "待筛选"
+              - option "待核验"
+              - option "等待审核"
+              - option "已批准"
+              - option "已发布"
+              - option "已拒绝"
+          - generic [ref=e91]:
+            - button [ref=e274] [cursor=pointer]:
+              - generic [ref=e275]:
+                - generic [ref=e276]: 01 · 2608.05909
+                - generic [ref=e277]: 待核验
+              - 'heading "MMAligner: Safeguarding Multimodal Large Language Models through Representation Calibration" [level=3] [ref=e278]'
+              - paragraph [ref=e279]: "Multimodal large language models (MLLMs) often refuse unsafe text prompts yet generate harmful responses to semantically equivalent multimodal inputs. Existing defenses either rely on external guardrails, which add inference overhead without repairing intrinsic flaws, or safety fine-tuning, which treats alignment as black-box optimization and may sacrifice utility or require large multimodal datasets. To identify the cause of this safety disparity, we analyze MLLM representations geometrically. We find that safety mechanisms learned from text persist across modalities: a shared safety subspace and refusal boundary remain effective, and representations inside this boundary consistently trigger refusals. However, unsafe multimodal inputs undergo a representation shift that places most of them outside the boundary, allowing them to bypass the model's intrinsic safety mechanism. This indicates that multimodal safety degradation stems from representation misalignment rather than the absence of safety capability. Based on this finding, we propose MMAligner, a safeguarding method that calibrates unsafe multimodal representations into the pre-existing refusal region. MMAligner applies a hard lower bound to ensure refusal, a soft upper bound to avoid excessive modification, and a preservation objective for benign inputs. Experiments across multiple open-source MLLMs show that MMAligner raises the average refusal rate on unsafe multimodal inputs to 99% with less than 2% utility degradation and minimal training data, substantially improving the safety-utility trade-off over existing baselines. (*Due to the notification from arXiv, \"The Abstract field cannot be longer than 1,920 characters\", the Abstract that appeared is shortened.)"
+              - generic [ref=e280]:
+                - strong [ref=e281]: 多模态安全
+                - generic [ref=e282]: 2026年8月6日
+                - generic [ref=e283]: 内容分 61
+            - button [ref=e284] [cursor=pointer]:
+              - generic [ref=e285]:
+                - generic [ref=e286]: 02 · 2608.06370
+                - generic [ref=e287]: 已拒绝
+              - heading "The Bitter Lesson of Tool Calling" [level=3] [ref=e288]
+              - paragraph [ref=e289]: Tool use transforms LLMs into agents that act beyond their training data, and for code-capable models, programmatic tool calling extends this further by replacing rigid JSON calls with scripts that chain and parallelize naturally. However, a systematic evaluation of tools as code on an established benchmark across current and prior model generations under real-world task conditions has not been conducted. In this work, we empirically compare programmatic tool calling (PTC) to native JSON tool calling across 14 language models on BFCL v4. In the programmatic tool calling paradigm, tools are exposed as typed Python stubs that the model invokes through code, with execution and results handled in a single agent turn. Programmatic tool calling matches or exceeds native JSON tool calling in 11 of 14 models on BFCL v4, with the GPT-5.6 family achieving a 10.6% improvement over the JSON tool calling baseline. Further, it matches or outperforms baseline in 13 of 14 models under parallel fan-out, and holds stable under context rot conditions where baseline degrades 2.3% on average. Our results demonstrate that programmatic tool calling is a viable and robust alternative to JSON tool calling, with performance tracking model capability across release generations.
+              - generic [ref=e290]:
+                - strong [ref=e291]: Agent 与工具安全
+                - generic [ref=e292]: 2026年8月7日
+                - generic [ref=e293]: 内容分 58
+            - 'button "03 · demo.00003 等待审核 Constructed Demo: Region-Grounded Safety Checks for Vision-Language Models This constructed example studies visual jailbreaks in vision-language models. It grounds safety decisions in image regions and text spans before response generation. The synthetic demo reduces attack success from 62% to 19% while retaining 88% benign task accuracy. 多模态安全 2026年7月20日 内容分 56" [ref=e294] [cursor=pointer]':
+              - generic [ref=e295]:
+                - generic [ref=e296]: 03 · demo.00003
+                - generic [ref=e297]: 等待审核
+              - 'heading "Constructed Demo: Region-Grounded Safety Checks for Vision-Language Models" [level=3] [ref=e298]'
+              - paragraph [ref=e299]: This constructed example studies visual jailbreaks in vision-language models. It grounds safety decisions in image regions and text spans before response generation. The synthetic demo reduces attack success from 62% to 19% while retaining 88% benign task accuracy.
+              - generic [ref=e300]:
+                - strong [ref=e301]: 多模态安全
+                - generic [ref=e302]: 2026年7月20日
+                - generic [ref=e303]: 内容分 56
+            - button [ref=e304] [cursor=pointer]:
+              - generic [ref=e305]:
+                - generic [ref=e306]: 04 · 2608.06231
+                - generic [ref=e307]: 已拒绝
+              - 'heading "EmoWorld: A Decoupled Affective Field for Controllable Emotional Video Generation" [level=3] [ref=e308]'
+              - paragraph [ref=e309]: Emotion shapes how viewers interpret a scene, yet existing video generators entangle global atmosphere, affect-bearing semantic cues, and temporal progression within a single text condition. We present EmoWorld, a framework that decouples these factors within a frozen flow-matching video diffusion transformer (Video DiT). A one-time preparation stage extracts layer-specific affect directions and a reusable cue library from geometry-preserving neutral and emotion-edited panoramas. At inference, Visual Atmosphere Steering (VAS) injects atmosphere directions into hidden states, Semantic Affective Steering (SAS) isolates a separately scalable prompt residual for semantic cues, and Temporal Affective Steering (TAS) interpolates endpoint residual fields across denoising and video time. On Wan2.2, VAS improves target-emotion alignment by 19% while reducing a temporal-fluctuation proxy by 48%; SAS improves target-emotion alignment by 37% and increases detected affect-bearing cues by 36%; and TAS improves transition monotonicity by 15% over the strongest baseline. EmoWorld is evaluated across 27 emotion categories in text-to-video and image-to-video settings, demonstrates portability across multiple Video-DiT backbones, and supports camera-conditioned composition without updating generator parameters.
+              - generic [ref=e310]:
+                - strong [ref=e311]: 对齐与治理
+                - generic [ref=e312]: 2026年8月7日
+                - generic [ref=e313]: 内容分 54
+            - 'button "05 · demo.00002 等待审核 Constructed Demo: Canary Queries for Detecting Retrieval Poisoning This constructed example studies retrieval poisoning in RAG systems. It injects controlled canary queries and compares retrieved evidence before generation. The demo reports 83% detection at 4% false alarms in a synthetic benchmark. RAG 与记忆安全 2026年7月28日 内容分 54" [ref=e314] [cursor=pointer]':
+              - generic [ref=e315]:
+                - generic [ref=e316]: 05 · demo.00002
+                - generic [ref=e317]: 等待审核
+              - 'heading "Constructed Demo: Canary Queries for Detecting Retrieval Poisoning" [level=3] [ref=e318]'
+              - paragraph [ref=e319]: This constructed example studies retrieval poisoning in RAG systems. It injects controlled canary queries and compares retrieved evidence before generation. The demo reports 83% detection at 4% false alarms in a synthetic benchmark.
+              - generic [ref=e320]:
+                - strong [ref=e321]: RAG 与记忆安全
+                - generic [ref=e322]: 2026年7月28日
+                - generic [ref=e323]: 内容分 54
+            - 'button "06 · demo.00001 已批准 Constructed Demo: Source-Aware Prompt Firewall for Tool-Using Agents This constructed example studies indirect prompt injection in tool-using agents. It labels instructions by source and checks the label before each sensitive tool call. In a synthetic evaluation, the example records 91% blocked attacks versus a 54% baseline. 越狱与提示注入 2026年8月1日 内容分 54" [ref=e324] [cursor=pointer]':
+              - generic [ref=e325]:
+                - generic [ref=e326]: 06 · demo.00001
+                - generic [ref=e327]: 已批准
+              - 'heading "Constructed Demo: Source-Aware Prompt Firewall for Tool-Using Agents" [level=3] [ref=e328]'
+              - paragraph [ref=e329]: This constructed example studies indirect prompt injection in tool-using agents. It labels instructions by source and checks the label before each sensitive tool call. In a synthetic evaluation, the example records 91% blocked attacks versus a 54% baseline.
+              - generic [ref=e330]:
+                - strong [ref=e331]: 越狱与提示注入
+                - generic [ref=e332]: 2026年8月1日
+                - generic [ref=e333]: 内容分 54
+            - button [ref=e334] [cursor=pointer]:
+              - generic [ref=e335]:
+                - generic [ref=e336]: 07 · 2608.04755
+                - generic [ref=e337]: 待核验
+              - 'heading "\"Allow\" to Achieve, Over-Privileged Inadvertently: The Unintended Cost of Task-Completion-Driven Pop-up Decisions in Mobile GUI Agents" [level=3] [ref=e338]'
+              - paragraph [ref=e339]: Mobile GUI agents routinely encounter system permission dialogs during task execution, yet their ability to grant only permissions that are necessary for the delegated task remains largely unexamined. We present a systematic study of this capability, which we term Permission Literacy. We construct a four-level permission framework based on task relevance and privacy risk and validate the evaluated scenarios with three independent experts in GUI-agent safety. We inject Android-style permission popups into real GUI tasks and evaluate four frontier multimodal large language models using synchronized annotated screenshots and UI-tree hierarchies, making the requester, permission, justification, and available actions accessible to the agent. Beyond the main study, we conduct controlled interventions that separately vary task context and agent-visible requester identity. Under the same Calendar task, changing only the requester from Calendar to PiMusic reduces grants from 26/32 to 0/32, revealing a strong but task-conditioned App-Trust Bias. Holding a popup fixed while changing task context also substantially changes authorization decisions, revealing a systematic Task-Prior Override. Prompt interventions can reduce unnecessary grants, but their effectiveness is inconsistent across models and may come at the cost of suppressing legitimate grants. These results suggest that separating task execution from permission authorization is a promising design direction for future work.
+              - generic [ref=e340]:
+                - strong [ref=e341]: 隐私与数据泄露
+                - generic [ref=e342]: 2026年8月5日
+                - generic [ref=e343]: 内容分 52
+            - button [ref=e344] [cursor=pointer]:
+              - generic [ref=e345]:
+                - generic [ref=e346]: 08 · 2608.06265
+                - generic [ref=e347]: 已拒绝
+              - heading "Improving the Realism of Synthetic Clinical Benchmarks Under Utility Constraints" [level=3] [ref=e348]
+              - paragraph [ref=e349]: "Synthetic clinical benchmarks for enterprise AI agents can pass existing utility checks and still remain structurally unrealistic, especially in privacy-sensitive healthcare settings where operational data are hard to access. We study how to improve such benchmarks without breaking the downstream utility checks already used in practice. We formulate benchmark revision as utility-constrained realism improvement: dataset changes should increase realism while staying above an operational utility floor. We instantiate this idea on a care-gap benchmark derived from Synthea-generated patients exercised through demonstration electronic health record workflows and then processed by the same downstream pipeline as operational data. Realism is measured through missingness structure, simplicity, structural plausibility, and population alignment. The baseline benchmark is extremely thin: sampled-pair missingness is 79.44%, only 12.75% of rows are actionable, 38.94% of patients have zero actionable measures, and top-three token concentration reaches 100.0%. Two deterministic revisions improve these panels while remaining above the current utility floor, whereas a naive densification control preserves unrealistic templating. We further show that internal benchmark realism and source fidelity to an aggregate operational reference are related but distinct objectives. These results suggest that synthetic benchmark quality should be optimized explicitly, with utility treated as one constraint rather than as sufficient evidence of realism."
+              - generic [ref=e350]:
+                - strong [ref=e351]: 隐私与数据泄露
+                - generic [ref=e352]: 2026年8月7日
+                - generic [ref=e353]: 内容分 52
+            - button [ref=e354] [cursor=pointer]:
+              - generic [ref=e355]:
+                - generic [ref=e356]: 09 · 2608.06312
+                - generic [ref=e357]: 已拒绝
+              - heading "Benchmarking and Enhancing LLMs for Rule-Intensive Review of National Standard Documents" [level=3] [ref=e358]
+              - paragraph [ref=e359]: "Large language models (LLMs) increasingly support complex professional tasks, yet their capabilities in rule-intensive document review remain insufficiently evaluated. National standard documents, such as China GB/T standards, offer a representative testbed: they are lengthy, highly structured, and governed by explicit rules for scope, terminology, normative wording, and cross-section consistency. Existing benchmarks focus on domain knowledge and question answering, largely overlooking intrinsic quality review for professional documents. Such reviews rely heavily on human experts, making them costly and difficult to scale. To bridge this gap, we introduce GB/T-Bench, the first benchmark for the structured review of national standard documents. Its GB/T Review Taxonomy is a hierarchical schema covering document structure, scope alignment, normative modality, terminology consistency, and normative references, with 25 diagnosable error types. A controllable counterexample generation mechanism combines deterministic rules and constrained LLM rewriting to process 488 documents into 7,306 traceable review error instances for evaluation. We also develop a diagnosis-oriented evaluation protocol requiring exact matches on error location, review dimension, and error type, plus document-level coverage metrics. We further propose GB/T-Reviewer, a multi-agent framework that converts review knowledge into specialized skills and coordinates global inspection, targeted diagnosis, rule scanning, and result verification. Experiments with 14 mainstream LLMs reveal a substantial human-LLM gap: the strongest model achieves only 0.3280 CMCS versus 0.6640 for experts. GB/T-Reviewer raises the best CMCS to 0.5094, showing the value of structured skill coordination for rule-intensive document review. This work paves the way for trustworthy AI in standardization and other high-stakes document domains."
+              - generic [ref=e360]:
+                - strong [ref=e361]: 对齐与治理
+                - generic [ref=e362]: 2026年8月7日
+                - generic [ref=e363]: 内容分 52
+            - button [ref=e364] [cursor=pointer]:
+              - generic [ref=e365]:
+                - generic [ref=e366]: 10 · 2608.06246
+                - generic [ref=e367]: 已拒绝
+              - heading "A Six-Dimensional Taxonomy of Post-Training Adaptation Techniques with Applications in AI Governance" [level=3] [ref=e368]
+              - paragraph [ref=e369]: Post-training adaptation has become central to modern machine learning practice and includes techniques such as retraining, fine-tuning, parameter-efficient adaptation, alignment, retrieval augmentation, model editing, unlearning, calibration, and Multimodal Instruction Tuning. However, the literature remains fragmented across technique families, model classes, and deployment contexts, making it difficult to compare methods or describe how a trained model has been modified. This survey synthesizes the post-training adaptation literature and introduces a six-dimensional taxonomy organized by mechanism, goal, data requirement, persistence, structural scope, and model type. The taxonomy distinguishes commonly conflated terms such as fine-tuning, retrieval augmentation, and prompting, and shows how adaptation strategies evolve from traditional machine learning through deep learning, foundation models, large language models, and multimodal large language models. It also maps relationships among techniques, including inheritance, supersession, hybridization, and layered deployment stacks. The resulting vocabulary can support technical documentation, model-change tracking, and governance analysis. The survey concludes by identifying open challenges in evaluation, reproducibility, persistent inference-time adaptation, unlearning, multimodal adaptation, and governance-aware post-training workflows.
+              - generic [ref=e370]:
+                - strong [ref=e371]: 对齐与治理
+                - generic [ref=e372]: 2026年8月7日
+                - generic [ref=e373]: 内容分 51
+            - button [ref=e374] [cursor=pointer]:
+              - generic [ref=e375]:
+                - generic [ref=e376]: 11 · 2502.13141
+                - generic [ref=e377]: 待核验
+              - 'heading "UniGuardian: A Unified Defense for Detecting Prompt Injection, Backdoor Attacks and Adversarial Attacks in Large Language Models" [level=3] [ref=e378]'
+              - paragraph [ref=e379]: "Large Language Models (LLMs) are vulnerable to attacks like prompt injection, backdoor attacks, and adversarial attacks, which manipulate prompts or models to generate harmful outputs. In this paper, departing from traditional deep learning attack paradigms, we explore their intrinsic relationship and collectively term them Prompt Trigger Attacks (PTA). This raises a key question: Can we determine if a prompt is benign or poisoned? To address this, we propose UniGuardian, the first unified defense mechanism designed to detect prompt injection, backdoor attacks, and adversarial attacks in LLMs. Additionally, we introduce a single-forward strategy to optimize the detection pipeline, enabling simultaneous attack detection and text generation within a single forward pass. Our experiments confirm that UniGuardian accurately and efficiently identifies malicious prompts in LLMs."
+              - generic [ref=e380]:
+                - strong [ref=e381]: 越狱与提示注入
+                - generic [ref=e382]: 2025年2月19日
+                - generic [ref=e383]: 内容分 48
+        - article [ref=e202]:
+          - generic [ref=e384]:
+            - generic [ref=e385]:
+              - generic [ref=e386]:
+                - generic [ref=e387]: demo.00001
+                - generic [ref=e388]: 已批准
+              - 'heading "Constructed Demo: Source-Aware Prompt Firewall for Tool-Using Agents" [level=2] [ref=e389]'
+              - paragraph [ref=e390]: Demo Author A、Demo Author B
+              - generic [ref=e391]:
+                - generic [ref=e392]: 发表 2026年8月1日
+                - generic [ref=e393]: 内容分 54
+                - generic [ref=e394]: 来源 Constructed Demo Venue
+              - generic [ref=e395]:
+                - link "查看原文" [ref=e396] [cursor=pointer]:
+                  - /url: https://example.invalid/demo.00001.pdf
+                - button "复制小红书文案" [ref=e397] [cursor=pointer]
+                - button "内容已生成" [disabled] [ref=e398]
+            - generic [ref=e399]:
+              - generic [ref=e400]:
+                - strong [ref=e401]: AI 处理过程
+                - generic [ref=e402]: 9 条审计记录 · 每一步均可回溯
+              - generic [ref=e403]:
+                - generic [ref=e404]:
+                  - generic [ref=e405]: ✓
+                  - strong [ref=e406]: 论文入库
+                  - generic [ref=e407]: 示例数据
+                - generic [ref=e408]:
+                  - generic [ref=e409]: ✓
+                  - strong [ref=e410]: 主题筛选
+                  - generic [ref=e411]: 内容分 54
+                - generic [ref=e412]:
+                  - generic [ref=e413]: ✓
+                  - strong [ref=e414]: 来源核验
+                  - generic [ref=e415]: 证据已记录
+                - generic [ref=e416]:
+                  - generic [ref=e417]: ✓
+                  - strong [ref=e418]: 事实抽取
+                  - generic [ref=e419]: 3 条可追溯事实
+                - generic [ref=e420]:
+                  - generic [ref=e421]: ✓
+                  - strong [ref=e422]: 内容生成
+                  - generic [ref=e423]: 双渠道内容完成
+                - generic [ref=e424]:
+                  - generic [ref=e425]: ✓
+                  - strong [ref=e426]: 自动校验
+                  - generic [ref=e427]: 检查通过
+                - generic [ref=e428]:
+                  - generic [ref=e429]: ✓
+                  - strong [ref=e430]: 人工审核
+                  - generic [ref=e431]: 内容已批准
+            - tablist [ref=e432]:
+              - button "AI 解读" [ref=e433] [cursor=pointer]
+              - button "小红书全文 3" [ref=e434] [cursor=pointer]
+              - button "公众号全文" [ref=e435] [cursor=pointer]
+              - button "证据与记录" [ref=e436] [cursor=pointer]
+            - generic [ref=e437]:
+              - generic [ref=e438]:
+                - paragraph [ref=e439]: PAPER ABSTRACT
+                - heading "论文摘要" [level=3] [ref=e440]
+                - paragraph [ref=e441]: This constructed example studies indirect prompt injection in tool-using agents. It labels instructions by source and checks the label before each sensitive tool call. In a synthetic evaluation, the example records 91% blocked attacks versus a 54% baseline.
+              - generic [ref=e442]:
+                - paragraph [ref=e443]: AI FACT SHEET
+                - heading "AI 事实底稿" [level=3] [ref=e444]
+                - paragraph [ref=e445]: 以下信息从论文中抽取，是小红书与公众号内容的共同依据。
+                - generic [ref=e446]:
+                  - generic [ref=e447]:
+                    - generic [ref=e448]: 研究问题
+                    - strong [ref=e449]: Agent 浏览网页时，网页里的恶意文字可能伪装成用户指令，诱导它调用发邮件、上传文件等敏感工具。
+                    - generic [ref=e450]: PDF 第 1 页
+                  - generic [ref=e452]:
+                    - generic [ref=e453]: 核心方法
+                    - strong [ref=e454]: 方法给每条指令保留来源标签，并在敏感工具真正执行前检查该来源是否有调用权限。
+                    - generic [ref=e455]: PDF 第 3 页
+                  - generic [ref=e457]:
+                    - generic [ref=e458]: 通俗解释
+                    - strong [ref=e459]: 像公司门禁卡：访客可以在大厅留言，但留言不会因此获得打开财务室的权限；系统在开门前再核对一次权限。
+              - generic [ref=e460]:
+                - paragraph [ref=e461]: RESULTS
+                - heading "论文结果" [level=3] [ref=e462]
+                - list [ref=e463]:
+                  - listitem [ref=e464]:
+                    - text: 在构造的演示评测中，来源感知检查阻断了攻击样例。 91%，对照 54%
+                    - generic [ref=e465]: 证据：PDF 第 7 页
+              - generic [ref=e466]:
+                - paragraph [ref=e467]: BOUNDARY
+                - heading "作者观点与编辑推演" [level=3] [ref=e468]
+                - generic [ref=e469]:
+                  - generic [ref=e470]:
+                    - heading "作者原文展望" [level=4] [ref=e471]
+                    - paragraph [ref=e472]: 演示作者建议扩大到更多工具类型和多轮任务。
+                  - generic [ref=e473]:
+                    - heading "编辑延伸判断" [level=4] [ref=e474]
+                    - paragraph [ref=e475]: 我们认为下一步应测试标签在长链路任务中是否会丢失。
+              - generic [ref=e476]:
+                - paragraph [ref=e477]: UNCERTAINTIES
+                - heading "不确定性与限制" [level=3] [ref=e478]
+                - list [ref=e479]:
+                  - listitem [ref=e480]: 这是构造的离线演示论文和演示数字，不能作为真实研究结论发布。
+              - generic [ref=e481]:
+                - paragraph [ref=e482]: VALIDATION
+                - heading "自动校验" [level=3] [ref=e483]
+                - generic [ref=e484]: 自动校验已通过 · 10 项检查
+                - generic [ref=e485]:
+                  - generic [ref=e486]:
+                    - generic [ref=e487]: paper identity consistent
+                    - generic [ref=e488]: 通过
+                  - generic [ref=e489]:
+                    - generic [ref=e490]: venue evidence present
+                    - generic [ref=e491]: 通过
+                  - generic [ref=e492]:
+                    - generic [ref=e493]: core claims have pages
+                    - generic [ref=e494]: 通过
+                  - generic [ref=e495]:
+                    - generic [ref=e496]: results have pages
+                    - generic [ref=e497]: 通过
+                  - generic [ref=e498]:
+                    - generic [ref=e499]: six cards
+                    - generic [ref=e500]: 通过
+                  - generic [ref=e501]:
+                    - generic [ref=e502]: card text readable
+                    - generic [ref=e503]: 通过
+                  - generic [ref=e504]:
+                    - generic [ref=e505]: channel identity consistent
+                    - generic [ref=e506]: 通过
+                  - generic [ref=e507]:
+                    - generic [ref=e508]: result values consistent
+                    - generic [ref=e509]: 通过
+                  - generic [ref=e510]:
+                    - generic [ref=e511]: editorial boundary labeled
+                    - generic [ref=e512]: 通过
+                  - generic [ref=e513]:
+                    - generic [ref=e514]: wechat length
+                    - generic [ref=e515]: 通过
+              - generic [ref=e516]:
+                - heading "发布包已批准" [level=4] [ref=e517]
+                - paragraph [ref=e518]: 已连接渠道可以自动发送；未连接渠道可下载后人工发布。
+                - generic [ref=e520]:
+                  - generic [ref=e521]: 小红书
+                  - generic [ref=e522]: 发布包就绪
+                - generic [ref=e523]:
+                  - link "下载发布包" [ref=e524] [cursor=pointer]:
+                    - /url: /api/artifacts/1/demo.00001-constructed-demo-source-aware-prompt-firewall-for-tool-using-agents-approved.zip
+                  - button "发送到发布渠道" [ref=e525] [cursor=pointer]
+                  - button "确认已经发布" [ref=e526] [cursor=pointer]

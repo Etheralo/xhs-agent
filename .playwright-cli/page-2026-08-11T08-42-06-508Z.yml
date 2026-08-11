@@ -1,0 +1,61 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - link "Paper to Post 首页" [ref=e4] [cursor=pointer]:
+      - /url: "#"
+      - generic [ref=e5]:
+        - generic [ref=e6]: P
+        - generic [ref=e7]: →
+        - generic [ref=e8]: P
+      - generic [ref=e9]:
+        - strong [ref=e10]: Paper→Post
+        - generic [ref=e11]: AI 论文编辑台
+    - navigation "主导航" [ref=e12]:
+      - button "内容工作台" [ref=e13] [cursor=pointer]
+      - button "审核队列 4" [active] [ref=e15] [cursor=pointer]:
+        - generic [ref=e16]: 审核队列
+        - generic [ref=e17]: "4"
+      - button "发布中心" [ref=e18] [cursor=pointer]
+      - button "运行记录" [ref=e20] [cursor=pointer]
+    - generic [ref=e22]:
+      - generic [ref=e25]:
+        - strong [ref=e26]: 本机引擎
+        - generic [ref=e27]: kimi-k2.5 已配置
+      - button "查看配置状态" [ref=e28] [cursor=pointer]: ⚙
+  - main [ref=e29]:
+    - generic [ref=e30]:
+      - generic [ref=e31]:
+        - strong [ref=e32]: 审核队列
+        - generic [ref=e33]: 逐项核对事实、文案与来源证据
+      - generic [ref=e34]: 数据已同步
+    - region "内容概览" [ref=e36]:
+      - article [ref=e37]:
+        - generic [ref=e38]: 已入库
+        - strong [ref=e39]: "2"
+        - emphasis [ref=e40]: 等待生成
+      - article [ref=e41]:
+        - generic [ref=e42]: 已生成内容
+        - strong [ref=e43]: "4"
+        - emphasis [ref=e44]: 等待审核
+      - article [ref=e45]:
+        - generic [ref=e46]: 已通过审核
+        - strong [ref=e47]: "1"
+        - emphasis [ref=e48]: 可以发布
+      - article [ref=e49]:
+        - generic [ref=e50]: 已发布
+        - strong [ref=e51]: "0"
+        - emphasis [ref=e52]: 确认完成
+    - generic [ref=e69]:
+      - generic [ref=e70]:
+        - generic [ref=e71]:
+          - generic [ref=e72]:
+            - paragraph [ref=e73]: LIBRARY
+            - heading "等待人工审核" [level=2] [ref=e293]
+          - button "刷新论文库" [ref=e75] [cursor=pointer]: ↻
+        - generic [ref=e294]:
+          - strong [ref=e295]: 这里暂时是空的
+          - text: 当前没有已生成、等待审核的内容。
+      - article [ref=e152]:
+        - generic [ref=e296]:
+          - generic [ref=e297]: P→P
+          - heading "暂无可展示内容" [level=3] [ref=e298]
+          - paragraph [ref=e299]: 返回内容工作台搜索和生成论文内容。

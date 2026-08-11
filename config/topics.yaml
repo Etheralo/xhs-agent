@@ -1,0 +1,32 @@
+topics:
+  jailbreak_prompt_injection:
+    label: 越狱与提示注入
+    keywords: [jailbreak, prompt injection, indirect prompt injection, instruction hierarchy, refusal]
+  agent_tool_security:
+    label: Agent 与工具安全
+    keywords: [agent security, tool calling, tool use, mcp, computer use, autonomous agent]
+  rag_memory_security:
+    label: RAG 与记忆安全
+    keywords: [rag security, retrieval poisoning, memory poisoning, agent memory, vector database]
+  multimodal_safety:
+    label: 多模态安全
+    keywords: [multimodal safety, visual jailbreak, vision-language, vlm safety, image jailbreak]
+  adversarial_robustness:
+    label: 对抗鲁棒性
+    keywords: [adversarial robustness, adversarial example, evasion attack, robust learning]
+  poisoning_backdoor:
+    label: 投毒与后门
+    keywords: [data poisoning, backdoor, trojan, model poisoning]
+  privacy_data_leakage:
+    label: 隐私与数据泄露
+    keywords: [privacy, data leakage, membership inference, model inversion, differential privacy]
+  alignment_governance:
+    label: 对齐与治理
+    keywords: [alignment, ai governance, misuse, scalable oversight, constitutional ai]
+  safety_evaluation:
+    label: 安全评测
+    keywords: [safety benchmark, red teaming, risk evaluation, safety evaluation]
+  cybersecurity_agent:
+    label: 网络安全 Agent
+    keywords: [cybersecurity agent, vulnerability detection, penetration testing, incident response]
+

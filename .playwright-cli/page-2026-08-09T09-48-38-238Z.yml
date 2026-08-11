@@ -1,0 +1,168 @@
+- generic [ref=f1e2]:
+  - complementary [ref=f1e3]:
+    - link "Paper to Post 首页" [ref=f1e4] [cursor=pointer]:
+      - /url: "#"
+      - generic [ref=f1e5]:
+        - generic [ref=f1e6]: P
+        - generic [ref=f1e7]: →
+        - generic [ref=f1e8]: P
+      - generic [ref=f1e9]:
+        - strong [ref=f1e10]: Paper→Post
+        - generic [ref=f1e11]: AI Safety 编辑台
+    - navigation "主导航" [ref=f1e12]:
+      - button "⌂ 内容工作台" [ref=f1e13] [cursor=pointer]:
+        - generic [ref=f1e14]: ⌂
+        - generic [ref=f1e15]: 内容工作台
+      - button "◎ 审核队列 3" [active] [ref=f1e16] [cursor=pointer]:
+        - generic [ref=f1e17]: ◎
+        - generic [ref=f1e18]: 审核队列
+        - generic [ref=f1e19]: "3"
+      - button "↗ 发布中心" [ref=f1e20] [cursor=pointer]:
+        - generic [ref=f1e21]: ↗
+        - generic [ref=f1e22]: 发布中心
+      - button "≋ 运行记录" [ref=f1e23] [cursor=pointer]:
+        - generic [ref=f1e24]: ≋
+        - generic [ref=f1e25]: 运行记录
+    - generic [ref=f1e26]:
+      - paragraph [ref=f1e27]: 内容状态
+      - button "等待审核 3" [ref=f1e28] [cursor=pointer]:
+        - text: 等待审核
+        - generic [ref=f1e30]: "3"
+      - button "已批准 0" [ref=f1e31] [cursor=pointer]:
+        - text: 已批准
+        - generic [ref=f1e33]: "0"
+      - button "已发布 0" [ref=f1e34] [cursor=pointer]:
+        - text: 已发布
+        - generic [ref=f1e36]: "0"
+    - generic [ref=f1e37]:
+      - generic [ref=f1e40]:
+        - strong [ref=f1e41]: 本机引擎已连接
+        - generic [ref=f1e42]: 规则模式
+      - button "配置状态 ›" [ref=f1e43] [cursor=pointer]:
+        - text: 配置状态
+        - generic [ref=f1e44]: ›
+  - main [ref=f1e45]:
+    - generic [ref=f1e46]:
+      - generic [ref=f1e47]:
+        - generic [ref=f1e48]: 编辑部
+        - generic [ref=f1e49]: /
+        - strong [ref=f1e50]: 审核队列
+      - generic [ref=f1e51]:
+        - generic [ref=f1e52]: 数据已同步
+        - button "ST" [ref=f1e54]
+    - region "内容概览" [ref=f1e55]:
+      - article [ref=f1e56]:
+        - generic [ref=f1e57]: 文
+        - generic [ref=f1e58]:
+          - generic [ref=f1e59]: 论文库
+          - strong [ref=f1e60]: "3"
+          - emphasis [ref=f1e61]: 全部候选
+      - article [ref=f1e62]:
+        - generic [ref=f1e63]: 待
+        - generic [ref=f1e64]:
+          - generic [ref=f1e65]: 等待审核
+          - strong [ref=f1e66]: "3"
+          - emphasis [ref=f1e67]: 需要人工确认
+      - article [ref=f1e68]:
+        - generic [ref=f1e69]: 稿
+        - generic [ref=f1e70]:
+          - generic [ref=f1e71]: 已生成内容
+          - strong [ref=f1e72]: "3"
+          - emphasis [ref=f1e73]: 双渠道草稿
+      - article [ref=f1e74]:
+        - generic [ref=f1e75]: 发
+        - generic [ref=f1e76]:
+          - generic [ref=f1e77]: 已发布
+          - strong [ref=f1e78]: "0"
+          - emphasis [ref=f1e79]: 人工确认完成
+    - generic [ref=f1e80]:
+      - generic [ref=f1e186]:
+        - text: 审
+        - paragraph [ref=f1e187]: HUMAN REVIEW
+        - heading "把注意力放回内容本身。" [level=1] [ref=f1e188]
+        - paragraph [ref=f1e189]: 这里不再提供论文搜索，只展示等待审核的文案、配图和来源证据。逐篇核对后再批准发布。
+      - generic [ref=f1e101]:
+        - generic [ref=f1e102]:
+          - generic [ref=f1e103]:
+            - generic [ref=f1e104]:
+              - paragraph [ref=f1e105]: PAPER LIBRARY
+              - heading "等待人工审核" [level=2] [ref=f1e190]
+            - button "刷新论文库" [ref=f1e107] [cursor=pointer]: ↻
+          - generic [ref=f1e113]:
+            - 'button "01 · demo.00003 等待审核 Constructed Demo: Region-Grounded Safety Checks for Vision-Language Models This constructed example studies visual jailbreaks in vision-language models. It grounds safety decisions in image regions and text spans before response generation. The synthetic demo reduces attack success from 62% to 19% while retaining 88% benign task accuracy. 多模态安全 2026年7月20日 内容分 56" [ref=f1e191] [cursor=pointer]':
+              - generic [ref=f1e192]:
+                - generic [ref=f1e193]: 01 · demo.00003
+                - generic [ref=f1e194]: 等待审核
+              - 'heading "Constructed Demo: Region-Grounded Safety Checks for Vision-Language Models" [level=3] [ref=f1e195]'
+              - paragraph [ref=f1e196]: This constructed example studies visual jailbreaks in vision-language models. It grounds safety decisions in image regions and text spans before response generation. The synthetic demo reduces attack success from 62% to 19% while retaining 88% benign task accuracy.
+              - generic [ref=f1e197]:
+                - strong [ref=f1e198]: 多模态安全
+                - generic [ref=f1e199]: 2026年7月20日
+                - generic [ref=f1e200]: 内容分 56
+            - 'button "02 · demo.00002 等待审核 Constructed Demo: Canary Queries for Detecting Retrieval Poisoning This constructed example studies retrieval poisoning in RAG systems. It injects controlled canary queries and compares retrieved evidence before generation. The demo reports 83% detection at 4% false alarms in a synthetic benchmark. RAG 与记忆安全 2026年7月28日 内容分 54" [ref=f1e201] [cursor=pointer]':
+              - generic [ref=f1e202]:
+                - generic [ref=f1e203]: 02 · demo.00002
+                - generic [ref=f1e204]: 等待审核
+              - 'heading "Constructed Demo: Canary Queries for Detecting Retrieval Poisoning" [level=3] [ref=f1e205]'
+              - paragraph [ref=f1e206]: This constructed example studies retrieval poisoning in RAG systems. It injects controlled canary queries and compares retrieved evidence before generation. The demo reports 83% detection at 4% false alarms in a synthetic benchmark.
+              - generic [ref=f1e207]:
+                - strong [ref=f1e208]: RAG 与记忆安全
+                - generic [ref=f1e209]: 2026年7月28日
+                - generic [ref=f1e210]: 内容分 54
+            - 'button "03 · demo.00001 等待审核 Constructed Demo: Source-Aware Prompt Firewall for Tool-Using Agents This constructed example studies indirect prompt injection in tool-using agents. It labels instructions by source and checks the label before each sensitive tool call. In a synthetic evaluation, the example records 91% blocked attacks versus a 54% baseline. 越狱与提示注入 2026年8月1日 内容分 54" [ref=f1e211] [cursor=pointer]':
+              - generic [ref=f1e212]:
+                - generic [ref=f1e213]: 03 · demo.00001
+                - generic [ref=f1e214]: 等待审核
+              - 'heading "Constructed Demo: Source-Aware Prompt Firewall for Tool-Using Agents" [level=3] [ref=f1e215]'
+              - paragraph [ref=f1e216]: This constructed example studies indirect prompt injection in tool-using agents. It labels instructions by source and checks the label before each sensitive tool call. In a synthetic evaluation, the example records 91% blocked attacks versus a 54% baseline.
+              - generic [ref=f1e217]:
+                - strong [ref=f1e218]: 越狱与提示注入
+                - generic [ref=f1e219]: 2026年8月1日
+                - generic [ref=f1e220]: 内容分 54
+        - complementary [ref=f1e144]:
+          - generic [ref=f1e221]:
+            - generic [ref=f1e222]:
+              - generic [ref=f1e223]:
+                - generic [ref=f1e224]: demo.00003
+                - generic [ref=f1e225]: 等待审核
+              - 'heading "Constructed Demo: Region-Grounded Safety Checks for Vision-Language Models" [level=2] [ref=f1e226]'
+              - paragraph [ref=f1e227]: Demo Author D、Demo Author E
+              - generic [ref=f1e228]:
+                - generic [ref=f1e229]: 发表 2026年7月20日
+                - generic [ref=f1e230]: 内容分 56
+                - generic [ref=f1e231]: 来源 Constructed Demo Venue
+              - generic [ref=f1e232]:
+                - link "查看原文" [ref=f1e233] [cursor=pointer]:
+                  - /url: https://example.invalid/demo.00003.pdf
+                - button "复制小红书文案" [ref=f1e234] [cursor=pointer]
+                - button "内容已生成" [disabled] [ref=f1e235]
+            - tablist [ref=f1e236]:
+              - button "论文概览" [ref=f1e237] [cursor=pointer]
+              - button "小红书 3" [ref=f1e238] [cursor=pointer]
+              - button "公众号" [ref=f1e239] [cursor=pointer]
+              - button "来源证据" [ref=f1e240] [cursor=pointer]
+            - generic [ref=f1e241]:
+              - paragraph [ref=f1e242]: DEMO IMAGE FALLBACK
+              - paragraph [ref=f1e243]: 构造示例没有真实 PDF，因此使用 3 张示例图完成离线流程。
+              - generic [ref=f1e244]:
+                - link "发布配图 1 1" [ref=f1e245] [cursor=pointer]:
+                  - /url: /api/artifacts/3/xhs-01.png
+                  - img "发布配图 1" [ref=f1e246]
+                  - generic [ref=f1e247]: "1"
+                - link "发布配图 2 2" [ref=f1e248] [cursor=pointer]:
+                  - /url: /api/artifacts/3/xhs-02.png
+                  - img "发布配图 2" [ref=f1e249]
+                  - generic [ref=f1e250]: "2"
+                - link "发布配图 3 3" [ref=f1e251] [cursor=pointer]:
+                  - /url: /api/artifacts/3/xhs-03.png
+                  - img "发布配图 3" [ref=f1e252]
+                  - generic [ref=f1e253]: "3"
+              - generic [ref=f1e254]:
+                - generic [ref=f1e255]:
+                  - strong [ref=f1e256]: 发布文案
+                  - button "复制全文" [ref=f1e257] [cursor=pointer]
+                - generic [ref=f1e258]: "👁️视觉语言模型可能只看到图片的整体语义，却忽略，怎么守住？ 视觉语言模型可能只看到图片的整体语义，却忽略局部区域藏着的越狱文字或危险组合，导致安全判断与真实触发位置脱节。 这篇论文用一个可检查的方法回应了这个问题。卡片里的结果均保留原文页码，编辑推演也与作者结论分开。 原文：arXiv demo.00003 #AISafety #AI安全 #多模态安全 #科研"
+              - generic [ref=f1e259]:
+                - heading "草稿已准备好" [level=4] [ref=f1e260]
+                - paragraph [ref=f1e261]: 完成 7 项人工检查后，一次性批准并生成双渠道发布包。
+                - button "一键准备发布" [ref=f1e262] [cursor=pointer]

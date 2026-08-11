@@ -1,0 +1,35 @@
+agent:
+  max_results: 50
+  days_back: 7
+  select_count: 1
+  require_verified_venue: false
+  request_timeout_seconds: 45
+  user_agent: "xhs-paper-agent/0.1 contact=local-editor"
+
+llm:
+  stream: true
+  json_mode: true
+  disable_thinking: true
+  read_timeout_seconds: 600
+  max_input_chars: 55000
+  max_completion_tokens: 4096
+
+sources:
+  arxiv_categories:
+    - cs.CR
+    - cs.AI
+    - cs.CL
+    - cs.LG
+    - cs.CV
+
+content:
+  xhs_slide_count: 6
+  canvas_width: 1242
+  canvas_height: 1660
+  wechat_min_chars: 900
+  wechat_max_chars: 2400
+  font_candidates:
+    - /System/Library/Fonts/STHeiti Medium.ttc
+    - /System/Library/Fonts/Hiragino Sans GB.ttc
+    - /System/Library/Fonts/Supplemental/Arial Unicode.ttf
+    - /usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc

@@ -1,0 +1,37 @@
+[project]
+name = "xhs-paper-agent"
+version = "0.1.0"
+description = "A human-in-the-loop AI safety paper content agent for Xiaohongshu and WeChat."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "httpx>=0.28,<1",
+  "jinja2>=3.1,<4",
+  "pillow>=11.0,<13",
+  "pymupdf>=1.25,<2",
+  "pyyaml>=6.0,<7",
+]
+
+[project.scripts]
+xhs-agent = "app.cli:main"
+
+[dependency-groups]
+dev = [
+  "pytest>=8.0,<10",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+filterwarnings = [
+  "ignore:builtin type SwigPyPacked has no __module__ attribute:DeprecationWarning",
+  "ignore:builtin type SwigPyObject has no __module__ attribute:DeprecationWarning",
+  "ignore:builtin type swigvarlink has no __module__ attribute:DeprecationWarning",
+]

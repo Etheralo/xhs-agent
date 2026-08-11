@@ -1,0 +1,8 @@
+# 人工核验后的会议覆盖配置。只有 status=verified 才能通过“顶会精选”硬门槛。
+# 示例：
+# "2608.01234":
+#   venue: USENIX Security Symposium
+#   status: verified
+#   evidence_url: https://www.usenix.org/conference/usenixsecurity26/presentation/example
+{}
+

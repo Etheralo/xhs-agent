@@ -1,0 +1,15 @@
+.venv/
+.env
+__pycache__/
+*.py[cod]
+.pytest_cache/
+data/
+output/
+docs/
+agent-proposal.md
+examples/
+output/
+templates/
+tests/
+.vscode/
+

@@ -1,0 +1,154 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - link "Paper to Post 首页" [ref=e4] [cursor=pointer]:
+      - /url: "#"
+      - generic [ref=e5]:
+        - generic [ref=e6]: P
+        - generic [ref=e7]: →
+        - generic [ref=e8]: P
+      - generic [ref=e9]:
+        - strong [ref=e10]: Paper→Post
+        - generic [ref=e11]: AI 论文编辑台
+    - navigation "主导航" [ref=e12]:
+      - button "内容工作台" [ref=e13] [cursor=pointer]
+      - button "审核队列 2" [active] [ref=e15] [cursor=pointer]:
+        - generic [ref=e16]: 审核队列
+        - generic [ref=e17]: "2"
+      - button "发布中心" [ref=e18] [cursor=pointer]
+      - button "运行记录" [ref=e20] [cursor=pointer]
+    - generic [ref=e22]:
+      - generic [ref=e25]:
+        - strong [ref=e26]: 本机引擎
+        - generic [ref=e27]: kimi-k2.5 已配置
+      - button "查看配置状态" [ref=e28] [cursor=pointer]: ⚙
+  - main [ref=e29]:
+    - generic [ref=e30]:
+      - button "打开菜单" [ref=e614]: ☰
+      - link "Paper→Post" [ref=e615] [cursor=pointer]:
+        - /url: "#"
+      - strong [ref=e32]: 审核队列
+    - region "内容概览" [ref=e36]:
+      - article [ref=e37]:
+        - generic [ref=e38]: 论文库
+        - strong [ref=e39]: "11"
+      - article [ref=e41]:
+        - generic [ref=e42]: 等待审核
+        - strong [ref=e43]: "2"
+      - article [ref=e45]:
+        - generic [ref=e46]: 已生成
+        - strong [ref=e47]: "3"
+      - article [ref=e49]:
+        - generic [ref=e50]: 已发布
+        - strong [ref=e51]: "0"
+    - generic [ref=e79]:
+      - generic [ref=e80]:
+        - generic [ref=e81]:
+          - generic [ref=e82]:
+            - paragraph [ref=e83]: LIBRARY
+            - heading "等待人工审核" [level=2] [ref=e616]
+          - button "刷新论文库" [ref=e85] [cursor=pointer]: ↻
+        - generic [ref=e91]:
+          - 'button "01 · demo.00003 等待审核 Constructed Demo: Region-Grounded Safety Checks for Vision-Language Models This constructed example studies visual jailbreaks in vision-language models. It grounds safety decisions in image regions and text spans before response generation. The synthetic demo reduces attack success from 62% to 19% while retaining 88% benign task accuracy. 多模态安全 2026年7月20日 内容分 56" [ref=e617] [cursor=pointer]':
+            - generic [ref=e618]:
+              - generic [ref=e619]: 01 · demo.00003
+              - generic [ref=e620]: 等待审核
+            - 'heading "Constructed Demo: Region-Grounded Safety Checks for Vision-Language Models" [level=3] [ref=e621]'
+            - paragraph [ref=e622]: This constructed example studies visual jailbreaks in vision-language models. It grounds safety decisions in image regions and text spans before response generation. The synthetic demo reduces attack success from 62% to 19% while retaining 88% benign task accuracy.
+            - generic [ref=e623]:
+              - strong [ref=e624]: 多模态安全
+              - generic [ref=e625]: 2026年7月20日
+              - generic [ref=e626]: 内容分 56
+          - 'button "02 · demo.00002 等待审核 Constructed Demo: Canary Queries for Detecting Retrieval Poisoning This constructed example studies retrieval poisoning in RAG systems. It injects controlled canary queries and compares retrieved evidence before generation. The demo reports 83% detection at 4% false alarms in a synthetic benchmark. RAG 与记忆安全 2026年7月28日 内容分 54" [ref=e627] [cursor=pointer]':
+            - generic [ref=e628]:
+              - generic [ref=e629]: 02 · demo.00002
+              - generic [ref=e630]: 等待审核
+            - 'heading "Constructed Demo: Canary Queries for Detecting Retrieval Poisoning" [level=3] [ref=e631]'
+            - paragraph [ref=e632]: This constructed example studies retrieval poisoning in RAG systems. It injects controlled canary queries and compares retrieved evidence before generation. The demo reports 83% detection at 4% false alarms in a synthetic benchmark.
+            - generic [ref=e633]:
+              - strong [ref=e634]: RAG 与记忆安全
+              - generic [ref=e635]: 2026年7月28日
+              - generic [ref=e636]: 内容分 54
+      - article [ref=e202]:
+        - generic [ref=e637]:
+          - generic [ref=e638]:
+            - generic [ref=e639]:
+              - generic [ref=e640]: demo.00003
+              - generic [ref=e641]: 等待审核
+            - 'heading "Constructed Demo: Region-Grounded Safety Checks for Vision-Language Models" [level=2] [ref=e642]'
+            - paragraph [ref=e643]: Demo Author D、Demo Author E
+            - generic [ref=e644]:
+              - generic [ref=e645]: 发表 2026年7月20日
+              - generic [ref=e646]: 内容分 56
+              - generic [ref=e647]: 来源 Constructed Demo Venue
+            - generic [ref=e648]:
+              - link "查看原文" [ref=e649] [cursor=pointer]:
+                - /url: https://example.invalid/demo.00003.pdf
+              - button "复制小红书文案" [ref=e650] [cursor=pointer]
+              - button "内容已生成" [disabled] [ref=e651]
+          - generic [ref=e652]:
+            - generic [ref=e653]:
+              - strong [ref=e654]: AI 处理过程
+              - generic [ref=e655]: 7 条审计记录 · 每一步均可回溯
+            - generic [ref=e656]:
+              - generic [ref=e657]:
+                - generic [ref=e658]: ✓
+                - strong [ref=e659]: 论文入库
+                - generic [ref=e660]: 示例数据
+              - generic [ref=e661]:
+                - generic [ref=e662]: ✓
+                - strong [ref=e663]: 主题筛选
+                - generic [ref=e664]: 内容分 56
+              - generic [ref=e665]:
+                - generic [ref=e666]: ✓
+                - strong [ref=e667]: 来源核验
+                - generic [ref=e668]: 证据已记录
+              - generic [ref=e669]:
+                - generic [ref=e670]: ✓
+                - strong [ref=e671]: 事实抽取
+                - generic [ref=e672]: 4 条可追溯事实
+              - generic [ref=e673]:
+                - generic [ref=e674]: ✓
+                - strong [ref=e675]: 内容生成
+                - generic [ref=e676]: 双渠道内容完成
+              - generic [ref=e677]:
+                - generic [ref=e678]: ✓
+                - strong [ref=e679]: 自动校验
+                - generic [ref=e680]: 检查通过
+              - generic [ref=e681]:
+                - strong [ref=e683]: 人工审核
+                - generic [ref=e684]: 等待编辑确认
+          - tablist [ref=e685]:
+            - button "AI 解读" [ref=e686] [cursor=pointer]
+            - button "小红书全文 3" [ref=e687] [cursor=pointer]
+            - button "公众号全文" [ref=e688] [cursor=pointer]
+            - button "证据与记录" [ref=e689] [cursor=pointer]
+          - generic [ref=e690]:
+            - generic [ref=e691]:
+              - paragraph [ref=e692]: DEMO IMAGE FALLBACK
+              - heading "发布配图" [level=3] [ref=e693]
+              - paragraph [ref=e694]: 构造示例没有真实 PDF，因此使用 3 张示例图完成离线流程。
+              - generic [ref=e695]:
+                - link "发布配图 1 1" [ref=e696] [cursor=pointer]:
+                  - /url: /api/artifacts/3/xhs-01.png
+                  - img "发布配图 1" [ref=e697]
+                  - generic [ref=e698]: "1"
+                - link "发布配图 2 2" [ref=e699] [cursor=pointer]:
+                  - /url: /api/artifacts/3/xhs-02.png
+                  - img "发布配图 2" [ref=e700]
+                  - generic [ref=e701]: "2"
+                - link "发布配图 3 3" [ref=e702] [cursor=pointer]:
+                  - /url: /api/artifacts/3/xhs-03.png
+                  - img "发布配图 3" [ref=e703]
+                  - generic [ref=e704]: "3"
+            - generic [ref=e705]:
+              - heading "发布文案" [level=3] [ref=e706]
+              - paragraph [ref=e707]: 以下为 AI 生成的完整文案，不折叠、不截断。
+              - generic [ref=e708]:
+                - generic [ref=e709]:
+                  - strong [ref=e710]: 小红书正文
+                  - button "复制全文" [ref=e711] [cursor=pointer]
+                - generic [ref=e712]: "👁️视觉语言模型可能只看到图片的整体语义，却忽略，怎么守住？ 视觉语言模型可能只看到图片的整体语义，却忽略局部区域藏着的越狱文字或危险组合，导致安全判断与真实触发位置脱节。 这篇论文用一个可检查的方法回应了这个问题。卡片里的结果均保留原文页码，编辑推演也与作者结论分开。 原文：arXiv demo.00003 #AISafety #AI安全 #多模态安全 #科研"
+            - generic [ref=e713]:
+              - heading "草稿已准备好" [level=4] [ref=e714]
+              - paragraph [ref=e715]: 完成 7 项人工检查后，一次性批准并生成双渠道发布包。
+              - button "一键准备发布" [ref=e716] [cursor=pointer]

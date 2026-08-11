@@ -1,0 +1,168 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - link "Paper to Post 首页" [ref=e4] [cursor=pointer]:
+      - /url: "#"
+      - generic [ref=e5]:
+        - generic [ref=e6]: P
+        - generic [ref=e7]: →
+        - generic [ref=e8]: P
+      - generic [ref=e9]:
+        - strong [ref=e10]: Paper→Post
+        - generic [ref=e11]: AI Safety 编辑台
+    - navigation "主导航" [ref=e12]:
+      - button "⌂ 内容工作台" [ref=e13] [cursor=pointer]:
+        - generic [ref=e14]: ⌂
+        - generic [ref=e15]: 内容工作台
+      - button "◎ 审核队列 3" [active] [ref=e16] [cursor=pointer]:
+        - generic [ref=e17]: ◎
+        - generic [ref=e18]: 审核队列
+        - generic [ref=e19]: "3"
+      - button "↗ 发布中心" [ref=e20] [cursor=pointer]:
+        - generic [ref=e21]: ↗
+        - generic [ref=e22]: 发布中心
+      - button "≋ 运行记录" [ref=e23] [cursor=pointer]:
+        - generic [ref=e24]: ≋
+        - generic [ref=e25]: 运行记录
+    - generic [ref=e26]:
+      - paragraph [ref=e27]: 内容状态
+      - button "等待审核 3" [ref=e28] [cursor=pointer]:
+        - text: 等待审核
+        - generic [ref=e30]: "3"
+      - button "已批准 0" [ref=e31] [cursor=pointer]:
+        - text: 已批准
+        - generic [ref=e33]: "0"
+      - button "已发布 0" [ref=e34] [cursor=pointer]:
+        - text: 已发布
+        - generic [ref=e36]: "0"
+    - generic [ref=e37]:
+      - generic [ref=e40]:
+        - strong [ref=e41]: 本机引擎已连接
+        - generic [ref=e42]: 规则模式
+      - button "配置状态 ›" [ref=e43] [cursor=pointer]:
+        - text: 配置状态
+        - generic [ref=e44]: ›
+  - main [ref=e45]:
+    - generic [ref=e46]:
+      - generic [ref=e47]:
+        - generic [ref=e48]: 编辑部
+        - generic [ref=e49]: /
+        - strong [ref=e50]: 审核队列
+      - generic [ref=e51]:
+        - generic [ref=e52]: 数据已同步
+        - button "ST" [ref=e54]
+    - region "内容概览" [ref=e55]:
+      - article [ref=e56]:
+        - generic [ref=e57]: 文
+        - generic [ref=e58]:
+          - generic [ref=e59]: 论文库
+          - strong [ref=e60]: "3"
+          - emphasis [ref=e61]: 全部候选
+      - article [ref=e62]:
+        - generic [ref=e63]: 待
+        - generic [ref=e64]:
+          - generic [ref=e65]: 等待审核
+          - strong [ref=e66]: "3"
+          - emphasis [ref=e67]: 需要人工确认
+      - article [ref=e68]:
+        - generic [ref=e69]: 稿
+        - generic [ref=e70]:
+          - generic [ref=e71]: 已生成内容
+          - strong [ref=e72]: "3"
+          - emphasis [ref=e73]: 双渠道草稿
+      - article [ref=e74]:
+        - generic [ref=e75]: 发
+        - generic [ref=e76]:
+          - generic [ref=e77]: 已发布
+          - strong [ref=e78]: "0"
+          - emphasis [ref=e79]: 人工确认完成
+    - generic [ref=e80]:
+      - generic [ref=e186]:
+        - text: 审
+        - paragraph [ref=e187]: HUMAN REVIEW
+        - heading "把注意力放回内容本身。" [level=1] [ref=e188]
+        - paragraph [ref=e189]: 这里不再提供论文搜索，只展示等待审核的文案、配图和来源证据。逐篇核对后再批准发布。
+      - generic [ref=e101]:
+        - generic [ref=e102]:
+          - generic [ref=e103]:
+            - generic [ref=e104]:
+              - paragraph [ref=e105]: PAPER LIBRARY
+              - heading "等待人工审核" [level=2] [ref=e190]
+            - button "刷新论文库" [ref=e107] [cursor=pointer]: ↻
+          - generic [ref=e113]:
+            - 'button "01 · demo.00003 等待审核 Constructed Demo: Region-Grounded Safety Checks for Vision-Language Models This constructed example studies visual jailbreaks in vision-language models. It grounds safety decisions in image regions and text spans before response generation. The synthetic demo reduces attack success from 62% to 19% while retaining 88% benign task accuracy. 多模态安全 2026年7月20日 内容分 56" [ref=e191] [cursor=pointer]':
+              - generic [ref=e192]:
+                - generic [ref=e193]: 01 · demo.00003
+                - generic [ref=e194]: 等待审核
+              - 'heading "Constructed Demo: Region-Grounded Safety Checks for Vision-Language Models" [level=3] [ref=e195]'
+              - paragraph [ref=e196]: This constructed example studies visual jailbreaks in vision-language models. It grounds safety decisions in image regions and text spans before response generation. The synthetic demo reduces attack success from 62% to 19% while retaining 88% benign task accuracy.
+              - generic [ref=e197]:
+                - strong [ref=e198]: 多模态安全
+                - generic [ref=e199]: 2026年7月20日
+                - generic [ref=e200]: 内容分 56
+            - 'button "02 · demo.00002 等待审核 Constructed Demo: Canary Queries for Detecting Retrieval Poisoning This constructed example studies retrieval poisoning in RAG systems. It injects controlled canary queries and compares retrieved evidence before generation. The demo reports 83% detection at 4% false alarms in a synthetic benchmark. RAG 与记忆安全 2026年7月28日 内容分 54" [ref=e201] [cursor=pointer]':
+              - generic [ref=e202]:
+                - generic [ref=e203]: 02 · demo.00002
+                - generic [ref=e204]: 等待审核
+              - 'heading "Constructed Demo: Canary Queries for Detecting Retrieval Poisoning" [level=3] [ref=e205]'
+              - paragraph [ref=e206]: This constructed example studies retrieval poisoning in RAG systems. It injects controlled canary queries and compares retrieved evidence before generation. The demo reports 83% detection at 4% false alarms in a synthetic benchmark.
+              - generic [ref=e207]:
+                - strong [ref=e208]: RAG 与记忆安全
+                - generic [ref=e209]: 2026年7月28日
+                - generic [ref=e210]: 内容分 54
+            - 'button "03 · demo.00001 等待审核 Constructed Demo: Source-Aware Prompt Firewall for Tool-Using Agents This constructed example studies indirect prompt injection in tool-using agents. It labels instructions by source and checks the label before each sensitive tool call. In a synthetic evaluation, the example records 91% blocked attacks versus a 54% baseline. 越狱与提示注入 2026年8月1日 内容分 54" [ref=e211] [cursor=pointer]':
+              - generic [ref=e212]:
+                - generic [ref=e213]: 03 · demo.00001
+                - generic [ref=e214]: 等待审核
+              - 'heading "Constructed Demo: Source-Aware Prompt Firewall for Tool-Using Agents" [level=3] [ref=e215]'
+              - paragraph [ref=e216]: This constructed example studies indirect prompt injection in tool-using agents. It labels instructions by source and checks the label before each sensitive tool call. In a synthetic evaluation, the example records 91% blocked attacks versus a 54% baseline.
+              - generic [ref=e217]:
+                - strong [ref=e218]: 越狱与提示注入
+                - generic [ref=e219]: 2026年8月1日
+                - generic [ref=e220]: 内容分 54
+        - complementary [ref=e144]:
+          - generic [ref=e221]:
+            - generic [ref=e222]:
+              - generic [ref=e223]:
+                - generic [ref=e224]: demo.00002
+                - generic [ref=e225]: 等待审核
+              - 'heading "Constructed Demo: Canary Queries for Detecting Retrieval Poisoning" [level=2] [ref=e226]'
+              - paragraph [ref=e227]: Demo Author C
+              - generic [ref=e228]:
+                - generic [ref=e229]: 发表 2026年7月28日
+                - generic [ref=e230]: 内容分 54
+                - generic [ref=e231]: 来源 Constructed Demo Venue
+              - generic [ref=e232]:
+                - link "查看原文" [ref=e233] [cursor=pointer]:
+                  - /url: https://example.invalid/demo.00002.pdf
+                - button "复制小红书文案" [ref=e234] [cursor=pointer]
+                - button "内容已生成" [disabled] [ref=e235]
+            - tablist [ref=e236]:
+              - button "论文概览" [ref=e237] [cursor=pointer]
+              - button "小红书 3" [ref=e238] [cursor=pointer]
+              - button "公众号" [ref=e239] [cursor=pointer]
+              - button "来源证据" [ref=e240] [cursor=pointer]
+            - generic [ref=e241]:
+              - paragraph [ref=e242]: DEMO IMAGE FALLBACK
+              - paragraph [ref=e243]: 构造示例没有真实 PDF，因此使用 3 张示例图完成离线流程。
+              - generic [ref=e244]:
+                - link "发布配图 1 1" [ref=e245] [cursor=pointer]:
+                  - /url: /api/artifacts/2/xhs-01.png
+                  - img "发布配图 1" [ref=e246]
+                  - generic [ref=e247]: "1"
+                - link "发布配图 2 2" [ref=e248] [cursor=pointer]:
+                  - /url: /api/artifacts/2/xhs-02.png
+                  - img "发布配图 2" [ref=e249]
+                  - generic [ref=e250]: "2"
+                - link "发布配图 3 3" [ref=e251] [cursor=pointer]:
+                  - /url: /api/artifacts/2/xhs-03.png
+                  - img "发布配图 3" [ref=e252]
+                  - generic [ref=e253]: "3"
+              - generic [ref=e254]:
+                - generic [ref=e255]:
+                  - strong [ref=e256]: 发布文案
+                  - button "复制全文" [ref=e257] [cursor=pointer]
+                - generic [ref=e258]: "🧠RAG 知识库被混入恶意文档后，模型可能引用，怎么守住？ RAG 知识库被混入恶意文档后，模型可能引用看似相关、实则被攻击者操纵的证据，而且普通问答抽查不一定触发它。 这篇论文用一个可检查的方法回应了这个问题。卡片里的结果均保留原文页码，编辑推演也与作者结论分开。 原文：arXiv demo.00002 #AISafety #AI安全 #RAG 与记忆安全 #科研"
+              - generic [ref=e259]:
+                - heading "草稿已准备好" [level=4] [ref=e260]
+                - paragraph [ref=e261]: 完成 7 项人工检查后，一次性批准并生成双渠道发布包。
+                - button "一键准备发布" [ref=e262] [cursor=pointer]

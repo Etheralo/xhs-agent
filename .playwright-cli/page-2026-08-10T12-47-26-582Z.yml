@@ -1,0 +1,165 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - link "Paper to Post 首页" [ref=e4] [cursor=pointer]:
+      - /url: "#"
+      - generic [ref=e5]:
+        - generic [ref=e6]: P
+        - generic [ref=e7]: →
+        - generic [ref=e8]: P
+      - generic [ref=e9]:
+        - strong [ref=e10]: Paper→Post
+        - generic [ref=e11]: AI 论文编辑台
+    - navigation "主导航" [ref=e12]:
+      - button "内容工作台" [ref=e13] [cursor=pointer]
+      - button "审核队列 2" [ref=e15] [cursor=pointer]:
+        - generic [ref=e16]: 审核队列
+        - generic [ref=e17]: "2"
+      - button "发布中心" [active] [ref=e18] [cursor=pointer]
+      - button "运行记录" [ref=e20] [cursor=pointer]
+    - generic [ref=e22]:
+      - generic [ref=e25]:
+        - strong [ref=e26]: 本机引擎
+        - generic [ref=e27]: kimi-k2.5 已配置
+      - button "查看配置状态" [ref=e28] [cursor=pointer]: ⚙
+  - main [ref=e29]:
+    - generic [ref=e30]:
+      - generic [ref=e31]:
+        - strong [ref=e32]: 发布中心
+        - generic [ref=e33]: 下载发布包并记录平台发布状态
+      - generic [ref=e34]: 数据已同步
+    - region "内容概览" [ref=e36]:
+      - article [ref=e37]:
+        - generic [ref=e38]: 论文库
+        - strong [ref=e39]: "11"
+        - emphasis [ref=e40]: 全部候选
+      - article [ref=e41]:
+        - generic [ref=e42]: 等待审核
+        - strong [ref=e43]: "2"
+        - emphasis [ref=e44]: 需要人工确认
+      - article [ref=e45]:
+        - generic [ref=e46]: 已生成
+        - strong [ref=e47]: "3"
+        - emphasis [ref=e48]: 内容草稿
+      - article [ref=e49]:
+        - generic [ref=e50]: 已发布
+        - strong [ref=e51]: "0"
+        - emphasis [ref=e52]: 确认完成
+      - generic "按状态查看" [ref=e53]:
+        - button "待审核 2" [ref=e54] [cursor=pointer]:
+          - text: 待审核
+          - generic [ref=e56]: "2"
+        - button "已批准 1" [ref=e57] [cursor=pointer]:
+          - text: 已批准
+          - generic [ref=e59]: "1"
+        - button "已发布 0" [ref=e60] [cursor=pointer]:
+          - text: 已发布
+          - generic [ref=e62]: "0"
+    - generic [ref=e79]:
+      - generic [ref=e80]:
+        - generic [ref=e81]:
+          - generic [ref=e82]:
+            - paragraph [ref=e83]: LIBRARY
+            - heading "发布内容" [level=2] [ref=e717]
+          - button "刷新论文库" [ref=e85] [cursor=pointer]: ↻
+        - 'button "01 · demo.00001 已批准 Constructed Demo: Source-Aware Prompt Firewall for Tool-Using Agents This constructed example studies indirect prompt injection in tool-using agents. It labels instructions by source and checks the label before each sensitive tool call. In a synthetic evaluation, the example records 91% blocked attacks versus a 54% baseline. 越狱与提示注入 2026年8月1日 内容分 54" [ref=e718] [cursor=pointer]':
+          - generic [ref=e719]:
+            - generic [ref=e720]: 01 · demo.00001
+            - generic [ref=e721]: 已批准
+          - 'heading "Constructed Demo: Source-Aware Prompt Firewall for Tool-Using Agents" [level=3] [ref=e722]'
+          - paragraph [ref=e723]: This constructed example studies indirect prompt injection in tool-using agents. It labels instructions by source and checks the label before each sensitive tool call. In a synthetic evaluation, the example records 91% blocked attacks versus a 54% baseline.
+          - generic [ref=e724]:
+            - strong [ref=e725]: 越狱与提示注入
+            - generic [ref=e726]: 2026年8月1日
+            - generic [ref=e727]: 内容分 54
+      - article [ref=e202]:
+        - generic [ref=e728]:
+          - generic [ref=e729]:
+            - generic [ref=e730]:
+              - generic [ref=e731]: demo.00001
+              - generic [ref=e732]: 已批准
+            - 'heading "Constructed Demo: Source-Aware Prompt Firewall for Tool-Using Agents" [level=2] [ref=e733]'
+            - paragraph [ref=e734]: Demo Author A、Demo Author B
+            - generic [ref=e735]:
+              - generic [ref=e736]: 发表 2026年8月1日
+              - generic [ref=e737]: 内容分 54
+              - generic [ref=e738]: 来源 Constructed Demo Venue
+            - generic [ref=e739]:
+              - link "查看原文" [ref=e740] [cursor=pointer]:
+                - /url: https://example.invalid/demo.00001.pdf
+              - button "复制小红书文案" [ref=e741] [cursor=pointer]
+              - button "内容已生成" [disabled] [ref=e742]
+          - generic [ref=e743]:
+            - generic [ref=e744]:
+              - strong [ref=e745]: AI 处理过程
+              - generic [ref=e746]: 9 条审计记录 · 每一步均可回溯
+            - generic [ref=e747]:
+              - generic [ref=e748]:
+                - generic [ref=e749]: ✓
+                - strong [ref=e750]: 论文入库
+                - generic [ref=e751]: 示例数据
+              - generic [ref=e752]:
+                - generic [ref=e753]: ✓
+                - strong [ref=e754]: 主题筛选
+                - generic [ref=e755]: 内容分 54
+              - generic [ref=e756]:
+                - generic [ref=e757]: ✓
+                - strong [ref=e758]: 来源核验
+                - generic [ref=e759]: 证据已记录
+              - generic [ref=e760]:
+                - generic [ref=e761]: ✓
+                - strong [ref=e762]: 事实抽取
+                - generic [ref=e763]: 3 条可追溯事实
+              - generic [ref=e764]:
+                - generic [ref=e765]: ✓
+                - strong [ref=e766]: 内容生成
+                - generic [ref=e767]: 双渠道内容完成
+              - generic [ref=e768]:
+                - generic [ref=e769]: ✓
+                - strong [ref=e770]: 自动校验
+                - generic [ref=e771]: 检查通过
+              - generic [ref=e772]:
+                - generic [ref=e773]: ✓
+                - strong [ref=e774]: 人工审核
+                - generic [ref=e775]: 内容已批准
+          - tablist [ref=e776]:
+            - button "AI 解读" [ref=e777] [cursor=pointer]
+            - button "小红书全文 3" [ref=e778] [cursor=pointer]
+            - button "公众号全文" [ref=e779] [cursor=pointer]
+            - button "证据与记录" [ref=e780] [cursor=pointer]
+          - generic [ref=e781]:
+            - generic [ref=e782]:
+              - paragraph [ref=e783]: DEMO IMAGE FALLBACK
+              - heading "发布配图" [level=3] [ref=e784]
+              - paragraph [ref=e785]: 构造示例没有真实 PDF，因此使用 3 张示例图完成离线流程。
+              - generic [ref=e786]:
+                - link "发布配图 1 1" [ref=e787] [cursor=pointer]:
+                  - /url: /api/artifacts/1/xhs-01.png
+                  - img "发布配图 1" [ref=e788]
+                  - generic [ref=e789]: "1"
+                - link "发布配图 2 2" [ref=e790] [cursor=pointer]:
+                  - /url: /api/artifacts/1/xhs-02.png
+                  - img "发布配图 2" [ref=e791]
+                  - generic [ref=e792]: "2"
+                - link "发布配图 3 3" [ref=e793] [cursor=pointer]:
+                  - /url: /api/artifacts/1/xhs-03.png
+                  - img "发布配图 3" [ref=e794]
+                  - generic [ref=e795]: "3"
+            - generic [ref=e796]:
+              - heading "发布文案" [level=3] [ref=e797]
+              - paragraph [ref=e798]: 以下为 AI 生成的完整文案，不折叠、不截断。
+              - generic [ref=e799]:
+                - generic [ref=e800]:
+                  - strong [ref=e801]: 小红书正文
+                  - button "复制全文" [ref=e802] [cursor=pointer]
+                - generic [ref=e803]: "🛡️Agent 浏览网页时，网页里的恶意文字可能，怎么守住？ Agent 浏览网页时，网页里的恶意文字可能伪装成用户指令，诱导它调用发邮件、上传文件等敏感工具。 这篇论文用一个可检查的方法回应了这个问题。卡片里的结果均保留原文页码，编辑推演也与作者结论分开。 原文：arXiv demo.00001 #AISafety #AI安全 #越狱与提示注入 #科研"
+            - generic [ref=e804]:
+              - heading "发布包已批准" [level=4] [ref=e805]
+              - paragraph [ref=e806]: 已连接渠道可以自动发送；未连接渠道可下载后人工发布。
+              - generic [ref=e808]:
+                - generic [ref=e809]: 小红书
+                - generic [ref=e810]: 发布包就绪
+              - generic [ref=e811]:
+                - link "下载发布包" [ref=e812] [cursor=pointer]:
+                  - /url: /api/artifacts/1/demo.00001-constructed-demo-source-aware-prompt-firewall-for-tool-using-agents-approved.zip
+                - button "发送到发布渠道" [ref=e813] [cursor=pointer]
+                - button "确认已经发布" [ref=e814] [cursor=pointer]

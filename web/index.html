@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f6f7f5" />
+    <meta name="description" content="AI Safety 论文内容工作台" />
+    <title>Paper→Post · 论文内容工作台</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="app-header sidebar">
+        <button class="mobile-nav-close" id="mobile-menu-close" aria-label="关闭菜单">×</button>
+        <a class="brand" href="#" aria-label="Paper to Post 首页">
+          <span class="brand-copy"><strong>Paper→Post</strong><small>AI 论文编辑台</small></span>
+        </a>
+
+        <nav class="primary-nav" aria-label="主导航">
+          <button class="nav-item is-active" data-view="workspace"><span>内容工作台</span></button>
+          <button class="nav-item" data-view="review"><span>审核队列</span><b id="review-badge">0</b></button>
+          <button class="nav-item" data-view="published"><span>发布中心</span></button>
+          <button class="nav-item" data-view="runs"><span>运行记录</span></button>
+        </nav>
+
+        <div class="header-tools">
+          <div class="engine-status"><i></i><span><strong>本机引擎</strong><small id="model-state">规则模式</small></span></div>
+          <button id="settings-button" class="icon-button settings-button" aria-label="查看配置状态">⚙</button>
+        </div>
+      </header>
+
+      <main class="main-content">
+        <header class="topbar">
+          <button class="mobile-menu" id="mobile-menu" aria-label="打开菜单">☰</button>
+          <a class="mobile-brand" href="#">Paper→Post</a>
+          <div class="page-identity"><strong id="view-name">内容工作台</strong><span id="view-description">搜索论文，查看 AI 生成过程与完整内容</span></div>
+          <span class="sync-state" id="sync-state"><i></i>数据已同步</span>
+        </header>
+
+        <section class="metrics top-metrics" aria-label="内容概览">
+          <article><small>已入库</small><strong id="metric-total">—</strong><em>等待生成</em></article>
+          <article><small>已生成内容</small><strong id="metric-ready">—</strong><em>等待审核</em></article>
+          <article><small>已通过审核</small><strong id="metric-generated">—</strong><em>可以发布</em></article>
+          <article><small>已发布</small><strong id="metric-published">—</strong><em>确认完成</em></article>
+        </section>
+
+        <div class="page" id="workspace-view">
+          <section class="workspace-entry workspace-only">
+            <div class="workspace-heading">
+              <p class="eyebrow">DISCOVER</p>
+              <h1>从论文到可发布内容</h1>
+              <p>搜索论文，或扫描最近 7 天的 AI Safety 研究。所有生成结果都需要人工审核。</p>
+            </div>
+            <section class="search-station">
+              <form id="arxiv-search-form" class="search-form">
+                <span class="search-symbol">⌕</span>
+                <label class="sr-only" for="arxiv-search">搜索 arXiv</label>
+                <input id="arxiv-search" autocomplete="off" placeholder="搜索标题、作者或关键词" />
+                <button type="submit" class="button button-primary">搜索论文</button>
+              </form>
+              <div class="search-tools">
+                <span>最新论文优先</span>
+                <button class="button button-quiet" id="demo-run">运行示例</button>
+                <button class="button button-dark" id="live-run"><span class="button-spark">✦</span> 扫描并生成</button>
+              </div>
+              <div id="search-results" class="search-results is-hidden" aria-live="polite"></div>
+            </section>
+          </section>
+
+          <section class="workbench">
+            <div class="library-panel">
+              <div class="section-head">
+                <div><p class="eyebrow">LIBRARY</p><h2 id="library-title">候选论文</h2></div>
+                <button class="icon-button" id="refresh-button" aria-label="刷新论文库">↻</button>
+              </div>
+              <div class="library-tools workspace-only">
+                <div class="mini-search"><span>⌕</span><input id="library-search" placeholder="筛选当前论文库" /></div>
+                <select id="status-filter" aria-label="按状态筛选">
+                  <option value="">全部状态</option>
+                  <option value="ingested">已入库</option>
+                  <option value="generated">已生成内容</option>
+                  <option value="approved">已通过审核</option>
+                  <option value="published">已发布</option>
+                </select>
+              </div>
+              <div id="paper-list" class="paper-list" aria-live="polite"></div>
+            </div>
+
+            <article class="detail-panel" id="detail-panel">
+              <div class="empty-detail">
+                <span class="empty-glyph">P→P</span>
+                <h3>选择一篇论文</h3>
+                <p>这里会完整展示论文信息、AI 处理过程和生成内容。</p>
+              </div>
+            </article>
+          </section>
+        </div>
+
+        <div class="page utility-view is-hidden" id="runs-view">
+          <section class="utility-head">
+            <div><p class="eyebrow">PIPELINE</p><h1>运行记录</h1></div>
+            <p>查看最近一次扫描的输入、筛选结果和异常信息。</p>
+          </section>
+          <div class="pipeline-map" aria-label="内容处理状态">
+            <span>论文入库</span><i>→</i><span>内容生成</span><i>→</i><span>内容审核</span><i>→</i><span>内容发布</span>
+          </div>
+          <section class="run-card" id="run-card"></section>
+        </div>
+      </main>
+    </div>
+
+    <div class="modal-backdrop is-hidden" id="publish-modal" role="dialog" aria-modal="true" aria-labelledby="publish-title">
+      <div class="modal">
+        <button class="modal-close" id="modal-close" aria-label="关闭">×</button>
+        <p class="eyebrow">HUMAN REVIEW GATE</p>
+        <h2 id="publish-title">发布前确认</h2>
+        <p class="modal-intro">逐项核对后批准内容，并生成发布包。</p>
+        <div id="review-checklist" class="review-checklist"></div>
+        <div class="publish-channel-section">
+          <span>发布渠道</span>
+          <div id="publish-channels" class="publish-channels"></div>
+        </div>
+        <label class="reviewer-field"><span>审核人</span><input id="reviewer-name" placeholder="请输入编辑姓名" /></label>
+        <div class="modal-warning"><strong>说明</strong><span>此操作生成发布包，不会绕过平台登录或平台审核。</span></div>
+        <button class="button button-primary button-full" id="publish-submit">批准并生成发布包</button>
+      </div>
+    </div>
+
+    <div class="toast-region" id="toast-region" aria-live="polite"></div>
+    <script src="/app.js" defer></script>
+  </body>
+</html>

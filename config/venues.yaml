@@ -1,0 +1,60 @@
+primary:
+  - code: ieee_sp
+    display_name: IEEE Symposium on Security and Privacy
+    aliases: ["IEEE S&P", "IEEE Symposium on Security and Privacy", "Oakland"]
+    points: 35
+  - code: usenix_security
+    display_name: USENIX Security Symposium
+    aliases: ["USENIX Security", "USENIX Security Symposium"]
+    points: 35
+  - code: acm_ccs
+    display_name: ACM Conference on Computer and Communications Security
+    aliases: ["ACM CCS", "CCS", "Computer and Communications Security"]
+    points: 35
+  - code: ndss
+    display_name: Network and Distributed System Security Symposium
+    aliases: ["NDSS", "Network and Distributed System Security Symposium"]
+    points: 35
+  - code: neurips
+    display_name: NeurIPS
+    aliases: ["NeurIPS", "Neural Information Processing Systems"]
+    points: 33
+  - code: icml
+    display_name: ICML
+    aliases: ["ICML", "International Conference on Machine Learning"]
+    points: 33
+  - code: iclr
+    display_name: ICLR
+    aliases: ["ICLR", "International Conference on Learning Representations"]
+    points: 33
+  - code: aaai
+    display_name: AAAI
+    aliases: ["AAAI", "AAAI Conference on Artificial Intelligence"]
+    points: 31
+  - code: ijcai
+    display_name: IJCAI
+    aliases: ["IJCAI", "International Joint Conference on Artificial Intelligence"]
+    points: 31
+
+supplementary:
+  - code: acl
+    display_name: ACL
+    aliases: ["ACL", "Annual Meeting of the Association for Computational Linguistics"]
+    points: 27
+  - code: emnlp
+    display_name: EMNLP
+    aliases: ["EMNLP", "Empirical Methods in Natural Language Processing"]
+    points: 27
+  - code: cvpr
+    display_name: CVPR
+    aliases: ["CVPR", "Computer Vision and Pattern Recognition"]
+    points: 27
+  - code: iccv
+    display_name: ICCV
+    aliases: ["ICCV", "International Conference on Computer Vision"]
+    points: 27
+  - code: eccv
+    display_name: ECCV
+    aliases: ["ECCV", "European Conference on Computer Vision"]
+    points: 27
+

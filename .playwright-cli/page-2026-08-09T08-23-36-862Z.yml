@@ -1,0 +1,261 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - link "Paper to Post 首页" [ref=e4] [cursor=pointer]:
+      - /url: "#"
+      - generic [ref=e5]:
+        - text: P
+        - generic [ref=e6]: →
+        - text: P
+      - generic [ref=e7]:
+        - strong [ref=e8]: Paper→Post
+        - generic [ref=e9]: AI Safety 编辑台
+    - navigation "主导航" [ref=e10]:
+      - button "⌂ 内容工作台" [ref=e11] [cursor=pointer]:
+        - generic [ref=e12]: ⌂
+        - generic [ref=e13]: 内容工作台
+      - button "◎ 审核队列 3" [ref=e14] [cursor=pointer]:
+        - generic [ref=e15]: ◎
+        - generic [ref=e16]: 审核队列
+        - generic [ref=e17]: "3"
+      - button "↗ 发布中心" [ref=e18] [cursor=pointer]:
+        - generic [ref=e19]: ↗
+        - generic [ref=e20]: 发布中心
+      - button "≋ 运行记录" [ref=e21] [cursor=pointer]:
+        - generic [ref=e22]: ≋
+        - generic [ref=e23]: 运行记录
+    - generic [ref=e24]:
+      - paragraph [ref=e25]: 内容状态
+      - button "等待审核 3" [ref=e26] [cursor=pointer]:
+        - text: 等待审核
+        - generic [ref=e28]: "3"
+      - button "已批准 0" [ref=e29] [cursor=pointer]:
+        - text: 已批准
+        - generic [ref=e31]: "0"
+      - button "已发布 0" [ref=e32] [cursor=pointer]:
+        - text: 已发布
+        - generic [ref=e34]: "0"
+    - generic [ref=e35]:
+      - generic [ref=e38]:
+        - strong [ref=e39]: 本机引擎已连接
+        - generic [ref=e40]: 规则模式
+      - button "配置状态 ›" [ref=e41] [cursor=pointer]:
+        - text: 配置状态
+        - generic [ref=e42]: ›
+  - main [ref=e43]:
+    - generic [ref=e44]:
+      - button "打开菜单" [ref=e269]: ☰
+      - strong [ref=e48]: 内容工作台
+      - button "ST" [ref=e52]
+    - generic [ref=e53]:
+      - generic [ref=e55]:
+        - paragraph [ref=e56]: EDITORIAL WORKSPACE · 08/09
+        - heading "今天，值得讲哪篇论文？" [level=1] [ref=e57]
+        - paragraph [ref=e58]: 从可信来源找到论文，把复杂研究变成读者真正看得懂的内容。
+      - generic [ref=e62]:
+        - generic [ref=e63]:
+          - generic [ref=e64]: ⌕
+          - generic [ref=e65]: 搜索 arXiv
+          - textbox "搜索 arXiv" [ref=e66]:
+            - /placeholder: 搜索标题、作者或关键词，例如 Prompt Injection
+            - text: prompt injection
+          - button "搜索 arXiv↵" [active] [ref=e67] [cursor=pointer]
+        - generic [ref=e71]:
+          - button "运行示例" [ref=e72] [cursor=pointer]
+          - button "✦ 扫描并生成" [ref=e73] [cursor=pointer]
+        - generic [ref=e300]:
+          - generic [ref=e301]:
+            - generic [ref=e302]: ARXIV SEARCH RESULTS
+            - generic [ref=e303]: 12 篇
+          - article [ref=e304]:
+            - generic [ref=e305]:
+              - heading "Automatic and Universal Prompt Injection Attacks against Large Language Models" [level=4] [ref=e306]
+              - paragraph [ref=e307]: Xiaogeng Liu、Zhiyuan Yu 等 5 人 · 2403.04957 · 2024年3月8日
+            - button "加入选题" [ref=e308] [cursor=pointer]
+          - article [ref=e309]:
+            - generic [ref=e310]:
+              - 'heading "SecAlign: Defending Against Prompt Injection with Preference Optimization" [level=4] [ref=e311]'
+              - paragraph [ref=e312]: Sizhe Chen、Arman Zharmagambetov 等 6 人 · 2410.05451 · 2024年10月8日
+            - button "加入选题" [ref=e313] [cursor=pointer]
+          - article [ref=e314]:
+            - generic [ref=e315]:
+              - 'heading "UniGuardian: A Unified Defense for Detecting Prompt Injection, Backdoor Attacks and Adversarial Attacks in Large Language Models" [level=4] [ref=e316]'
+              - paragraph [ref=e317]: Huawei Lin、Yingjie Lao 等 5 人 · 2502.13141 · 2025年2月19日
+            - button "加入选题" [ref=e318] [cursor=pointer]
+          - article [ref=e319]:
+            - generic [ref=e320]:
+              - 'heading "StruQ: Defending Against Prompt Injection with Structured Queries" [level=4] [ref=e321]'
+              - paragraph [ref=e322]: Sizhe Chen、Julien Piet 等 4 人 · 2402.06363 · 2024年2月9日
+            - button "加入选题" [ref=e323] [cursor=pointer]
+          - article [ref=e324]:
+            - generic [ref=e325]:
+              - heading "Detecting Prompt Injection Attacks Against Application Using Classifiers" [level=4] [ref=e326]
+              - paragraph [ref=e327]: Safwan Shaheer、G. M. Refatul Islam 等 6 人 · 2512.12583 · 2025年12月14日
+            - button "加入选题" [ref=e328] [cursor=pointer]
+          - article [ref=e329]:
+            - generic [ref=e330]:
+              - 'heading "WebInject: Prompt Injection Attack to Web Agents" [level=4] [ref=e331]'
+              - paragraph [ref=e332]: Xilong Wang、John Bloch 等 6 人 · 2505.11717 · 2025年5月17日
+            - button "加入选题" [ref=e333] [cursor=pointer]
+          - article [ref=e334]:
+            - generic [ref=e335]:
+              - heading "Measuring Real-World Prompt Injection Attacks in LLM-based Resume Screening" [level=4] [ref=e336]
+              - paragraph [ref=e337]: Mohan Zhang、Yuqi Jia 等 7 人 · 2605.28999 · 2026年5月28日
+            - button "加入选题" [ref=e338] [cursor=pointer]
+          - article [ref=e339]:
+            - generic [ref=e340]:
+              - heading "Are GUI Agents Focused Enough? Automated Distraction via Semantic-level UI Element Injection" [level=4] [ref=e341]
+              - paragraph [ref=e342]: Wenkui Yang、Chao Jin 等 10 人 · 2604.07831 · 2026年4月9日
+            - button "加入选题" [ref=e343] [cursor=pointer]
+          - article [ref=e344]:
+            - generic [ref=e345]:
+              - 'heading "DeRAG: Black-box Adversarial Attacks on Multiple Retrieval-Augmented Generation Applications via Prompt Injection" [level=4] [ref=e346]'
+              - paragraph [ref=e347]: Jerry Wang、Fang Yu · 2507.15042 · 2025年7月21日
+            - button "加入选题" [ref=e348] [cursor=pointer]
+          - article [ref=e349]:
+            - generic [ref=e350]:
+              - 'heading "CourtGuard: A Local, Multiagent Prompt Injection Classifier" [level=4] [ref=e351]'
+              - paragraph [ref=e352]: Isaac Wu、Michael Maslowski · 2510.19844 · 2025年10月21日
+            - button "加入选题" [ref=e353] [cursor=pointer]
+          - article [ref=e354]:
+            - generic [ref=e355]:
+              - 'heading "PromptLocate: Localizing Prompt Injection Attacks" [level=4] [ref=e356]'
+              - paragraph [ref=e357]: Yuqi Jia、Yupei Liu 等 5 人 · 2510.12252 · 2025年10月14日
+            - button "加入选题" [ref=e358] [cursor=pointer]
+          - article [ref=e359]:
+            - generic [ref=e360]:
+              - 'heading "Maatphor: Automated Variant Analysis for Prompt Injection Attacks" [level=4] [ref=e361]'
+              - paragraph [ref=e362]: Ahmed Salem、Andrew Paverd 等 3 人 · 2312.11513 · 2023年12月12日
+            - button "加入选题" [ref=e363] [cursor=pointer]
+      - region "内容概览" [ref=e74]:
+        - article [ref=e75]:
+          - generic [ref=e76]: 文
+          - generic [ref=e77]:
+            - generic [ref=e78]: 论文库
+            - strong [ref=e79]: "3"
+            - emphasis [ref=e80]: 全部候选
+        - article [ref=e81]:
+          - generic [ref=e82]: 待
+          - generic [ref=e83]:
+            - generic [ref=e84]: 等待审核
+            - strong [ref=e85]: "3"
+            - emphasis [ref=e86]: 需要人工确认
+        - article [ref=e87]:
+          - generic [ref=e88]: 稿
+          - generic [ref=e89]:
+            - generic [ref=e90]: 已生成内容
+            - strong [ref=e91]: "3"
+            - emphasis [ref=e92]: 双渠道草稿
+        - article [ref=e93]:
+          - generic [ref=e94]: 发
+          - generic [ref=e95]:
+            - generic [ref=e96]: 已发布
+            - strong [ref=e97]: "0"
+            - emphasis [ref=e98]: 人工确认完成
+      - generic [ref=e99]:
+        - generic [ref=e100]:
+          - generic [ref=e101]:
+            - generic [ref=e102]:
+              - paragraph [ref=e103]: PAPER LIBRARY
+              - heading "候选论文" [level=2] [ref=e104]
+            - button "刷新论文库" [ref=e105] [cursor=pointer]: ↻
+          - generic [ref=e106]:
+            - generic [ref=e107]:
+              - generic [ref=e108]: ⌕
+              - textbox "筛选当前论文库" [ref=e109]
+            - combobox "按状态筛选" [ref=e110]:
+              - option "全部状态" [selected]
+              - option "待筛选"
+              - option "待核验"
+              - option "等待审核"
+              - option "已批准"
+              - option "已发布"
+              - option "已拒绝"
+          - generic [ref=e111]:
+            - 'button "01 · demo.00003 等待审核 Constructed Demo: Region-Grounded Safety Checks for Vision-Language Models This constructed example studies visual jailbreaks in vision-language models. It grounds safety decisions in image regions and text spans before response generation. The synthetic demo reduces attack success from 62% to 19% while retaining 88% benign task accuracy. 多模态安全 2026年7月20日 内容分 56" [ref=e270] [cursor=pointer]':
+              - generic [ref=e271]:
+                - generic [ref=e272]: 01 · demo.00003
+                - generic [ref=e273]: 等待审核
+              - 'heading "Constructed Demo: Region-Grounded Safety Checks for Vision-Language Models" [level=3] [ref=e274]'
+              - paragraph [ref=e275]: This constructed example studies visual jailbreaks in vision-language models. It grounds safety decisions in image regions and text spans before response generation. The synthetic demo reduces attack success from 62% to 19% while retaining 88% benign task accuracy.
+              - generic [ref=e276]:
+                - strong [ref=e277]: 多模态安全
+                - generic [ref=e278]: 2026年7月20日
+                - generic [ref=e279]: 内容分 56
+            - 'button "02 · demo.00002 等待审核 Constructed Demo: Canary Queries for Detecting Retrieval Poisoning This constructed example studies retrieval poisoning in RAG systems. It injects controlled canary queries and compares retrieved evidence before generation. The demo reports 83% detection at 4% false alarms in a synthetic benchmark. RAG 与记忆安全 2026年7月28日 内容分 54" [ref=e280] [cursor=pointer]':
+              - generic [ref=e281]:
+                - generic [ref=e282]: 02 · demo.00002
+                - generic [ref=e283]: 等待审核
+              - 'heading "Constructed Demo: Canary Queries for Detecting Retrieval Poisoning" [level=3] [ref=e284]'
+              - paragraph [ref=e285]: This constructed example studies retrieval poisoning in RAG systems. It injects controlled canary queries and compares retrieved evidence before generation. The demo reports 83% detection at 4% false alarms in a synthetic benchmark.
+              - generic [ref=e286]:
+                - strong [ref=e287]: RAG 与记忆安全
+                - generic [ref=e288]: 2026年7月28日
+                - generic [ref=e289]: 内容分 54
+            - 'button "03 · demo.00001 等待审核 Constructed Demo: Source-Aware Prompt Firewall for Tool-Using Agents This constructed example studies indirect prompt injection in tool-using agents. It labels instructions by source and checks the label before each sensitive tool call. In a synthetic evaluation, the example records 91% blocked attacks versus a 54% baseline. 越狱与提示注入 2026年8月1日 内容分 54" [ref=e290] [cursor=pointer]':
+              - generic [ref=e291]:
+                - generic [ref=e292]: 03 · demo.00001
+                - generic [ref=e293]: 等待审核
+              - 'heading "Constructed Demo: Source-Aware Prompt Firewall for Tool-Using Agents" [level=3] [ref=e294]'
+              - paragraph [ref=e295]: This constructed example studies indirect prompt injection in tool-using agents. It labels instructions by source and checks the label before each sensitive tool call. In a synthetic evaluation, the example records 91% blocked attacks versus a 54% baseline.
+              - generic [ref=e296]:
+                - strong [ref=e297]: 越狱与提示注入
+                - generic [ref=e298]: 2026年8月1日
+                - generic [ref=e299]: 内容分 54
+        - complementary [ref=e142]:
+          - generic [ref=e184]:
+            - generic [ref=e185]:
+              - generic [ref=e186]:
+                - generic [ref=e187]: demo.00003
+                - generic [ref=e188]: 等待审核
+              - 'heading "Constructed Demo: Region-Grounded Safety Checks for Vision-Language Models" [level=2] [ref=e189]'
+              - paragraph [ref=e190]: Demo Author D、Demo Author E
+              - generic [ref=e191]:
+                - generic [ref=e192]: 发表 2026年7月20日
+                - generic [ref=e193]: 内容分 56
+                - generic [ref=e194]: 来源 Constructed Demo Venue
+              - generic [ref=e195]:
+                - link "查看原文" [ref=e196] [cursor=pointer]:
+                  - /url: https://example.invalid/demo.00003.pdf
+                - button "复制小红书文案" [ref=e197] [cursor=pointer]
+                - button "内容已生成" [disabled] [ref=e198]
+            - tablist [ref=e199]:
+              - button "论文概览" [ref=e200] [cursor=pointer]
+              - button "小红书 6" [ref=e201] [cursor=pointer]
+              - button "公众号" [ref=e202] [cursor=pointer]
+              - button "来源证据" [ref=e203] [cursor=pointer]
+            - generic [ref=e204]:
+              - paragraph [ref=e205]: 6-CARD STORY
+              - generic [ref=e206]:
+                - link "小红书卡片 1 1" [ref=e207] [cursor=pointer]:
+                  - /url: /api/artifacts/3/xhs-01.png
+                  - img "小红书卡片 1" [ref=e208]
+                  - generic [ref=e209]: "1"
+                - link "小红书卡片 2 2" [ref=e210] [cursor=pointer]:
+                  - /url: /api/artifacts/3/xhs-02.png
+                  - img "小红书卡片 2" [ref=e211]
+                  - generic [ref=e212]: "2"
+                - link "小红书卡片 3 3" [ref=e213] [cursor=pointer]:
+                  - /url: /api/artifacts/3/xhs-03.png
+                  - img "小红书卡片 3" [ref=e214]
+                  - generic [ref=e215]: "3"
+                - link "小红书卡片 4 4" [ref=e216] [cursor=pointer]:
+                  - /url: /api/artifacts/3/xhs-04.png
+                  - img "小红书卡片 4" [ref=e217]
+                  - generic [ref=e218]: "4"
+                - link "小红书卡片 5 5" [ref=e219] [cursor=pointer]:
+                  - /url: /api/artifacts/3/xhs-05.png
+                  - img "小红书卡片 5" [ref=e220]
+                  - generic [ref=e221]: "5"
+                - link "小红书卡片 6 6" [ref=e222] [cursor=pointer]:
+                  - /url: /api/artifacts/3/xhs-06.png
+                  - img "小红书卡片 6" [ref=e223]
+                  - generic [ref=e224]: "6"
+              - generic [ref=e225]:
+                - generic [ref=e226]:
+                  - strong [ref=e227]: 发布文案
+                  - button "复制全文" [ref=e228] [cursor=pointer]
+                - generic [ref=e229]: "👁️视觉语言模型可能只看到图片的整体语义，却忽略，怎么守住？ 视觉语言模型可能只看到图片的整体语义，却忽略局部区域藏着的越狱文字或危险组合，导致安全判断与真实触发位置脱节。 这篇论文用一个可检查的方法回应了这个问题。卡片里的结果均保留原文页码，编辑推演也与作者结论分开。 原文：arXiv demo.00003 #AISafety #AI安全 #多模态安全 #科研"
+              - generic [ref=e230]:
+                - heading "草稿已准备好" [level=4] [ref=e231]
+                - paragraph [ref=e232]: 完成 7 项人工检查后，一次性批准并生成双渠道发布包。
+                - button "一键准备发布" [ref=e233] [cursor=pointer]

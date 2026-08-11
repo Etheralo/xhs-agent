@@ -1,0 +1,181 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - link "Paper to Post 首页" [ref=e4] [cursor=pointer]:
+      - /url: "#"
+      - generic [ref=e5]:
+        - generic [ref=e6]: P
+        - generic [ref=e7]: →
+        - generic [ref=e8]: P
+      - generic [ref=e9]:
+        - strong [ref=e10]: Paper→Post
+        - generic [ref=e11]: AI 论文编辑台
+    - navigation "主导航" [ref=e12]:
+      - button "内容工作台" [ref=e13] [cursor=pointer]
+      - button "审核队列 4" [active] [ref=e15] [cursor=pointer]:
+        - generic [ref=e16]: 审核队列
+        - generic [ref=e17]: "4"
+      - button "发布中心" [ref=e18] [cursor=pointer]
+      - button "运行记录" [ref=e20] [cursor=pointer]
+    - generic [ref=e22]:
+      - generic [ref=e25]:
+        - strong [ref=e26]: 本机引擎
+        - generic [ref=e27]: kimi-k2.5 已配置
+      - button "查看配置状态" [ref=e28] [cursor=pointer]: ⚙
+  - main [ref=e29]:
+    - generic [ref=e30]:
+      - generic [ref=e31]:
+        - strong [ref=e32]: 审核队列
+        - generic [ref=e33]: 逐项核对事实、文案与来源证据
+      - generic [ref=e34]: 数据已同步
+    - region "内容概览" [ref=e36]:
+      - article [ref=e37]:
+        - generic [ref=e38]: 已入库
+        - strong [ref=e39]: "2"
+        - emphasis [ref=e40]: 等待生成
+      - article [ref=e41]:
+        - generic [ref=e42]: 已生成内容
+        - strong [ref=e43]: "4"
+        - emphasis [ref=e44]: 等待审核
+      - article [ref=e45]:
+        - generic [ref=e46]: 已通过审核
+        - strong [ref=e47]: "1"
+        - emphasis [ref=e48]: 可以发布
+      - article [ref=e49]:
+        - generic [ref=e50]: 已发布
+        - strong [ref=e51]: "0"
+        - emphasis [ref=e52]: 确认完成
+    - generic [ref=e69]:
+      - generic [ref=e70]:
+        - generic [ref=e71]:
+          - generic [ref=e72]:
+            - paragraph [ref=e73]: LIBRARY
+            - heading "等待人工审核" [level=2] [ref=e290]
+          - button "刷新论文库" [ref=e75] [cursor=pointer]: ↻
+        - generic [ref=e81]:
+          - button [ref=e291] [cursor=pointer]:
+            - generic [ref=e292]:
+              - generic [ref=e293]: 01 · 2608.05909
+              - generic [ref=e294]: 已生成内容
+            - 'heading "MMAligner: Safeguarding Multimodal Large Language Models through Representation Calibration" [level=3] [ref=e295]'
+            - paragraph [ref=e296]: "Multimodal large language models (MLLMs) often refuse unsafe text prompts yet generate harmful responses to semantically equivalent multimodal inputs. Existing defenses either rely on external guardrails, which add inference overhead without repairing intrinsic flaws, or safety fine-tuning, which treats alignment as black-box optimization and may sacrifice utility or require large multimodal datasets. To identify the cause of this safety disparity, we analyze MLLM representations geometrically. We find that safety mechanisms learned from text persist across modalities: a shared safety subspace and refusal boundary remain effective, and representations inside this boundary consistently trigger refusals. However, unsafe multimodal inputs undergo a representation shift that places most of them outside the boundary, allowing them to bypass the model's intrinsic safety mechanism. This indicates that multimodal safety degradation stems from representation misalignment rather than the absence of safety capability. Based on this finding, we propose MMAligner, a safeguarding method that calibrates unsafe multimodal representations into the pre-existing refusal region. MMAligner applies a hard lower bound to ensure refusal, a soft upper bound to avoid excessive modification, and a preservation objective for benign inputs. Experiments across multiple open-source MLLMs show that MMAligner raises the average refusal rate on unsafe multimodal inputs to 99% with less than 2% utility degradation and minimal training data, substantially improving the safety-utility trade-off over existing baselines. (*Due to the notification from arXiv, \"The Abstract field cannot be longer than 1,920 characters\", the Abstract that appeared is shortened.)"
+            - generic [ref=e297]:
+              - strong [ref=e298]: 多模态安全
+              - generic [ref=e299]: 2026年8月6日
+              - generic [ref=e300]: 内容分 61
+          - button [ref=e301] [cursor=pointer]:
+            - generic [ref=e302]:
+              - generic [ref=e303]: 02 · 2608.05430
+              - generic [ref=e304]: 已生成内容
+            - heading "Robust Context-Aware Detection of Malicious Instructions in Text" [level=3] [ref=e305]
+            - paragraph [ref=e306]: The remarkable instruction-following ability of modern LLMs has enabled their practical use as the minds of agents that can autonomously complete increasingly complex tasks. Therein, however, also lies their vulnerability to attacks which embed malicious instructions in text, common variants of which are known as indirect prompt injection (IPI). A fundamental task in addressing this vulnerability is successful segmentation of a given text into benign and malicious sentences (if any). While a number of approaches for this task have been proposed, no detector combines query-relative detection at the segment level, and none are hardened against adaptive evasion attacks realizable in agentic executions. We address the former limitation by developing an approach for malicious sentence classification that is both context- and query-aware. Next, to harden the resulting classifier against evasion, we present two adversarial training methods. The first is directly adapted feature-space adversarial training (AT) in which evasions are approximated using projected-gradient-based optimization in the embedding space. The second simulates realizable evasion attacks in the AT loop through LLM-based paraphrasing. Crucially, we parametrize both AT variants to facilitate a smooth tradeoff between utility and attack robustness. In extensive experiments using indirect prompt injection benchmarks we show that the proposed approach outperforms state-of-the-art IPI defense baselines under static attacks, while in the case of adaptive attacks, our AT variants provide significantly higher utility, lower attack success rate, and often both. Finally, we show that the best AT parameters can depend intimately on the particular application domain. Consequently, domain-dependent tuning of malicious text detectors is likely necessary in practice. Our code is publicly available at https://github.com/tavia-liu/CAD.
+            - generic [ref=e307]:
+              - strong [ref=e308]: 越狱与提示注入
+              - generic [ref=e309]: 2026年8月6日
+              - generic [ref=e310]: 内容分 60
+          - 'button "03 · demo.00003 已生成内容 Constructed Demo: Region-Grounded Safety Checks for Vision-Language Models This constructed example studies visual jailbreaks in vision-language models. It grounds safety decisions in image regions and text spans before response generation. The synthetic demo reduces attack success from 62% to 19% while retaining 88% benign task accuracy. 多模态安全 2026年7月20日 内容分 56" [ref=e311] [cursor=pointer]':
+            - generic [ref=e312]:
+              - generic [ref=e313]: 03 · demo.00003
+              - generic [ref=e314]: 已生成内容
+            - 'heading "Constructed Demo: Region-Grounded Safety Checks for Vision-Language Models" [level=3] [ref=e315]'
+            - paragraph [ref=e316]: This constructed example studies visual jailbreaks in vision-language models. It grounds safety decisions in image regions and text spans before response generation. The synthetic demo reduces attack success from 62% to 19% while retaining 88% benign task accuracy.
+            - generic [ref=e317]:
+              - strong [ref=e318]: 多模态安全
+              - generic [ref=e319]: 2026年7月20日
+              - generic [ref=e320]: 内容分 56
+          - 'button "04 · demo.00002 已生成内容 Constructed Demo: Canary Queries for Detecting Retrieval Poisoning This constructed example studies retrieval poisoning in RAG systems. It injects controlled canary queries and compares retrieved evidence before generation. The demo reports 83% detection at 4% false alarms in a synthetic benchmark. RAG 与记忆安全 2026年7月28日 内容分 54" [ref=e321] [cursor=pointer]':
+            - generic [ref=e322]:
+              - generic [ref=e323]: 04 · demo.00002
+              - generic [ref=e324]: 已生成内容
+            - 'heading "Constructed Demo: Canary Queries for Detecting Retrieval Poisoning" [level=3] [ref=e325]'
+            - paragraph [ref=e326]: This constructed example studies retrieval poisoning in RAG systems. It injects controlled canary queries and compares retrieved evidence before generation. The demo reports 83% detection at 4% false alarms in a synthetic benchmark.
+            - generic [ref=e327]:
+              - strong [ref=e328]: RAG 与记忆安全
+              - generic [ref=e329]: 2026年7月28日
+              - generic [ref=e330]: 内容分 54
+      - article [ref=e152]:
+        - generic [ref=e331]:
+          - generic [ref=e332]:
+            - generic [ref=e333]:
+              - generic [ref=e334]: "2608.05909"
+              - generic [ref=e335]: 已生成内容
+            - 'heading "MMAligner: Safeguarding Multimodal Large Language Models through Representation Calibration" [level=2] [ref=e336]'
+            - paragraph [ref=e337]: Shenyi Zhang、Keyan Guo 等 8 人
+            - generic [ref=e338]:
+              - generic [ref=e339]: 发表 2026年8月6日
+              - generic [ref=e340]: 内容分 61
+              - generic [ref=e341]: 来源 待核验
+            - generic [ref=e342]:
+              - strong [ref=e343]: 来源尚未核验
+              - generic [ref=e344]: 这不会阻止内容生成或审核，发布前建议补充官方来源。
+              - button "查看来源" [ref=e345] [cursor=pointer]
+            - generic [ref=e346]:
+              - link "查看原文" [ref=e347] [cursor=pointer]:
+                - /url: https://arxiv.org/pdf/2608.05909v1
+              - button "复制小红书文案" [ref=e348] [cursor=pointer]
+              - button "内容已生成" [disabled] [ref=e349]
+          - generic [ref=e350]:
+            - generic [ref=e351]:
+              - strong [ref=e352]: AI 处理过程
+              - generic [ref=e353]: 15 条审计记录 · 每一步均可回溯
+            - generic [ref=e354]:
+              - generic [ref=e355]:
+                - generic [ref=e356]: ✓
+                - strong [ref=e357]: 论文入库
+                - generic [ref=e358]: arXiv 元数据
+              - generic [ref=e359]:
+                - generic [ref=e360]: ✓
+                - strong [ref=e361]: 内容生成
+                - generic [ref=e362]: 正文与配图已完成
+              - generic [ref=e363]:
+                - strong [ref=e365]: 内容审核
+                - generic [ref=e366]: 等待人工确认
+              - generic [ref=e367]:
+                - strong [ref=e369]: 内容发布
+                - generic [ref=e370]: 尚未发布
+          - tablist [ref=e371]:
+            - button "AI 解读" [ref=e372] [cursor=pointer]
+            - button "小红书全文 6" [ref=e373] [cursor=pointer]
+            - button "公众号全文" [ref=e374] [cursor=pointer]
+            - button "证据与记录" [ref=e375] [cursor=pointer]
+          - generic [ref=e376]:
+            - generic [ref=e377]:
+              - paragraph [ref=e378]: PDF FIRST 6 PAGES
+              - heading "发布配图" [level=3] [ref=e379]
+              - paragraph [ref=e380]: 最终发布配图直接采用论文 PDF 的前六页。
+              - generic [ref=e381]:
+                - link "发布配图 1 1" [ref=e382] [cursor=pointer]:
+                  - /url: /api/artifacts/11/xhs-01.png
+                  - img "发布配图 1" [ref=e383]
+                  - generic [ref=e384]: "1"
+                - link "发布配图 2 2" [ref=e385] [cursor=pointer]:
+                  - /url: /api/artifacts/11/xhs-02.png
+                  - img "发布配图 2" [ref=e386]
+                  - generic [ref=e387]: "2"
+                - link "发布配图 3 3" [ref=e388] [cursor=pointer]:
+                  - /url: /api/artifacts/11/xhs-03.png
+                  - img "发布配图 3" [ref=e389]
+                  - generic [ref=e390]: "3"
+                - link "发布配图 4 4" [ref=e391] [cursor=pointer]:
+                  - /url: /api/artifacts/11/xhs-04.png
+                  - img "发布配图 4" [ref=e392]
+                  - generic [ref=e393]: "4"
+                - link "发布配图 5 5" [ref=e394] [cursor=pointer]:
+                  - /url: /api/artifacts/11/xhs-05.png
+                  - img "发布配图 5" [ref=e395]
+                  - generic [ref=e396]: "5"
+                - link "发布配图 6 6" [ref=e397] [cursor=pointer]:
+                  - /url: /api/artifacts/11/xhs-06.png
+                  - img "发布配图 6" [ref=e398]
+                  - generic [ref=e399]: "6"
+            - generic [ref=e400]:
+              - heading "发布文案" [level=3] [ref=e401]
+              - paragraph [ref=e402]: 以下为 AI 生成的完整文案，不折叠、不截断。
+              - generic [ref=e403]:
+                - generic [ref=e404]:
+                  - strong [ref=e405]: 小红书正文
+                  - button "复制全文" [ref=e406] [cursor=pointer]
+                - generic [ref=e407]: "👁️多模态大语言模型(MLLMs)在处理语义等价，怎么守住？ 多模态大语言模型(MLLMs)在处理语义等价的多模态输入时，虽然能拒绝不安全的纯文本提示，但会对多模态输入生成有害响应，存在安全对齐缺陷。现有防御方法要么依赖外部护栏（增加推理开销且无法修复内在缺陷），要么进行安全微调（将安全对齐视为黑盒优化，可能牺牲实用性或需要大量多模态数据集）。 这篇论文用一个可检查的方法回应了这个问题。卡片里的结果均保留原文页码，编辑推演也与作者结论分开。 原文：arXiv 2608.05909 #AISafety #AI安全 #多模态安全 #科研"
+            - generic [ref=e408]:
+              - heading "草稿已准备好" [level=4] [ref=e409]
+              - paragraph [ref=e410]: 完成 6 项人工检查后，批准内容并生成发布包。
+              - button "开始内容审核" [ref=e411] [cursor=pointer]
