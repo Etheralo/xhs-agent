@@ -1,103 +1,160 @@
-# AI Safety 论文内容 Agent
+# Paper→Post：AI Safety 论文内容工作流
 
-这是一个本机运行、人工审核的小红书与微信公众号内容流水线。它从 arXiv
-发现候选论文，严格区分“预印本”与“已核验会议论文”，从同一份可追溯事实底稿
-生成独立的小红书标题、结构化正文、论文 PDF 前六页配图和公众号长文。小红书可选用专用浏览器
-自动填充图片、标题和正文，最终发布按钮始终由用户手动点击。
+Paper→Post 是一个在本机运行、带人工审核的论文内容生成工具。它可以从 arXiv 搜索和导入
+论文，读取 PDF 并生成小红书文案、论文前 6 页配图和微信公众号文章，再由编辑审核、修改
+和发布。
 
-完整设计依据与取舍见 [agent-proposal.md](agent-proposal.md)。
-面向编辑和运营人员的完整操作步骤见 [Paper→Post 使用说明书](docs/USER_GUIDE.md)。
+系统不会把 arXiv 收录自动写成“顶会录用”，也不会代替用户点击小红书最终发布按钮。
 
-## 已实现的闭环
+## 主要功能
+
+- 搜索 arXiv，并按论文发布时间优先展示最新结果；
+- 将论文加入本地 SQLite 论文库，自动去重和筛选相关主题；
+- 下载并按页读取 PDF，生成带页码依据的事实底稿；
+- 生成独立的小红书标题、结构化正文和微信公众号长文；
+- 直接导出真实论文 PDF 的前 6 页作为小红书配图；
+- 流式展示模型读取、事实抽取和正文生成过程；
+- 在网页控制台预览并修改小红书标题、正文和公众号内容；
+- 展示来源核验提醒，但不强制阻塞内容生成；
+- 完成 6 项人工检查后生成带 SHA-256 清单的 ZIP 发布包；
+- 将 6 张图片、标题和正文自动填入小红书创作者平台；
+- 由用户手动点击发布，并在控制台确认最终发布结果。
+
+工作流只保留四个主要步骤：
 
 ```text
-arXiv / 本地样例
-  → SQLite 去重
-  → AI Safety 主题筛选
-  → 来源状态提醒（不阻塞生成）
-  → 结构化评分与选题
-  → PDF 按页抽取 / 事实底稿
-  → 小红书 + 公众号草稿
-  → 自动一致性检查
-  → ready_for_review
-  → 人工 approve
-  → 可导出的发布包 / 小红书浏览器自动填充
+论文入库 → 内容生成 → 内容审核 → 内容发布
 ```
 
-页面只展示四个业务状态：
+页面对应四种业务状态：
 
 ```text
 已入库 → 已生成内容 → 已通过审核 → 已发布
 ```
 
-不符合选题范围的论文会直接删除，不保留“已拒绝”记录。系统内部仍保留细分处理节点，
-用于断点续跑和任务诊断，但不会作为页面状态展示。
+不符合选题范围的论文会直接删除，不保留“已拒绝”记录。已通过审核的内容如果再次修改，
+旧审核会自动撤销，需要重新审核后才能发布。
 
-`approve` 之前不能导出。浏览器自动填充也必须经过同一组人工审核，不能跳过审核门。
+## 环境要求
 
-## 1. 安装
+- Python 3.11 或更高版本；
+- `uv` Python 包管理工具；
+- 真实论文搜索、PDF 下载和模型调用需要互联网；
+- 小红书自动填充需要 Chrome。
 
-需要 Python 3.11 或更高版本。推荐使用 `uv`：
+不需要 GPU、向量数据库、消息队列或云服务器。
+
+## 快速安装
 
 ```bash
+git clone https://github.com/Etheralo/xhs-agent.git
+cd xhs-agent
 uv sync --dev
 cp .env.example .env
 ```
 
-真实运行请填写 OpenAI-compatible 模型配置。可使用 OpenAI，也可使用任何提供兼容
-`chat/completions` 接口的模型服务。缺少模型密钥时，程序仍能做规则分类和
-保守底稿，但不会猜测 PDF 中没有明确提取出的结果。OpenAlex key 用于辅助会议
-匹配；OpenAlex 只能产生 `matched_secondary`，不能单独证明论文已被会议录用。
+打开 `.env`，填写模型配置：
 
-## 2. 先跑离线验收
-
-仓库内置 3 篇明确标注为 constructed demo 的构造论文，只用来证明工程闭环，
-其中的题目、作者、会议和数字都不能作为真实研究内容发布。
-
-```bash
-uv run xhs-agent run --demo --select-count 3
-uv run xhs-agent review
+```dotenv
+OPENAI_API_KEY=你的模型密钥
+OPENAI_BASE_URL=https://api.openai.com/v1
+OPENAI_MODEL=你的模型名称
 ```
 
-每篇会在 `output/<日期>/<paper>/` 生成：
+`OPENAI_*` 表示接口协议，不限定模型厂商。程序可以连接 OpenAI，也可以连接任何兼容
+OpenAI `chat/completions` 接口的模型服务。`.env` 只保存在本机，不要提交真实密钥。
 
-```text
-source.json
-facts.json
-validation.json
-xhs-slides.json
-xhs-title.txt
-xhs-caption.md
-publication-images.json
-xhs-01.png ... xhs-06.png
-wechat.md
-wechat.html
+可选的模型参数：
+
+```dotenv
+LLM_STREAM=true
+LLM_JSON_MODE=true
+LLM_DISABLE_THINKING=true
+LLM_READ_TIMEOUT_SECONDS=600
+LLM_MAX_INPUT_CHARS=55000
+LLM_MAX_COMPLETION_TOKENS=4096
 ```
 
-重复运行相同样例时，SQLite 会记录 `duplicate_skipped`，不会生成第二份候选。
-
-## 3. 启动可视化控制台
+## 启动网页控制台
 
 ```bash
 uv run xhs-agent serve
 ```
 
-浏览器打开 `http://127.0.0.1:8765`。控制台直接使用同一套 SQLite、流水线和
-人工审核状态机，支持：
+浏览器访问 <http://127.0.0.1:8765>。
 
-- 搜索 arXiv，选择并加入候选论文；
-- 扫描最近论文或运行离线示例；
-- 为单篇真实论文直接导出 PDF 前 6 页作为小红书配图，并生成公众号长文；
-- 预览发布配图、文案、事实底稿、校验结果及操作记录；
-- 在人工审核前直接修改小红书标题、正文和公众号全文，保存后的版本会进入发布包；
-- 按需补充会议官网证据；未核验时仅提醒，不阻塞内容生成；
-- 完成 6 项人工审核后，一键批准并下载发布包，或自动填充到小红书发布页；
-- 人工发到平台后确认发布状态。
-
-控制台默认只监听本机地址，不包含自己的账号系统。默认发布模式仍是 `manual`；没有
-连接器时由编辑下载后手工发布。要启用本机浏览器自动填充，在 `.env` 配置：
+如果端口已被占用，可以指定其他端口：
 
 ```bash
+uv run xhs-agent serve --port 9000
+```
+
+控制台默认只监听本机地址，不提供独立的用户账号系统。
+
+## 使用流程
+
+### 1. 论文入库
+
+进入“内容工作台”，输入研究主题或关键词搜索 arXiv。选择目标论文并加入论文库，也可以
+扫描近期相关论文。
+
+### 2. 内容生成
+
+打开论文详情并点击“生成内容”。系统会读取 PDF、抽取事实、生成小红书内容和公众号文章，
+并导出 PDF 前 6 页。生成过程和模型输出会在页面中逐步展示。
+
+### 3. 内容审核
+
+检查以下内容：
+
+- 小红书标题和正文；
+- 6 张论文页面配图；
+- 微信公众号文章；
+- 事实底稿、核心数字和对应页码；
+- 来源核验提醒及操作记录。
+
+标题、正文和公众号文章可以直接在网页中修改。确认内容后点击“开始内容审核”，完成全部
+6 项检查并填写审核人姓名，即可批准内容并生成发布包。
+
+### 4. 内容发布
+
+审核通过后可以：
+
+- 下载 ZIP 发布包并手工发布；
+- 把图片、标题和正文自动填充到小红书创作者平台；
+- 通过自有 webhook 连接器接收发布包。
+
+平台发布完成后，回到控制台确认结果，论文状态才会更新为“已发布”。
+
+## 离线示例
+
+仓库内置 3 篇构造论文，可用于检查本地工作流，不需要模型密钥：
+
+```bash
+uv run xhs-agent run --demo --select-count 1
+uv run xhs-agent serve
+```
+
+构造论文只用于功能测试，不能作为真实研究内容发布。
+
+生成文件位于 `output/<日期>/<paper>/`，主要包括：
+
+```text
+facts.json
+validation.json
+xhs-title.txt
+xhs-caption.md
+xhs-01.png ... xhs-06.png
+wechat.md
+wechat.html
+publication-images.json
+```
+
+## 小红书自动填充
+
+在 `.env` 中启用浏览器模式：
+
+```dotenv
 XHS_PUBLISH_MODE=browser
 XHS_CREATOR_URL=https://creator.xiaohongshu.com/publish/publish?source=official
 XHS_BROWSER_CHANNEL=chrome
@@ -105,123 +162,62 @@ XHS_BROWSER_HEADLESS=false
 XHS_PUBLISH_TIMEOUT_SECONDS=180
 ```
 
-首次使用或登录失效后，运行：
+首次使用需要安装浏览器组件并登录：
 
 ```bash
-uv sync --dev
 uv run playwright install chrome
 uv run xhs-agent xhs-login
 ```
 
-程序会打开只供本项目使用的 Chrome 配置目录。完成短信登录并进入发布页后，回到终端
-按 Enter 保存登录态。此后在控制台完成内容审核并选择“小红书”，后台任务会上传 6 张
-图片、填写标题和完整正文，然后停止自动化操作并保留浏览器页面。程序不会寻找或点击
-“发布”按钮。编辑核对内容后在小红书页面手动点击发布，再回控制台点击“我已手动发布”；
-此时论文才会被标记为“已发布”。
+在项目专用 Chrome 中完成短信登录，进入发布页面后回到终端按 Enter。此后从控制台填充
+内容时，程序会上传 6 张图片并填写标题和正文，然后停止操作并保留浏览器页面。
 
-小红书标题和正文分开保存。标题按“会议简写：核心总结”生成，核心总结最多 15 字，
-完整标题最多 20 字；正文固定包含“论文题目、会议来源、研究摘要、研究背景、核心创新、
-实验结果”六部分，生成目标控制在 900 字内，网页编辑保存时硬性限制为 1000 字。
+请人工检查内容、处理验证码或风险提示、点击“发布”，再回控制台点击“我已手动发布”。
+程序不会绕过登录、验证码、风控或平台审核。
 
-如已有自己的发布服务，也可以改用 webhook 模式：
+## 常用命令
 
 ```bash
-XHS_PUBLISH_MODE=webhook
-XHS_PUBLISH_WEBHOOK_URL=https://your-publisher.example/xhs
-WECHAT_PUBLISH_WEBHOOK_URL=https://your-publisher.example/wechat
-PUBLISH_WEBHOOK_TOKEN=your-private-token
-```
-
-连接器接收 `multipart/form-data`：`metadata` 是 JSON，`package` 是经过人工审核并带
-SHA-256 清单的 ZIP。连接器返回 JSON `status` 可取 `delivered`、`submitted` 或
-`published`；所选渠道全部返回 `published` 时，控制台会自动把论文记为已发布。
-密钥仅在本机后端读取，不会传给浏览器。浏览器模式依赖创作者平台当前页面结构，平台
-改版后可能需要更新定位规则；短信验证、验证码和风险提示不会被程序绕过。可修改控制台端口：
-
-```bash
-uv run xhs-agent serve --port 9000
-```
-
-## 4. 真实运行
-
-```bash
-uv run xhs-agent run
-```
-
-来源核验不再是内容生成的硬门槛。未核验论文会继续生成，但页面和发布审核弹窗会提醒
-编辑核对。自动从 OpenAlex 匹配到的来源不会被当成已核验录用；如需补充证据，可从会议
-官方 accepted papers / proceedings 页面核对后，在
-`config/venue_overrides.yaml` 添加覆盖：
-
-```yaml
-"2608.01234":
-  venue: USENIX Security Symposium
-  venue_code: usenix_security
-  status: verified
-  evidence_url: https://www.usenix.org/conference/usenixsecurity26/presentation/example
-```
-
-再运行时，新论文可通过门槛。已经被拒绝的历史候选不会被程序暗中改回；这保留了
-审计记录。如需重新处理，应使用新的数据库或由编辑明确迁移记录，而不是删除审核历史。
-
-## 5. 人工审核与导出
-
-先阅读 `validation.json`，然后逐项核对：
-
-1. 论文是否值得发布；
-2. 会议证据是否来自可信官方页面；
-3. 问题和方法是否讲反；
-4. 每个结果能否在标注 PDF 页码找到；
-5. 通俗例子是否误导；
-6. “作者展望”和“编辑推演”是否明确分开；
-7. 6 张发布配图是否清晰可读（真实论文为 PDF 前六页）。
-
-审核通过后使用数据库 ID 或 arXiv ID：
-
-```bash
-uv run xhs-agent approve demo.00001 --reviewer "编辑姓名"
-uv run xhs-agent export demo.00001
-```
-
-`approve` 会生成带 SHA-256 文件摘要的 `FINAL-APPROVED.json`；`export` 仅接受
-已有该清单且数据库状态为 `approved` 的内容。手工发到两个平台后可记录：
-
-```bash
-uv run xhs-agent mark-published demo.00001
-```
-
-## 6. 常用命令
-
-```bash
+# 初始化数据库
 uv run xhs-agent init-db
+
+# 扫描并处理真实论文
+uv run xhs-agent run
+
+# 查看论文和审核队列
 uv run xhs-agent list
-uv run xhs-agent list --status ready_for_review
 uv run xhs-agent review
 uv run xhs-agent show 1
+
+# 启动控制台
 uv run xhs-agent serve
-uv run pytest
+
+# 命令行审核、导出和确认发布
+uv run xhs-agent approve 1 --reviewer "编辑姓名"
+uv run xhs-agent export 1
+uv run xhs-agent mark-published 1
 ```
 
-可用环境变量：
+## 数据和安全
 
-- `OPENAI_API_KEY`、`OPENAI_BASE_URL`、`OPENAI_MODEL`；
-- `LLM_STREAM`、`LLM_JSON_MODE`、`LLM_DISABLE_THINKING`；
-- `LLM_READ_TIMEOUT_SECONDS`、`LLM_MAX_INPUT_CHARS`、`LLM_MAX_COMPLETION_TOKENS`；
-- `OPENALEX_API_KEY`；
-- `XHS_PUBLISH_MODE`、`XHS_CREATOR_URL`、`XHS_BROWSER_PROFILE_DIR`；
-- `XHS_BROWSER_CHANNEL`、`XHS_BROWSER_HEADLESS`；
-- `XHS_PUBLISH_TIMEOUT_SECONDS`；
-- `XHS_AGENT_DATA_DIR`、`XHS_AGENT_OUTPUT_DIR`，用于隔离测试或部署数据。
+- `data/agent.sqlite3` 保存论文、草稿和业务状态；
+- `data/cache/` 保存下载的论文 PDF；
+- `data/xhs-browser-profile/` 保存项目专用 Chrome 登录状态；
+- `output/` 保存正文、配图和发布包；
+- `.env` 保存 API 密钥和本机配置。
 
-所有密钥只从环境变量读取，`data/`、`output/` 和 `.env` 默认被 Git 忽略。
+上述目录和 `.env` 默认不会提交到 Git。不要公开 API 密钥、浏览器登录目录或包含未发布
+内容的发布包。
 
-## 7. 当前边界
+## 当前边界
 
-- 小红书浏览器模式只填充内容，不点击发布，也不绕过首次登录、验证码、风险控制或平台审核；公众号仍需手工发布或 webhook；
-- 不把 arXiv 分类、作者备注或 OpenAlex 二手匹配写成“顶会录用”；
-- 不自动把失败草稿推进到待审状态；
-- 不需要 GPU、向量数据库、消息队列、多 Agent 或云服务器；
-- 真实内容仍需人工逐项核对原文；会议证据是建议核对项，不阻塞审核。
+- 小红书模式只填充内容，不自动点击发布；
+- 微信公众号默认使用 HTML 或 ZIP 手工发布，也可连接自有 webhook；
+- 来源未核验只做提醒，但真实发布前应人工核对正式来源；
+- 模型输出和论文解读必须经过人工审核；
+- 小红书页面改版后，自动填充定位规则可能需要更新。
 
-当连续人工发布 2–4 周并确认内容价值后，再考虑定时服务器、飞书通知、公众号草稿
-接口或审核网页。第一阶段的目标是来源可信、事实可追溯、表达清楚，而不是无人值守。
+## 使用文档
+
+- [简易使用说明](docs/QUICK_START.md)
+- [完整使用说明书](docs/USER_GUIDE.md)
