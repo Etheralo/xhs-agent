@@ -27,6 +27,7 @@ def write_draft_artifacts(
     write_json(target / "source.json", source)
     write_json(target / "facts.json", facts.to_dict())
     write_json(target / "xhs-slides.json", content.slides)
+    (target / "xhs-title.txt").write_text(content.xhs_title + "\n", encoding="utf-8")
     (target / "xhs-caption.md").write_text(content.caption + "\n", encoding="utf-8")
     (target / "wechat.md").write_text(content.wechat_markdown + "\n", encoding="utf-8")
     (target / "wechat.html").write_text(content.wechat_html, encoding="utf-8")
@@ -66,7 +67,7 @@ def create_approval_manifest(target: Path, *, reviewer: str) -> Path:
     if not publication_images:
         raise ValueError("Cannot approve incomplete package: publication images")
     required = [
-        "source.json", "facts.json", "validation.json", "xhs-caption.md",
+        "source.json", "facts.json", "validation.json", "xhs-title.txt", "xhs-caption.md",
         "wechat.md", "wechat.html", *publication_images,
     ]
     if (target / "publication-images.json").is_file():
@@ -87,6 +88,16 @@ def create_approval_manifest(target: Path, *, reviewer: str) -> Path:
     path = target / "FINAL-APPROVED.json"
     write_json(path, manifest)
     return path
+
+
+def invalidate_approval(target: Path) -> None:
+    """Remove approval-derived files after their source copy changes."""
+    manifest = target / "FINAL-APPROVED.json"
+    if manifest.is_file():
+        manifest.unlink()
+    for output in target.glob("*-approved.zip"):
+        if output.is_file():
+            output.unlink()
 
 
 def export_zip(target: Path) -> Path:

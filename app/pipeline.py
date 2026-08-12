@@ -57,10 +57,11 @@ class Pipeline:
                     detail=json.dumps(safe_detail, ensure_ascii=False),
                 )
             elif event == "chunk":
+                preview = detail.get("preview") if operation == "小红书内容生成" else None
                 notify(
-                    "model",
+                    "writing" if preview else "model",
                     f"正在接收模型响应 · {detail.get('received_chars', 0):,} 字符",
-                    None,
+                    str(preview) if preview else None,
                 )
             elif event == "completed":
                 notify(
@@ -121,9 +122,16 @@ class Pipeline:
             self.storage.transition(paper_id, "extracted", run_id=run_id)
 
         current = str(self.storage.get_paper(paper_id)["status"])
-        notify("writing", "正在生成双渠道正文", "")
-        content = generate_content(paper, facts, self.settings)
-        notify("writing", "双渠道正文已生成", content.caption)
+        notify("writing", "正在生成小红书标题与结构化正文", "")
+        content = generate_content(
+            paper,
+            facts,
+            self.settings,
+            on_event=self._model_event_callback(
+                paper_id, run_id, notify, "小红书内容生成"
+            ),
+        )
+        notify("writing", "小红书标题与正文已生成", f"{content.xhs_title}\n\n{content.caption}")
         if current == "extracted":
             self.storage.transition(paper_id, "drafted", run_id=run_id)
 
@@ -156,7 +164,13 @@ class Pipeline:
         )
         write_json(target / "validation.json", report.to_dict())
         self.storage.save_draft(
-            paper_id, "xhs", {"title": content.title, "slides": content.slides},
+            paper_id,
+            "xhs",
+            {
+                "title": content.xhs_title,
+                "body": content.caption,
+                "slides": content.slides,
+            },
             target, "passed" if report.passed else "failed",
         )
         self.storage.save_draft(

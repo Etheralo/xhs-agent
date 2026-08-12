@@ -1,12 +1,40 @@
 from __future__ import annotations
 
+import json
 import re
 from pathlib import Path
+from typing import Any
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from .config import Settings
+from .llm import LLMEventCallback, chat_json
 from .models import ContentBundle, FactSheet, Paper
+
+
+XHS_TITLE_MAX_CHARS = 20
+XHS_TITLE_SUMMARY_MAX_CHARS = 15
+XHS_BODY_MAX_CHARS = 1000
+XHS_BODY_GENERATION_TARGET = 900
+XHS_SECTION_LABELS = (
+    "论文题目",
+    "会议来源",
+    "研究摘要",
+    "研究背景",
+    "核心创新",
+    "实验结果",
+)
+
+
+def xhs_title_is_valid(value: str) -> bool:
+    if not value or "\n" in value or len(value) > XHS_TITLE_MAX_CHARS:
+        return False
+    parts = value.split("：", 1)
+    return (
+        len(parts) == 2
+        and bool(parts[0].strip())
+        and 1 <= len(parts[1].strip()) <= XHS_TITLE_SUMMARY_MAX_CHARS
+    )
 
 
 EMOJI = {
@@ -43,17 +71,236 @@ def _result_lines(facts: FactSheet) -> list[str]:
     return lines
 
 
-def _title(paper: Paper, facts: FactSheet) -> str:
-    emoji = EMOJI.get(paper.topic or "", "🧭")
-    problem = str(facts.problem.get("plain_cn") or "AI 系统的安全边界")
-    short = re.split(r"[。！？!?；;]", problem)[0].strip()
-    if len(short) > 22:
-        short = short[:22]
-    return f"{emoji}{short}，怎么守住？"
+def _clean_prose(value: Any) -> str:
+    text = str(value or "").replace("\r", "\n")
+    lines = [re.sub(r"\s+", " ", line).strip() for line in text.splitlines()]
+    return " ".join(line for line in lines if line).strip()
 
 
-def generate_content(paper: Paper, facts: FactSheet, settings: Settings) -> ContentBundle:
-    title = _title(paper, facts)
+def _truncate(value: str, limit: int) -> str:
+    value = _clean_prose(value)
+    if len(value) <= limit:
+        return value
+    return value[: max(1, limit - 1)].rstrip("，,；;：:。.!！?？ ") + "…"
+
+
+def _venue_abbreviation(paper: Paper) -> str:
+    known = {
+        "ieee_sp": "S&P",
+        "usenix_security": "USENIX",
+        "acm_ccs": "CCS",
+        "ndss": "NDSS",
+        "neurips": "NeurIPS",
+        "icml": "ICML",
+        "iclr": "ICLR",
+        "aaai": "AAAI",
+        "ijcai": "IJCAI",
+        "acl": "ACL",
+        "emnlp": "EMNLP",
+        "cvpr": "CVPR",
+        "iccv": "ICCV",
+        "eccv": "ECCV",
+    }
+    if paper.venue_code in known:
+        return known[str(paper.venue_code)]
+    venue = _clean_prose(paper.venue)
+    if paper.venue_status == "verified" and venue:
+        tokens = re.findall(r"[A-Z][A-Z0-9&-]{1,8}", venue)
+        if tokens:
+            return tokens[0]
+        initials = "".join(
+            item[0] for item in re.findall(r"[A-Za-z]+", venue)
+            if item.lower() not in {"on", "of", "and", "the"}
+        ).upper()
+        if initials:
+            return initials[:6]
+    return "ARXIV"
+
+
+def _title_summary(facts: FactSheet) -> str:
+    problem = _clean_prose(facts.problem.get("plain_cn") or "AI系统安全边界")
+    short = re.split(r"[。！？!?；;，,：:]", problem)[0].strip()
+    short = re.sub(r"[^0-9A-Za-z\u4e00-\u9fff]+", "", short)
+    return short[:XHS_TITLE_SUMMARY_MAX_CHARS] or "AI系统安全边界"
+
+
+def _xhs_title(paper: Paper, summary: str) -> str:
+    venue = _venue_abbreviation(paper)
+    clean_summary = re.sub(
+        r"[^0-9A-Za-z\u4e00-\u9fff]+", "", _clean_prose(summary)
+    )[:XHS_TITLE_SUMMARY_MAX_CHARS]
+    if not clean_summary:
+        clean_summary = _title_summary(FactSheet({}, {}, {}, [], [], [], []))
+    available = XHS_TITLE_MAX_CHARS - len(venue) - 1
+    if available < 6:
+        venue = venue[: max(2, XHS_TITLE_MAX_CHARS - 7)]
+        available = XHS_TITLE_MAX_CHARS - len(venue) - 1
+    title = f"{venue}：{clean_summary[:available]}"
+    if not xhs_title_is_valid(title):
+        raise ValueError("生成的小红书标题不符合“会议简写：15字总结”格式。")
+    return title
+
+
+def _venue_line(paper: Paper) -> str:
+    if paper.venue_status == "verified" and paper.venue:
+        return _clean_prose(paper.venue)
+    if paper.is_demo and paper.venue:
+        return f"{_clean_prose(paper.venue)}（演示数据）"
+    return "会议待核验（当前仅确认 arXiv 预印本）"
+
+
+def _result_summary(facts: FactSheet) -> str:
+    if not facts.results:
+        return "论文事实底稿未提取到可公开强调的量化结果，发布前需回到实验章节核对。"
+    lines: list[str] = []
+    for item in facts.results[:3]:
+        claim = _clean_prose(item.claim).rstrip("，,；;。.!！?？ ")
+        value = f"，结果为{_clean_prose(item.value)}" if item.value else ""
+        baseline = f"，对照为{_clean_prose(item.baseline)}" if item.baseline else ""
+        pages = f"（PDF第{'、'.join(map(str, item.source_pages))}页）" if item.source_pages else ""
+        lines.append(f"{claim}{value}{baseline}{pages}")
+    return "；".join(lines) + "。"
+
+
+def _local_xhs_sections(facts: FactSheet) -> dict[str, str]:
+    problem = _clean_prose(
+        facts.problem.get("plain_cn") or "原文未给出可确认的问题描述。"
+    )
+    method = _clean_prose(
+        facts.method.get("one_sentence")
+        or facts.method.get("plain_cn")
+        or "原文方法仍需人工核对。"
+    )
+    example = _clean_prose(facts.method.get("plain_example"))
+    background = problem
+    if example:
+        background = f"{problem}直观地说，{example}"
+    return {
+        "title_summary": _title_summary(facts),
+        "research_summary": f"这项研究围绕上述安全问题提出可检查的方法，并用论文实验评估其效果与适用边界。",
+        "research_background": background,
+        "core_innovation": method,
+    }
+
+
+def _readable_xhs_stream(raw_preview: str) -> str:
+    labels = {
+        "title_summary": "标题总结",
+        "research_summary": "研究摘要",
+        "research_background": "研究背景",
+        "core_innovation": "核心创新",
+    }
+    parts: list[str] = []
+    for key, label in labels.items():
+        match = re.search(
+            rf'"{key}"\s*:\s*"((?:\\.|[^"\\])*)', raw_preview, re.S
+        )
+        if not match:
+            continue
+        encoded = match.group(1)
+        try:
+            value = json.loads(f'"{encoded}"')
+        except json.JSONDecodeError:
+            value = encoded.replace('\\n', "\n").replace('\\"', '"')
+        value = _clean_prose(value)
+        if value:
+            parts.append(f"{label}\n{value}")
+    return "\n\n".join(parts)
+
+
+def _llm_xhs_sections(
+    paper: Paper,
+    facts: FactSheet,
+    settings: Settings,
+    on_event: LLMEventCallback | None,
+) -> dict[str, str]:
+    fallback = _local_xhs_sections(facts)
+    fact_json = {
+        "problem": facts.problem,
+        "method": facts.method,
+        "results": [item.to_dict() for item in facts.results],
+        "uncertainties": facts.uncertainties,
+    }
+    prompt = f"""你是严谨的中文科技编辑。根据给定论文元数据和事实底稿，为小红书图文笔记撰写高信息密度、通俗但不夸张的内容。只返回 JSON 对象。
+
+字段要求：
+1. title_summary：12至15个字的中文核心总结，不含会议名、冒号、emoji、书名号或句末标点。
+2. research_summary：60至100字，说明研究做了什么、解决什么，不重复论文题目。
+3. research_background：80至140字，解释真实问题、已有困难和研究必要性。
+4. core_innovation：80至160字，清楚说明方法机制、关键步骤和区别，不能只写“提出新框架”。
+
+事实约束：只能改写事实底稿；不得补充底稿之外的数据、基线、会议录用信息或因果结论。不确定信息明确保守表达。语言自然连贯，避免“一字一行”、营销口号和空泛评价。
+
+论文题目：{paper.title}
+会议来源：{_venue_line(paper)}
+事实底稿：{fact_json}
+"""
+    def readable_event(event: str, detail: dict[str, Any]) -> None:
+        if on_event is None:
+            return
+        if event == "chunk" and detail.get("preview"):
+            preview = _readable_xhs_stream(str(detail["preview"]))
+            detail = {**detail, "preview": preview or "正在组织小红书正文…"}
+        on_event(event, detail)
+
+    raw = chat_json(
+        settings, prompt, on_event=readable_event if on_event is not None else None
+    )
+    return {
+        key: _clean_prose(raw.get(key)) or fallback[key]
+        for key in fallback
+    }
+
+
+def _format_xhs_body(paper: Paper, sections: dict[str, str], facts: FactSheet) -> str:
+    values = {
+        "论文题目": _truncate(paper.title, 150),
+        "会议来源": _truncate(_venue_line(paper), 70),
+        "研究摘要": _truncate(sections["research_summary"], 130),
+        "研究背景": _truncate(sections["research_background"], 170),
+        "核心创新": _truncate(sections["core_innovation"], 190),
+        "实验结果": _truncate(_result_summary(facts), 210),
+    }
+
+    def render() -> str:
+        return "\n\n".join(f"{label}\n{values[label]}" for label in XHS_SECTION_LABELS)
+
+    body = render()
+    while len(body) > XHS_BODY_GENERATION_TARGET:
+        label = max(values, key=lambda item: len(values[item]))
+        current = values[label]
+        if len(current) <= 24:
+            break
+        values[label] = _truncate(current, len(current) - min(20, len(body) - XHS_BODY_GENERATION_TARGET))
+        body = render()
+    if len(body) > XHS_BODY_MAX_CHARS:
+        raise ValueError("生成的小红书正文超过平台字数限制。")
+    return body
+
+
+def render_wechat_html(settings: Settings, title: str, markdown: str) -> str:
+    env = Environment(
+        loader=FileSystemLoader(settings.root / "templates"),
+        autoescape=select_autoescape(["html", "xml"]),
+    )
+    return env.get_template("wechat/article.html.j2").render(
+        title=title,
+        markdown=markdown,
+        paragraphs=[line for line in markdown.splitlines() if line.strip()],
+    )
+
+
+def generate_content(
+    paper: Paper,
+    facts: FactSheet,
+    settings: Settings,
+    *,
+    on_event: LLMEventCallback | None = None,
+) -> ContentBundle:
+    sections = _local_xhs_sections(facts)
+    if settings.llm_api_key and not paper.is_demo and on_event is not None:
+        sections = _llm_xhs_sections(paper, facts, settings, on_event)
+    title = _xhs_title(paper, sections["title_summary"])
     problem = str(facts.problem.get("plain_cn") or "原文未给出可确认的问题描述。")
     method = str(
         facts.method.get("one_sentence")
@@ -64,7 +311,7 @@ def generate_content(paper: Paper, facts: FactSheet, settings: Settings) -> Cont
     results = _result_lines(facts)
     author_future = "；".join(facts.authors_future_work) or "作者没有在底稿中明确给出未来工作。"
     editorial = "；".join(facts.editorial_extension) or "我们认为可继续验证真实部署边界。"
-    venue_line = paper.venue if paper.venue_status == "verified" else "发表状态待人工核验"
+    venue_line = _venue_line(paper)
     slides = [
         {"eyebrow": f"{paper.topic_label or 'AI Safety'} · {venue_line}", "title": title,
          "body": f"一篇论文，讲清问题、方法与可核对证据\n{paper.title}"},
@@ -137,17 +384,13 @@ def generate_content(paper: Paper, facts: FactSheet, settings: Settings) -> Cont
 
 如果你希望继续看这类“有证据、能落地”的 AI Safety 论文解读，可以收藏本文；发布前请以原论文和会议官方页面为准。
 """
-    env = Environment(
-        loader=FileSystemLoader(settings.root / "templates"),
-        autoescape=select_autoescape(["html", "xml"]),
-    )
-    html = env.get_template("wechat/article.html.j2").render(
+    html = render_wechat_html(settings, title, wechat)
+    caption = _format_xhs_body(paper, sections, facts)
+    return ContentBundle(
         title=title,
-        markdown=wechat,
-        paragraphs=[line for line in wechat.splitlines() if line.strip()],
+        caption=caption,
+        slides=slides,
+        wechat_markdown=wechat,
+        wechat_html=html,
+        xhs_title=title,
     )
-    hashtags = " ".join(
-        ["#AISafety", "#AI安全", f"#{paper.topic_label or '论文解读'}", "#科研"]
-    )
-    caption = f"{title}\n\n{problem}\n\n这篇论文用一个可检查的方法回应了这个问题。卡片里的结果均保留原文页码，编辑推演也与作者结论分开。\n\n原文：arXiv {paper.arxiv_id}\n{hashtags}"
-    return ContentBundle(title, caption, slides, wechat, html)

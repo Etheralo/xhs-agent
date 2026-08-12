@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from .config import Settings
+from .generate import XHS_BODY_MAX_CHARS, XHS_SECTION_LABELS, xhs_title_is_valid
 from .models import ContentBundle, FactSheet, Paper
 
 
@@ -64,12 +65,40 @@ def validate_bundle(
     if not checks["six_cards"]:
         errors.append(f"小红书卡片应为 {settings.xhs_slide_count} 张。")
 
-    checks["channel_identity_consistent"] = all(
-        token in content.wechat_markdown and token in content.caption
-        for token in (paper.arxiv_id, content.title)
+    xhs_title = content.xhs_title or content.title
+    structured_xhs = bool(content.xhs_title)
+    checks["channel_identity_consistent"] = (
+        paper.title in content.wechat_markdown and paper.title in content.caption
+        if structured_xhs
+        else all(
+            token in content.wechat_markdown and token in content.caption
+            for token in (paper.arxiv_id, content.title)
+        )
     )
     if not checks["channel_identity_consistent"]:
         errors.append("小红书与公众号的标题或 arXiv ID 不一致。")
+
+    checks["xhs_title_within_limit"] = (
+        xhs_title_is_valid(xhs_title)
+        if structured_xhs
+        else bool(xhs_title.strip()) and "\n" not in xhs_title and len(xhs_title) <= 20
+    )
+    if not checks["xhs_title_within_limit"]:
+        errors.append("小红书标题必须采用“会议简写：15字内总结”格式，且总长不超过 20 字。")
+
+    checks["xhs_body_within_limit"] = (
+        bool(content.caption.strip()) and len(content.caption) <= XHS_BODY_MAX_CHARS
+    )
+    if not checks["xhs_body_within_limit"]:
+        errors.append(f"小红书正文必须在 {XHS_BODY_MAX_CHARS} 字以内。")
+
+    checks["xhs_sections_complete"] = (
+        all(label in content.caption for label in XHS_SECTION_LABELS)
+        if structured_xhs
+        else True
+    )
+    if not checks["xhs_sections_complete"]:
+        errors.append("小红书正文缺少规定的论文解读部分。")
 
     checks["editorial_boundary_labeled"] = (
         "编辑推演" in content.wechat_markdown

@@ -25,6 +25,7 @@ ALLOWED_TRANSITIONS = {
     current: {STATUS_ORDER[index + 1]}
     for index, current in enumerate(STATUS_ORDER[:-1])
 }
+ALLOWED_TRANSITIONS["approved"].add("ready_for_review")
 ALLOWED_TRANSITIONS.update({"published": set()})
 
 
@@ -365,6 +366,18 @@ class Storage:
                 ),
             )
 
+    def update_draft_content(
+        self, paper_id: int, channel: str, content: dict[str, Any]
+    ) -> None:
+        with self.connect() as db:
+            cursor = db.execute(
+                """UPDATE drafts SET content_json=?, prompt_version='v2-edited'
+                   WHERE paper_id=? AND channel=?""",
+                (json.dumps(content, ensure_ascii=False), paper_id, channel),
+            )
+            if cursor.rowcount != 1:
+                raise KeyError(f"Missing {channel} draft for paper {paper_id}")
+
     def approve(self, paper_id: int) -> None:
         paper = self.get_paper(paper_id)
         if not paper or paper["status"] != "ready_for_review":
@@ -376,6 +389,21 @@ class Storage:
                 "UPDATE drafts SET approved_at=? WHERE paper_id=?",
                 (now_iso(), paper_id),
             )
+
+    def reopen_for_review(self, paper_id: int) -> None:
+        """Invalidate an approval after an editor changes approved copy."""
+        paper = self.get_paper(paper_id)
+        if not paper or paper["status"] != "approved":
+            actual = paper["status"] if paper else "missing"
+            raise ValueError(f"Paper must be approved, got {actual}")
+        self.transition(
+            paper_id,
+            "ready_for_review",
+            detail="approved copy edited; human review required again",
+        )
+        with self.connect() as db:
+            db.execute("UPDATE drafts SET approved_at=NULL WHERE paper_id=?", (paper_id,))
+            db.execute("DELETE FROM publications WHERE paper_id=?", (paper_id,))
 
     def log_event(
         self, event: str, *, paper_id: int | None = None,

@@ -155,14 +155,22 @@ def _stream_content(
             _emit(
                 callback,
                 "chunk",
-                {**_public_diagnostics(diagnostics), "received_chars": received_chars},
+                {
+                    **_public_diagnostics(diagnostics),
+                    "received_chars": received_chars,
+                    "preview": "".join(parts)[-4000:],
+                },
             )
     content = "".join(parts)
     if content and len(content) != last_notified_chars:
         _emit(
             callback,
             "chunk",
-            {**_public_diagnostics(diagnostics), "received_chars": len(content)},
+            {
+                **_public_diagnostics(diagnostics),
+                "received_chars": len(content),
+                "preview": content[-4000:],
+            },
         )
     return content, finish_reason, usage
 

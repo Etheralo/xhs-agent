@@ -48,6 +48,22 @@ def split_xhs_copy(caption: str, fallback_title: str) -> tuple[str, str]:
     return title, body
 
 
+def load_xhs_copy(artifact_dir: Path, fallback_title: str) -> tuple[str, str]:
+    """Load separate title/body artifacts, with support for legacy captions."""
+    caption_path = artifact_dir / "xhs-caption.md"
+    if not caption_path.is_file():
+        raise ValueError("内容包缺少 xhs-caption.md。")
+    caption = caption_path.read_text(encoding="utf-8")
+    title_path = artifact_dir / "xhs-title.txt"
+    if title_path.is_file():
+        title = title_path.read_text(encoding="utf-8").strip()
+        body = caption.strip()
+        if not title or not body:
+            raise ValueError("小红书标题或正文为空，不能填充。")
+        return title, body
+    return split_xhs_copy(caption, fallback_title)
+
+
 def _normalized_editor_text(value: Any) -> str:
     """Normalize browser/editor-only whitespace without hiding lost content."""
     text = unicodedata.normalize("NFKC", str(value or ""))
@@ -344,11 +360,8 @@ def publish_to_xhs(
     image_paths = [artifact_dir / name for name in publication_image_names(artifact_dir)]
     if len(image_paths) != 6 or any(not path.is_file() for path in image_paths):
         raise ValueError("自动填充要求内容包中恰好存在 6 张小红书配图。")
-    caption_path = artifact_dir / "xhs-caption.md"
-    if not caption_path.is_file():
-        raise ValueError("内容包缺少 xhs-caption.md。")
-    title, body = split_xhs_copy(
-        caption_path.read_text(encoding="utf-8"), str(paper.get("title") or "论文解读")
+    title, body = load_xhs_copy(
+        artifact_dir, str(paper.get("title") or "论文解读")
     )
     timeout_ms = max(30, settings.xhs_publish_timeout_seconds) * 1000
     sync_playwright = _playwright()

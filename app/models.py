@@ -86,6 +86,7 @@ class ContentBundle:
     slides: list[dict[str, str]]
     wechat_markdown: str
     wechat_html: str
+    xhs_title: str = ""
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

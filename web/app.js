@@ -49,6 +49,7 @@ const eventLabels = {
   xhs_login_required: "小红书登录已失效",
   xhs_fill_failed: "小红书内容自动填充未完成",
   xhs_content_filled: "小红书图片和文本已填入",
+  content_edited: "编辑保存了发布文本",
 };
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -166,9 +167,11 @@ function renderPapers() {
   $$("[data-paper-id]", root).forEach((button) => button.addEventListener("click", () => selectPaper(Number(button.dataset.paperId))));
 }
 
-async function selectPaper(id) {
+async function selectPaper(id, preserveTab = false) {
   state.selectedId = id;
-  state.activeTab = ["review", "published"].includes(state.view) ? "xhs" : "overview";
+  if (!preserveTab) {
+    state.activeTab = ["review", "published"].includes(state.view) ? "xhs" : "overview";
+  }
   renderPapers();
   const panel = $("#detail-panel");
   panel.innerHTML = `<div class="empty-detail"><span class="empty-glyph skeleton"></span><h3>正在读取内容</h3></div>`;
@@ -276,7 +279,8 @@ function renderDetail() {
         ${paper.venue_status !== "verified" && !paper.is_demo ? '<div class="source-reminder"><strong>来源尚未核验</strong><span>这不会阻止内容生成或审核，发布前建议补充官方来源。</span><button data-tab="evidence">查看来源</button></div>' : ""}
         <div class="detail-actions">
           <a class="button button-quiet" href="${escapeHtml(paper.pdf_url)}" target="_blank" rel="noreferrer">查看原文</a>
-          ${artifacts?.caption ? '<button class="button button-quiet" id="quick-copy">复制小红书文案</button>' : ""}
+          ${artifacts?.caption ? '<button class="button button-quiet" id="quick-copy">复制小红书标题与正文</button>' : ""}
+          ${artifacts?.caption && paper.status !== "published" ? '<button class="button button-quiet" id="edit-content-button">编辑发布内容</button>' : ""}
           <button class="button ${canGenerate ? "button-dark" : "button-quiet"}" id="generate-button" ${canGenerate ? "" : "disabled"}>${generatingThisPaper ? "正在生成…" : actionLabel(paper.status)}</button>
         </div>
       </header>
@@ -294,9 +298,21 @@ function renderDetail() {
   const generate = $("#generate-button");
   if (generate && canGenerate) generate.addEventListener("click", () => generatePaper(paper.id));
   const quickCopy = $("#quick-copy");
-  if (quickCopy) quickCopy.addEventListener("click", () => copyText(artifacts.caption));
+  if (quickCopy) quickCopy.addEventListener("click", () => copyText(`${artifacts.xhs_title || ""}\n\n${artifacts.caption || ""}`.trim()));
+  const editContent = $("#edit-content-button");
+  if (editContent) editContent.addEventListener("click", () => {
+    state.activeTab = "xhs";
+    renderDetail();
+    $("#edit-xhs-title")?.focus();
+  });
   const copy = $("#copy-content");
-  if (copy) copy.addEventListener("click", () => copyText(state.activeTab === "xhs" ? artifacts.caption : artifacts.wechat_markdown));
+  if (copy) copy.addEventListener("click", () => copyText(state.activeTab === "xhs" ? `${artifacts.xhs_title || ""}\n\n${artifacts.caption || ""}`.trim() : artifacts.wechat_markdown));
+  const contentEditor = $("#content-editor");
+  if (contentEditor) contentEditor.addEventListener("submit", saveContent);
+  const xhsTitle = $("#edit-xhs-title");
+  const xhsBody = $("#edit-xhs-body");
+  if (xhsTitle) xhsTitle.addEventListener("input", updateTextCounts);
+  if (xhsBody) xhsBody.addEventListener("input", updateTextCounts);
   const venueForm = $("#venue-form");
   if (venueForm) venueForm.addEventListener("submit", saveVenue);
   const publish = $("#open-publish");
@@ -313,18 +329,33 @@ function renderDetail() {
 function renderTab(paper, artifacts, claims, events) {
   if (state.activeTab === "xhs") {
     if (!artifacts) return emptyArtifact("生成后将在这里预览发布配图。");
+    const canEdit = ["ready_for_review", "approved"].includes(paper.status);
+    const saveLabel = paper.status === "approved" ? "保存并重新审核" : "保存文本修改";
     const pdfPages = artifacts.image_source === "pdf_first_pages";
     const imageLabel = pdfPages ? "PDF FIRST 6 PAGES" : "DEMO IMAGE FALLBACK";
     const imageNote = pdfPages ? "最终发布配图直接采用论文 PDF 的前六页。" : "构造示例没有真实 PDF，因此使用 6 张示例图完成离线流程。";
     return `
       <section class="content-section"><p class="summary-label">${imageLabel}</p><h3 class="section-title">发布配图</h3><p class="section-note">${imageNote}</p>
       <div class="card-strip">${artifacts.images.map((src, index) => `<a class="card-thumb" href="${src}" target="_blank" rel="noreferrer"><img src="${src}" alt="发布配图 ${index + 1}" loading="lazy" /><span>${index + 1}</span></a>`).join("")}</div></section>
-      <section class="content-section"><h3 class="section-title">发布文案</h3><p class="section-note">以下为 AI 生成的完整文案，不折叠、不截断。</p><div class="content-tool"><div class="content-tool-head"><strong>小红书正文</strong><button class="copy-button" id="copy-content">复制全文</button></div><pre class="caption-preview">${escapeHtml(artifacts.caption || "")}</pre></div></section>
+      <section class="content-section"><h3 class="section-title">发布文案</h3><p class="section-note">标题与正文独立保存；发布填充会使用这里最后保存的版本。</p>
+        <form class="content-editor" id="content-editor">
+          <label><span>小红书标题 <small id="xhs-title-count">${(artifacts.xhs_title || "").length}/20</small></span><input id="edit-xhs-title" maxlength="20" value="${escapeHtml(artifacts.xhs_title || "")}" ${canEdit ? "" : "readonly"} /></label>
+          <label><span>小红书正文 <small id="xhs-body-count">${(artifacts.caption || "").length}/1000</small></span><textarea id="edit-xhs-body" maxlength="1000" rows="22" ${canEdit ? "" : "readonly"}>${escapeHtml(artifacts.caption || "")}</textarea></label>
+          <div class="content-editor-actions"><button class="copy-button" type="button" id="copy-content">复制标题与正文</button>${canEdit ? `<button class="button button-dark" type="submit">${saveLabel}</button>` : '<span>内容已发布，当前为只读版本。</span>'}</div>
+        </form>
+      </section>
       ${renderPublishCallout(paper, artifacts)}`;
   }
   if (state.activeTab === "wechat") {
     if (!artifacts) return emptyArtifact("生成后将在这里预览公众号长文。");
-    return `<section class="content-section"><h3 class="section-title">公众号完整稿件</h3><p class="section-note">保留完整段落结构，可直接复制到编辑器继续修改。</p><div class="content-tool"><div class="content-tool-head"><strong>公众号长文</strong><button class="copy-button" id="copy-content">复制全文</button></div><pre class="wechat-preview">${escapeHtml(artifacts.wechat_markdown || "")}</pre></div></section>${renderPublishCallout(paper, artifacts)}`;
+    const canEdit = ["ready_for_review", "approved"].includes(paper.status);
+    const saveLabel = paper.status === "approved" ? "保存并重新审核" : "保存文本修改";
+    return `<section class="content-section"><h3 class="section-title">公众号完整稿件</h3><p class="section-note">可直接修改完整稿件；保存后发布包和 HTML 会同步更新。</p>
+      <form class="content-editor" id="content-editor">
+        <label><span>公众号正文</span><textarea id="edit-wechat-body" rows="30" ${canEdit ? "" : "readonly"}>${escapeHtml(artifacts.wechat_markdown || "")}</textarea></label>
+        <div class="content-editor-actions"><button class="copy-button" type="button" id="copy-content">复制全文</button>${canEdit ? `<button class="button button-dark" type="submit">${saveLabel}</button>` : '<span>内容已发布，当前为只读版本。</span>'}</div>
+      </form>
+    </section>${renderPublishCallout(paper, artifacts)}`;
   }
   if (state.activeTab === "evidence") {
     const canEdit = paper.status !== "published";
@@ -437,6 +468,34 @@ async function saveVenue(event) {
     toast("官方会议证据已保存。 ");
     await Promise.all([loadPapers(), selectPaper(state.selectedId)]);
   } catch (error) { toast(error.message, true); }
+}
+
+function updateTextCounts() {
+  const title = $("#edit-xhs-title");
+  const body = $("#edit-xhs-body");
+  if (title && $("#xhs-title-count")) $("#xhs-title-count").textContent = `${title.value.length}/20`;
+  if (body && $("#xhs-body-count")) $("#xhs-body-count").textContent = `${body.value.length}/1000`;
+}
+
+async function saveContent(event) {
+  event.preventDefault();
+  const artifacts = state.detail.artifacts || {};
+  const xhsTitle = $("#edit-xhs-title")?.value ?? artifacts.xhs_title ?? "";
+  const xhsBody = $("#edit-xhs-body")?.value ?? artifacts.caption ?? "";
+  const wechatBody = $("#edit-wechat-body")?.value ?? artifacts.wechat_markdown ?? "";
+  const button = event.currentTarget.querySelector('button[type="submit"]');
+  const buttonLabel = button?.textContent || "保存文本修改";
+  if (button) { button.disabled = true; button.textContent = "正在保存…"; }
+  try {
+    const result = await api(`/api/papers/${state.selectedId}/content`, {
+      method: "POST",
+      body: JSON.stringify({ xhs_title: xhsTitle, xhs_body: xhsBody, wechat_markdown: wechatBody }),
+    });
+    toast(result.message);
+    await Promise.all([loadOverview(), loadPapers()]);
+    await selectPaper(state.selectedId, true);
+  } catch (error) { toast(error.message, true); }
+  finally { if (button?.isConnected) { button.disabled = false; button.textContent = buttonLabel; } }
 }
 
 function openPublishModal() {

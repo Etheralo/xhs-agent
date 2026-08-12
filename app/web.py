@@ -13,15 +13,26 @@ from pathlib import Path
 from typing import Any, Callable
 from urllib.parse import parse_qs, urlparse
 
-from .artifacts import create_approval_manifest, export_zip, publication_image_names
+from .artifacts import (
+    create_approval_manifest,
+    export_zip,
+    invalidate_approval,
+    publication_image_names,
+)
 from .config import Settings
 from .enrich import match_venue
+from .generate import (
+    XHS_BODY_MAX_CHARS,
+    XHS_SECTION_LABELS,
+    render_wechat_html,
+    xhs_title_is_valid,
+)
 from .ingest import search_arxiv
 from .models import Paper
 from .pipeline import Pipeline
 from .publish import configured_publishers, publish_package
 from .storage import Storage
-from .xhs_browser import XHSLoginRequired, publish_to_xhs
+from .xhs_browser import XHSLoginRequired, publish_to_xhs, split_xhs_copy
 
 
 REVIEW_CHECKLIST = [
@@ -212,12 +223,19 @@ class ConsoleService:
                 if (target / name).is_file()
             ]
             zip_files = sorted(target.glob("*-approved.zip"))
+            caption = self._read_text(target / "xhs-caption.md") or ""
+            xhs_title = self._read_text(target / "xhs-title.txt")
+            if not xhs_title and caption:
+                xhs_title, caption = split_xhs_copy(
+                    caption, str(paper.get("title") or "论文解读")
+                )
             artifacts = {
                 "images": images,
                 "image_source": image_manifest.get("source") or "legacy_generated_cards",
                 "image_page_numbers": image_manifest.get("page_numbers") or [],
-                "caption": self._read_text(target / "xhs-caption.md"),
-                "wechat_markdown": self._read_text(target / "wechat.md"),
+                "xhs_title": (xhs_title or "").strip(),
+                "caption": caption.strip(),
+                "wechat_markdown": (self._read_text(target / "wechat.md") or "").strip(),
                 "slides": self._read_json(target / "xhs-slides.json"),
                 "facts": self._read_json(target / "facts.json"),
                 "validation": self._read_json(target / "validation.json"),
@@ -234,6 +252,74 @@ class ConsoleService:
             "review_checklist": REVIEW_CHECKLIST,
             "publications": self.storage.list_publications(paper_id),
             "publishers": configured_publishers(self.settings),
+        }
+
+    def update_content(self, paper_id: int, payload: dict[str, Any]) -> dict[str, Any]:
+        paper = self.storage.get_paper(paper_id)
+        if not paper:
+            raise KeyError("没有找到这篇论文。")
+        if paper["status"] not in {"ready_for_review", "approved"}:
+            if paper["status"] == "published":
+                raise ValueError("已发布内容只读，不能再修改。")
+            raise ValueError("只有已生成内容或已通过审核的内容可以修改。")
+        target = self._artifact_dir(paper_id)
+        if not target:
+            raise ValueError("这篇论文还没有可编辑的内容包。")
+
+        xhs_title = str(payload.get("xhs_title", "")).strip()
+        xhs_body = str(payload.get("xhs_body", "")).strip()
+        wechat_markdown = str(payload.get("wechat_markdown", "")).strip()
+        if not xhs_title_is_valid(xhs_title):
+            raise ValueError("小红书标题必须采用“会议简写：15字内总结”格式，且总长不超过 20 字。")
+        if not xhs_body or len(xhs_body) > XHS_BODY_MAX_CHARS:
+            raise ValueError(f"小红书正文不能为空，且最多 {XHS_BODY_MAX_CHARS} 字。")
+        missing = [label for label in XHS_SECTION_LABELS if label not in xhs_body]
+        if missing:
+            raise ValueError("小红书正文缺少以下部分：" + "、".join(missing))
+        if not wechat_markdown:
+            raise ValueError("公众号正文不能为空。")
+
+        (target / "xhs-title.txt").write_text(xhs_title + "\n", encoding="utf-8")
+        (target / "xhs-caption.md").write_text(xhs_body + "\n", encoding="utf-8")
+        (target / "wechat.md").write_text(wechat_markdown + "\n", encoding="utf-8")
+        (target / "wechat.html").write_text(
+            render_wechat_html(self.settings, xhs_title, wechat_markdown),
+            encoding="utf-8",
+        )
+        slides = self._read_json(target / "xhs-slides.json") or []
+        self.storage.update_draft_content(
+            paper_id,
+            "xhs",
+            {"title": xhs_title, "body": xhs_body, "slides": slides},
+        )
+        self.storage.update_draft_content(
+            paper_id, "wechat", {"title": xhs_title, "markdown": wechat_markdown}
+        )
+        review_reset = paper["status"] == "approved"
+        if review_reset:
+            invalidate_approval(target)
+            self.storage.reopen_for_review(paper_id)
+        self.storage.log_event(
+            "content_edited",
+            paper_id=paper_id,
+            detail=(
+                f"xhs_title_chars={len(xhs_title)}; "
+                f"xhs_body_chars={len(xhs_body)}; "
+                f"wechat_chars={len(wechat_markdown)}; "
+                f"review_reset={str(review_reset).lower()}"
+            ),
+        )
+        return {
+            "paper_id": paper_id,
+            "status": "ready_for_review",
+            "review_reset": review_reset,
+            "message": (
+                "文本修改已保存，旧审核已撤销，请重新审核后发布。"
+                if review_reset
+                else "文本修改已保存，后续发布将使用当前版本。"
+            ),
+            "xhs_title_chars": len(xhs_title),
+            "xhs_body_chars": len(xhs_body),
         }
 
     def configure_venue(self, paper_id: int, payload: dict[str, Any]) -> dict[str, Any]:
@@ -410,6 +496,16 @@ class ConsoleService:
         if not target:
             raise ValueError("这篇论文还没有可发布的内容包。")
         if paper["status"] == "ready_for_review":
+            title_path = target / "xhs-title.txt"
+            if not title_path.is_file():
+                legacy_caption = (target / "xhs-caption.md").read_text(encoding="utf-8")
+                legacy_title, legacy_body = split_xhs_copy(
+                    legacy_caption, str(paper.get("title") or "论文解读")
+                )
+                title_path.write_text(legacy_title + "\n", encoding="utf-8")
+                (target / "xhs-caption.md").write_text(
+                    legacy_body + "\n", encoding="utf-8"
+                )
             create_approval_manifest(target, reviewer=reviewer)
             self.storage.approve(paper_id)
         elif paper["status"] not in {"approved", "published"}:
@@ -627,6 +723,9 @@ class ConsoleHandler(BaseHTTPRequestHandler):
             match = re.fullmatch(r"/api/papers/(\d+)/venue", path)
             if match:
                 return self._json(self.service.configure_venue(int(match.group(1)), body))
+            match = re.fullmatch(r"/api/papers/(\d+)/content", path)
+            if match:
+                return self._json(self.service.update_content(int(match.group(1)), body))
             match = re.fullmatch(r"/api/papers/(\d+)/publish-package", path)
             if match:
                 result = self.service.prepare_publication(int(match.group(1)), body)
