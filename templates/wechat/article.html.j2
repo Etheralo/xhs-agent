@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ title }}</title>
+  <style>
+    body { max-width: 760px; margin: 36px auto; padding: 0 24px; color: #172033;
+           font: 17px/1.85 -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif; }
+    h1 { font-size: 32px; line-height: 1.3; } h2 { margin-top: 34px; color: #3457d5; }
+    blockquote { margin: 20px 0; padding: 12px 18px; background: #f2f5ff; border-left: 4px solid #5b72e8; }
+    p { white-space: pre-wrap; } .source { color: #667085; font-size: 14px; }
+  </style>
+</head>
+<body>
+{% for paragraph in paragraphs %}
+  {% if paragraph.startswith('# ') %}<h1>{{ paragraph[2:] }}</h1>
+  {% elif paragraph.startswith('## ') %}<h2>{{ paragraph[3:] }}</h2>
+  {% elif paragraph.startswith('> ') %}<blockquote>{{ paragraph[2:] }}</blockquote>
+  {% elif paragraph.startswith('- ') %}<p>• {{ paragraph[2:] }}</p>
+  {% else %}<p>{{ paragraph }}</p>{% endif %}
+{% endfor %}
+</body>
+</html>

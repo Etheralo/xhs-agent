@@ -6,10 +6,7 @@ __pycache__/
 .playwright-cli/
 data/
 output/
-docs/
 agent-proposal.md
-examples/
 output/
-templates/
 tests/
 record.md

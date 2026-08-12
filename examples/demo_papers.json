@@ -1,0 +1,135 @@
+[
+  {
+    "arxiv_id": "demo.00001",
+    "title": "Constructed Demo: Source-Aware Prompt Firewall for Tool-Using Agents",
+    "abstract": "This constructed example studies indirect prompt injection in tool-using agents. It labels instructions by source and checks the label before each sensitive tool call. In a synthetic evaluation, the example records 91% blocked attacks versus a 54% baseline.",
+    "authors": ["Demo Author A", "Demo Author B"],
+    "published_at": "2026-08-01T00:00:00Z",
+    "updated_at": "2026-08-01T00:00:00Z",
+    "categories": ["cs.CR", "cs.AI"],
+    "pdf_url": "https://example.invalid/demo.00001.pdf",
+    "venue": "Constructed Demo Venue",
+    "venue_status": "demo_only",
+    "topic": "jailbreak_prompt_injection",
+    "topic_label": "越狱与提示注入",
+    "source_pages": [
+      "Page 1 defines indirect prompt injection for a browsing agent.",
+      "Page 3 describes source labels and the tool-call policy check.",
+      "Page 7 reports the synthetic evaluation: 91% versus 54%."
+    ],
+    "facts": {
+      "problem": {
+        "plain_cn": "Agent 浏览网页时，网页里的恶意文字可能伪装成用户指令，诱导它调用发邮件、上传文件等敏感工具。",
+        "source_pages": [1]
+      },
+      "method": {
+        "one_sentence": "方法给每条指令保留来源标签，并在敏感工具真正执行前检查该来源是否有调用权限。",
+        "plain_example": "像公司门禁卡：访客可以在大厅留言，但留言不会因此获得打开财务室的权限；系统在开门前再核对一次权限。",
+        "source_pages": [3]
+      },
+      "results": [
+        {
+          "claim": "在构造的演示评测中，来源感知检查阻断了攻击样例。",
+          "value": "91%",
+          "baseline": "54%",
+          "source_pages": [7],
+          "source_anchor": "Demo Table 2"
+        }
+      ],
+      "authors_future_work": ["演示作者建议扩大到更多工具类型和多轮任务。"],
+      "editorial_extension": ["我们认为下一步应测试标签在长链路任务中是否会丢失。"],
+      "uncertainties": ["这是构造的离线演示论文和演示数字，不能作为真实研究结论发布。"]
+    }
+  },
+  {
+    "arxiv_id": "demo.00002",
+    "title": "Constructed Demo: Canary Queries for Detecting Retrieval Poisoning",
+    "abstract": "This constructed example studies retrieval poisoning in RAG systems. It injects controlled canary queries and compares retrieved evidence before generation. The demo reports 83% detection at 4% false alarms in a synthetic benchmark.",
+    "authors": ["Demo Author C"],
+    "published_at": "2026-07-28T00:00:00Z",
+    "updated_at": "2026-07-29T00:00:00Z",
+    "categories": ["cs.CR", "cs.CL"],
+    "pdf_url": "https://example.invalid/demo.00002.pdf",
+    "venue": "Constructed Demo Venue",
+    "venue_status": "demo_only",
+    "topic": "rag_memory_security",
+    "topic_label": "RAG 与记忆安全",
+    "source_pages": [
+      "Page 1 defines retrieval poisoning.",
+      "Page 4 explains controlled canary queries.",
+      "Page 8 reports 83% detection and 4% false alarms."
+    ],
+    "facts": {
+      "problem": {
+        "plain_cn": "RAG 知识库被混入恶意文档后，模型可能引用看似相关、实则被攻击者操纵的证据，而且普通问答抽查不一定触发它。",
+        "source_pages": [1]
+      },
+      "method": {
+        "one_sentence": "方法定期发送受控的金丝雀查询，检查检索证据是否出现预期之外的来源和内容漂移。",
+        "plain_example": "像矿井里的金丝雀：不等每位矿工先感到不适，而是用一个对异常更敏感的信号提前发现环境变化。",
+        "source_pages": [4]
+      },
+      "results": [
+        {
+          "claim": "在构造的检索投毒演示集上识别出异常。",
+          "value": "83%",
+          "baseline": "4% 误报率",
+          "source_pages": [8],
+          "source_anchor": "Demo Figure 4"
+        }
+      ],
+      "authors_future_work": ["演示作者计划研究攻击者知道金丝雀规则后的自适应绕过。"],
+      "editorial_extension": ["我们认为金丝雀告警还应连接知识库版本回滚和来源审计。"],
+      "uncertainties": ["这是构造的离线演示论文和演示数字，不能作为真实研究结论发布。"]
+    }
+  },
+  {
+    "arxiv_id": "demo.00003",
+    "title": "Constructed Demo: Region-Grounded Safety Checks for Vision-Language Models",
+    "abstract": "This constructed example studies visual jailbreaks in vision-language models. It grounds safety decisions in image regions and text spans before response generation. The synthetic demo reduces attack success from 62% to 19% while retaining 88% benign task accuracy.",
+    "authors": ["Demo Author D", "Demo Author E"],
+    "published_at": "2026-07-20T00:00:00Z",
+    "updated_at": "2026-07-20T00:00:00Z",
+    "categories": ["cs.CV", "cs.CR"],
+    "pdf_url": "https://example.invalid/demo.00003.pdf",
+    "venue": "Constructed Demo Venue",
+    "venue_status": "demo_only",
+    "topic": "multimodal_safety",
+    "topic_label": "多模态安全",
+    "source_pages": [
+      "Page 2 defines the visual jailbreak setting.",
+      "Page 5 describes region and text-span grounding.",
+      "Page 9 reports attack success and benign accuracy."
+    ],
+    "facts": {
+      "problem": {
+        "plain_cn": "视觉语言模型可能只看到图片的整体语义，却忽略局部区域藏着的越狱文字或危险组合，导致安全判断与真实触发位置脱节。",
+        "source_pages": [2]
+      },
+      "method": {
+        "one_sentence": "方法先把安全判断绑定到具体图像区域和文本片段，再综合这些局部证据决定是否生成回答。",
+        "plain_example": "像机场安检不只看行李箱标签，而是定位 X 光图里的具体可疑区域，再决定是否开箱复查。",
+        "source_pages": [5]
+      },
+      "results": [
+        {
+          "claim": "构造演示中的攻击成功率下降。",
+          "value": "从 62% 降至 19%",
+          "baseline": "未使用区域绑定检查",
+          "source_pages": [9],
+          "source_anchor": "Demo Table 5"
+        },
+        {
+          "claim": "构造演示中保留了正常任务准确率。",
+          "value": "88%",
+          "baseline": null,
+          "source_pages": [9],
+          "source_anchor": "Demo Table 5"
+        }
+      ],
+      "authors_future_work": ["演示作者建议扩大到视频和多图输入。"],
+      "editorial_extension": ["我们认为区域级证据可以进一步用于人工复核界面。"],
+      "uncertainties": ["这是构造的离线演示论文和演示数字，不能作为真实研究结论发布。"]
+    }
+  }
+]
