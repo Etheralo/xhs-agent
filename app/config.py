@@ -68,7 +68,13 @@ class Settings:
     llm_max_input_chars: int
     llm_max_completion_tokens: int
     openalex_api_key: str | None
+    xhs_publish_mode: str
     xhs_publish_webhook_url: str | None
+    xhs_creator_url: str
+    xhs_browser_profile_dir: Path
+    xhs_browser_headless: bool
+    xhs_browser_channel: str | None
+    xhs_publish_timeout_seconds: int
     wechat_publish_webhook_url: str | None
     publish_webhook_token: str | None
 
@@ -88,6 +94,13 @@ def load_settings(root: Path | None = None) -> Settings:
     llm = raw.get("llm", {})
     data_dir = Path(os.environ.get("XHS_AGENT_DATA_DIR", root / "data")).resolve()
     output_dir = Path(os.environ.get("XHS_AGENT_OUTPUT_DIR", root / "output")).resolve()
+    xhs_publish_webhook_url = os.environ.get("XHS_PUBLISH_WEBHOOK_URL") or None
+    xhs_publish_mode = os.environ.get(
+        "XHS_PUBLISH_MODE", "webhook" if xhs_publish_webhook_url else "manual"
+    ).strip().lower()
+    if xhs_publish_mode not in {"manual", "webhook", "browser"}:
+        raise ValueError("XHS_PUBLISH_MODE must be manual, webhook, or browser")
+    browser_channel = os.environ.get("XHS_BROWSER_CHANNEL", "chrome").strip()
     return Settings(
         root=root,
         data_dir=data_dir,
@@ -143,7 +156,20 @@ def load_settings(root: Path | None = None) -> Settings:
             )
         ),
         openalex_api_key=os.environ.get("OPENALEX_API_KEY") or None,
-        xhs_publish_webhook_url=os.environ.get("XHS_PUBLISH_WEBHOOK_URL") or None,
+        xhs_publish_mode=xhs_publish_mode,
+        xhs_publish_webhook_url=xhs_publish_webhook_url,
+        xhs_creator_url=os.environ.get(
+            "XHS_CREATOR_URL",
+            "https://creator.xiaohongshu.com/publish/publish?source=official",
+        ).strip(),
+        xhs_browser_profile_dir=Path(
+            os.environ.get("XHS_BROWSER_PROFILE_DIR", data_dir / "xhs-browser-profile")
+        ).resolve(),
+        xhs_browser_headless=_env_bool("XHS_BROWSER_HEADLESS", False),
+        xhs_browser_channel=browser_channel or None,
+        xhs_publish_timeout_seconds=int(
+            os.environ.get("XHS_PUBLISH_TIMEOUT_SECONDS", "180")
+        ),
         wechat_publish_webhook_url=os.environ.get("WECHAT_PUBLISH_WEBHOOK_URL") or None,
         publish_webhook_token=os.environ.get("PUBLISH_WEBHOOK_TOKEN") or None,
     )

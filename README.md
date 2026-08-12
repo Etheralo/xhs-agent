@@ -2,7 +2,8 @@
 
 这是一个本机运行、人工审核的小红书与微信公众号内容流水线。它从 arXiv
 发现候选论文，严格区分“预印本”与“已核验会议论文”，从同一份可追溯事实底稿
-生成小红书文案、论文 PDF 前六页配图和公众号长文。程序不会登录或自动发布到平台。
+生成小红书文案、论文 PDF 前六页配图和公众号长文。小红书可选用专用浏览器
+自动填充图片、标题和正文，最终发布按钮始终由用户手动点击。
 
 完整设计依据与取舍见 [agent-proposal.md](agent-proposal.md)。
 面向编辑和运营人员的完整操作步骤见 [Paper→Post 使用说明书](docs/USER_GUIDE.md)。
@@ -20,7 +21,7 @@ arXiv / 本地样例
   → 自动一致性检查
   → ready_for_review
   → 人工 approve
-  → 可导出的发布包
+  → 可导出的发布包 / 小红书浏览器自动填充
 ```
 
 页面只展示四个业务状态：
@@ -32,7 +33,7 @@ arXiv / 本地样例
 不符合选题范围的论文会直接删除，不保留“已拒绝”记录。系统内部仍保留细分处理节点，
 用于断点续跑和任务诊断，但不会作为页面状态展示。
 
-`approve` 之前不能导出，`mark-published` 只记录人工发布完成，不会调用平台接口。
+`approve` 之前不能导出。浏览器自动填充也必须经过同一组人工审核，不能跳过审核门。
 
 ## 1. 安装
 
@@ -88,14 +89,38 @@ uv run xhs-agent serve
 - 为单篇真实论文直接导出 PDF 前 6 页作为小红书配图，并生成公众号长文；
 - 预览发布配图、文案、事实底稿、校验结果及操作记录；
 - 按需补充会议官网证据；未核验时仅提醒，不阻塞内容生成；
-- 完成 6 项人工审核后，一键批准并下载发布包；
+- 完成 6 项人工审核后，一键批准并下载发布包，或自动填充到小红书发布页；
 - 人工发到平台后确认发布状态。
 
-控制台默认只监听本机地址，不包含登录系统。所谓“一键发布”是批准并生成完整发布包，
-不会绕过平台审核。没有发布连接器时由编辑下载后手工发布；如果你已有自己的平台发布
-服务，可在 `.env` 配置：
+控制台默认只监听本机地址，不包含自己的账号系统。默认发布模式仍是 `manual`；没有
+连接器时由编辑下载后手工发布。要启用本机浏览器自动填充，在 `.env` 配置：
 
 ```bash
+XHS_PUBLISH_MODE=browser
+XHS_CREATOR_URL=https://creator.xiaohongshu.com/publish/publish?source=official
+XHS_BROWSER_CHANNEL=chrome
+XHS_BROWSER_HEADLESS=false
+XHS_PUBLISH_TIMEOUT_SECONDS=180
+```
+
+首次使用或登录失效后，运行：
+
+```bash
+uv sync --dev
+uv run playwright install chrome
+uv run xhs-agent xhs-login
+```
+
+程序会打开只供本项目使用的 Chrome 配置目录。完成短信登录并进入发布页后，回到终端
+按 Enter 保存登录态。此后在控制台完成内容审核并选择“小红书”，后台任务会上传 6 张
+图片、填写标题和完整正文，然后停止自动化操作并保留浏览器页面。程序不会寻找或点击
+“发布”按钮。编辑核对内容后在小红书页面手动点击发布，再回控制台点击“我已手动发布”；
+此时论文才会被标记为“已发布”。
+
+如已有自己的发布服务，也可以改用 webhook 模式：
+
+```bash
+XHS_PUBLISH_MODE=webhook
 XHS_PUBLISH_WEBHOOK_URL=https://your-publisher.example/xhs
 WECHAT_PUBLISH_WEBHOOK_URL=https://your-publisher.example/wechat
 PUBLISH_WEBHOOK_TOKEN=your-private-token
@@ -104,8 +129,8 @@ PUBLISH_WEBHOOK_TOKEN=your-private-token
 连接器接收 `multipart/form-data`：`metadata` 是 JSON，`package` 是经过人工审核并带
 SHA-256 清单的 ZIP。连接器返回 JSON `status` 可取 `delivered`、`submitted` 或
 `published`；所选渠道全部返回 `published` 时，控制台会自动把论文记为已发布。
-密钥仅在本机后端读取，不会传给浏览器。小红书公开分享能力依赖客户端 SDK，因此普通
-账号没有连接器时仍保持手工发布。可修改控制台端口：
+密钥仅在本机后端读取，不会传给浏览器。浏览器模式依赖创作者平台当前页面结构，平台
+改版后可能需要更新定位规则；短信验证、验证码和风险提示不会被程序绕过。可修改控制台端口：
 
 ```bash
 uv run xhs-agent serve --port 9000
@@ -177,13 +202,16 @@ uv run pytest
 - `LLM_STREAM`、`LLM_JSON_MODE`、`LLM_DISABLE_THINKING`；
 - `LLM_READ_TIMEOUT_SECONDS`、`LLM_MAX_INPUT_CHARS`、`LLM_MAX_COMPLETION_TOKENS`；
 - `OPENALEX_API_KEY`；
+- `XHS_PUBLISH_MODE`、`XHS_CREATOR_URL`、`XHS_BROWSER_PROFILE_DIR`；
+- `XHS_BROWSER_CHANNEL`、`XHS_BROWSER_HEADLESS`；
+- `XHS_PUBLISH_TIMEOUT_SECONDS`；
 - `XHS_AGENT_DATA_DIR`、`XHS_AGENT_OUTPUT_DIR`，用于隔离测试或部署数据。
 
 所有密钥只从环境变量读取，`data/`、`output/` 和 `.env` 默认被 Git 忽略。
 
 ## 7. 当前边界
 
-- 不自动发布小红书或公众号，不绕过登录与平台审核；
+- 小红书浏览器模式只填充内容，不点击发布，也不绕过首次登录、验证码、风险控制或平台审核；公众号仍需手工发布或 webhook；
 - 不把 arXiv 分类、作者备注或 OpenAlex 二手匹配写成“顶会录用”；
 - 不自动把失败草稿推进到待审状态；
 - 不需要 GPU、向量数据库、消息队列、多 Agent 或云服务器；

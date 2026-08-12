@@ -32,7 +32,7 @@ const viewLabels = {
 const viewDescriptions = {
   workspace: "搜索论文，查看 AI 生成过程与完整内容",
   review: "逐项核对事实、文案与来源证据",
-  published: "下载发布包并记录平台发布状态",
+  published: "自动填充发布内容，并记录人工发布结果",
   runs: "查看扫描、筛选和生成任务的执行结果",
 };
 
@@ -46,6 +46,9 @@ const eventLabels = {
   llm_rule_fallback: "模型分类失败，使用本地规则",
   publication_package_ready: "审核通过，发布包已生成",
   platform_publication_confirmed: "编辑确认平台发布完成",
+  xhs_login_required: "小红书登录已失效",
+  xhs_fill_failed: "小红书内容自动填充未完成",
+  xhs_content_filled: "小红书图片和文本已填入",
 };
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -210,6 +213,12 @@ const jobStageLabels = {
   validation: "自动检查",
   review: "等待审核",
   discarded: "记录删除",
+  launching: "启动发布浏览器",
+  needs_login: "等待登录",
+  uploading: "上传 6 张配图",
+  filling: "填写标题和正文",
+  filled: "内容已填入",
+  published: "用户确认已发布",
 };
 
 function renderLiveGeneration(paperId) {
@@ -224,10 +233,12 @@ function renderLiveGeneration(paperId) {
   const previewUpdate = [...(trace.updates || [])].reverse().find((item) => item.preview);
   const preview = previewUpdate?.preview || "";
   const finished = ["completed", "failed"].includes(trace.status);
+  const publishing = trace.kind === "fill_xhs";
+  const taskName = publishing ? "小红书内容填充" : "AI 生成内容";
   return `<section class="ai-live ${finished ? "is-finished" : ""}">
-    <div class="ai-live-head"><div><i></i><strong>${finished ? (trace.status === "failed" ? "生成任务未完成" : "AI 生成过程") : "AI 正在生成内容"}</strong></div><span>${escapeHtml(trace.message || "处理中")}</span><button id="dismiss-job-trace" aria-label="关闭生成过程">×</button></div>
+    <div class="ai-live-head"><div><i></i><strong>${finished ? (trace.status === "failed" ? `${taskName}未完成` : `${taskName}过程`) : `${taskName}进行中`}</strong></div><span>${escapeHtml(trace.message || "处理中")}</span><button id="dismiss-job-trace" aria-label="关闭任务过程">×</button></div>
     <div class="ai-live-steps">${compact.map((item, index) => `<div class="ai-live-step ${index === compact.length - 1 && !finished ? "is-current" : ""}"><b>${index + 1}</b><span><strong>${jobStageLabels[item.stage] || item.stage}</strong><small>${escapeHtml(item.message)}</small></span></div>`).join("")}</div>
-    ${preview ? `<div class="ai-live-preview"><small>${previewUpdate?.stage === "writing" ? "生成后的推文正文" : "AI 生成内容预览"}</small><pre>${escapeHtml(preview)}${finished ? "" : '<i class="typing-caret"></i>'}</pre></div>` : ""}
+    ${preview ? `<div class="ai-live-preview"><small>${publishing ? "待发布正文预览" : previewUpdate?.stage === "writing" ? "生成后的推文正文" : "AI 生成内容预览"}</small><pre>${escapeHtml(preview)}${finished ? "" : '<i class="typing-caret"></i>'}</pre></div>` : ""}
   </section>`;
 }
 
@@ -241,7 +252,7 @@ function renderProcess(paper, artifacts, claims, events) {
     processStep("论文入库", paper.is_demo ? "示例数据" : "arXiv 元数据", "done"),
     processStep("内容生成", hasContent ? "正文与配图已完成" : hasFacts ? "正在生成正文" : "等待生成", hasContent ? "done" : "active"),
     processStep("内容审核", isReviewed ? "审核已通过" : isWaitingReview ? "等待人工确认" : "尚未开始", isReviewed ? "done" : isWaitingReview ? "active" : "pending"),
-    processStep("内容发布", paper.status === "published" ? "发布已确认" : paper.status === "approved" ? "等待平台发布" : "尚未发布", paper.status === "published" ? "done" : paper.status === "approved" ? "active" : "pending"),
+    processStep("内容发布", paper.status === "published" ? "发布已确认" : paper.status === "approved" ? "等待用户发布并反馈" : "尚未发布", paper.status === "published" ? "done" : paper.status === "approved" ? "active" : "pending"),
   ];
   return `<section class="process-panel"><div class="process-heading"><strong>AI 处理过程</strong><span>${events.length} 条审计记录 · 每一步均可回溯</span></div><div class="process-steps">${steps.join("")}</div></section>`;
 }
@@ -364,10 +375,10 @@ function emptyArtifact(text) {
 
 function renderPublishCallout(paper, artifacts) {
   if (!artifacts || !["ready_for_review", "approved", "published"].includes(paper.status)) return "";
-  const states = (state.detail.publications || []).map((item) => `<div class="publication-state"><span>${item.channel === "xhs" ? "小红书" : "微信公众号"}</span><b>${escapeHtml({ manual_ready: "发布包就绪", delivered: "已发送连接器", submitted: "平台处理中", published: "发布成功", failed: "发送失败" }[item.status] || item.status)}</b></div>`).join("");
+  const states = (state.detail.publications || []).map((item) => `<div class="publication-state"><span>${item.channel === "xhs" ? "小红书" : "微信公众号"}</span><b>${escapeHtml({ manual_ready: "发布包就绪", queued: "等待自动填充", launching: "启动浏览器", needs_login: "需要重新登录", uploading: "上传配图中", filling: "填写内容中", filled: "等待用户发布并反馈", delivered: "已发送连接器", submitted: "平台处理中", published: "用户确认已发布", failed: "填充或发送失败" }[item.status] || item.status)}</b></div>`).join("");
   const stateBlock = states ? `<div class="publication-states">${states}</div>` : "";
   if (paper.status === "published") return `<div class="publish-callout"><h4>内容已发布</h4><p>这篇内容已由发布连接器或编辑确认完成。</p>${stateBlock}${artifacts.export_url ? `<a class="button button-quiet" href="${artifacts.export_url}">重新下载发布包</a>` : ""}</div>`;
-  if (paper.status === "approved") return `<div class="publish-callout"><h4>内容已通过审核</h4><p>已连接渠道可以自动发送；未连接渠道可下载后人工发布。</p>${stateBlock}<div class="publish-actions">${artifacts.export_url ? `<a class="button button-primary" href="${artifacts.export_url}">下载发布包</a>` : ""}<button class="button button-quiet" id="open-publish">发送到发布渠道</button><button class="button button-quiet" id="confirm-published">确认已经发布</button></div></div>`;
+  if (paper.status === "approved") return `<div class="publish-callout"><h4>内容已通过审核</h4><p>浏览器模式只填充图片、标题和正文，不会点击发布。请在小红书页面人工核对并发布，再回到这里反馈结果。</p>${stateBlock}<div class="publish-actions">${artifacts.export_url ? `<a class="button button-primary" href="${artifacts.export_url}">下载发布包</a>` : ""}<button class="button button-quiet" id="open-publish">填充到发布页面</button><button class="button button-quiet" id="confirm-published">我已手动发布</button></div></div>`;
   return `<div class="publish-callout"><h4>草稿已准备好</h4><p>完成 ${state.detail.review_checklist.length} 项人工检查后，批准内容并生成发布包。</p><button class="button button-primary" id="open-publish">开始内容审核</button></div>`;
 }
 
@@ -411,7 +422,7 @@ async function pollJob(jobId, paperId = null) {
       $("#detail-panel").innerHTML = `<div class="empty-detail"><span class="empty-glyph">✓</span><h3>论文记录未保留</h3><p>${escapeHtml(job.result?.message || "这篇论文不符合当前选题范围。")}</p></div>`;
     }
     if (job.status === "failed") toast(job.error || "任务未完成", true);
-    else toast("内容任务已完成。 ");
+    else toast(job.kind === "fill_xhs" ? "小红书内容已填充。请在浏览器中手动发布，再回到控制台反馈结果。" : "内容任务已完成。 ");
   } catch (error) {
     setWorking(false);
     toast(error.message, true);
@@ -432,7 +443,11 @@ function openPublishModal() {
   const checklist = state.detail.review_checklist || [];
   const publishers = state.detail.publishers || {};
   $("#review-checklist").innerHTML = checklist.map((item, index) => `<label class="review-check"><input type="checkbox" data-check="${index}" /><span>${escapeHtml(item)}</span></label>`).join("");
-  $("#publish-channels").innerHTML = Object.entries(publishers).map(([channel, config]) => `<label class="publish-channel"><input type="checkbox" data-channel="${channel}" checked /><span><strong>${escapeHtml(config.label)}</strong><small>${config.connected ? "连接器已就绪 · 将自动发送" : "未连接 · 生成手工发布包"}</small></span></label>`).join("");
+  $("#publish-channels").innerHTML = Object.entries(publishers).map(([channel, config]) => {
+    const checked = config.connected || channel === "xhs";
+    const note = config.mode === "browser" ? "专用浏览器 · 仅填充内容，人工点击发布" : config.connected ? "连接器已就绪 · 将自动发送" : "未连接 · 生成手工发布包";
+    return `<label class="publish-channel"><input type="checkbox" data-channel="${channel}" ${checked ? "checked" : ""} /><span><strong>${escapeHtml(config.label)}</strong><small>${note}</small></span></label>`;
+  }).join("");
   const connected = Object.values(publishers).some((item) => item.connected);
   const sourcePending = state.detail.paper.venue_status !== "verified" && !state.detail.paper.is_demo;
   $(".modal-intro").textContent = sourcePending
@@ -440,8 +455,8 @@ function openPublishModal() {
     : "逐项核对后批准内容，并生成发布包。";
   $(".modal-warning span").textContent = sourcePending
     ? "来源核验不是强制项，但建议在正式发布前补充官方页面。"
-    : "此操作生成发布包，不会绕过平台登录或平台审核。";
-  $("#publish-submit").textContent = connected ? "批准并一键发布" : "批准并生成发布包";
+    : (publishers.xhs?.mode === "browser" ? "专用浏览器会上传 6 张配图并填写标题、正文，但不会点击发布；请人工核对后发布。" : "此操作生成发布包，不会绕过平台登录或平台审核。");
+  $("#publish-submit").textContent = publishers.xhs?.mode === "browser" ? "批准并填充到小红书" : connected ? "批准并发送发布包" : "批准并生成发布包";
   $("#publish-modal").classList.remove("is-hidden");
   $("#reviewer-name").focus();
 }
@@ -458,16 +473,22 @@ async function preparePublication() {
   try {
     const result = await api(`/api/papers/${state.selectedId}/publish-package`, { method: "POST", body: JSON.stringify({ reviewer, checks, channels }) });
     closePublishModal();
+    if (result.publication_job) {
+      state.activeJob = result.publication_job.id;
+      state.jobTrace = { ...result.publication_job, paperId: state.selectedId };
+      setWorking(true, "正在填充小红书内容");
+      pollJob(result.publication_job.id, state.selectedId);
+    }
     const sent = (result.outcomes || []).filter((item) => ["delivered", "submitted", "published"].includes(item.status)).length;
-    toast(sent ? `${sent} 个发布连接器已接收内容包。` : result.message);
+    toast(result.publication_job ? "审核已通过，正在把图片和文本填入小红书。" : sent ? `${sent} 个发布连接器已接收内容包。` : result.message);
     await Promise.all([loadOverview(), loadPapers(), selectPaper(state.selectedId)]);
-    if (result.download_url) window.location.assign(result.download_url);
+    if (result.download_url && !result.publication_job) window.location.assign(result.download_url);
   } catch (error) { toast(error.message, true); }
   finally { button.disabled = false; }
 }
 
 async function confirmPublished() {
-  if (!window.confirm("确认这篇内容已经手工发布到目标平台？")) return;
+  if (!window.confirm("确认你已经在小红书或目标平台手动点击发布，并看到发布完成？")) return;
   try {
     await api(`/api/papers/${state.selectedId}/confirm-published`, { method: "POST", body: "{}" });
     toast("发布状态已记录。 ");

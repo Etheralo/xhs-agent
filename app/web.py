@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import mimetypes
 import re
@@ -20,6 +21,7 @@ from .models import Paper
 from .pipeline import Pipeline
 from .publish import configured_publishers, publish_package
 from .storage import Storage
+from .xhs_browser import XHSLoginRequired, publish_to_xhs
 
 
 REVIEW_CHECKLIST = [
@@ -345,6 +347,48 @@ class ConsoleService:
                 raise KeyError("没有找到这个任务。")
             return self._job_snapshot(job)
 
+    def _publish_xhs_browser(
+        self,
+        paper: dict[str, Any],
+        target: Path,
+        progress: Callable[[str, str, str | None], None],
+    ) -> dict[str, Any]:
+        paper_id = int(paper["id"])
+
+        def tracked_progress(stage: str, message: str, preview: str | None = None) -> None:
+            self.storage.save_publication(paper_id, "xhs", stage, message=message)
+            progress(stage, message, preview)
+
+        try:
+            outcome = publish_to_xhs(
+                self.settings,
+                paper=paper,
+                artifact_dir=target,
+                progress=tracked_progress,
+            )
+        except XHSLoginRequired as exc:
+            self.storage.save_publication(paper_id, "xhs", "needs_login", message=str(exc))
+            self.storage.log_event("xhs_login_required", paper_id=paper_id, detail=str(exc))
+            raise
+        except Exception as exc:
+            self.storage.save_publication(paper_id, "xhs", "failed", message=str(exc))
+            self.storage.log_event("xhs_fill_failed", paper_id=paper_id, detail=str(exc))
+            raise
+
+        self.storage.save_publication(
+            paper_id,
+            "xhs",
+            outcome.status,
+            external_id=outcome.external_id,
+            external_url=outcome.external_url,
+            message=outcome.message,
+        )
+        if outcome.status == "filled":
+            self.storage.log_event(
+                "xhs_content_filled", paper_id=paper_id, detail=outcome.message
+            )
+        return outcome.to_dict()
+
     def prepare_publication(self, paper_id: int, payload: dict[str, Any]) -> dict[str, Any]:
         paper = self.storage.get_paper(paper_id)
         if not paper:
@@ -371,8 +415,50 @@ class ConsoleService:
         elif paper["status"] not in {"approved", "published"}:
             raise ValueError(f"当前状态不能发布：{paper['status']}")
         output = export_zip(target)
+        approval_digest = hashlib.sha256(
+            (target / "FINAL-APPROVED.json").read_bytes()
+        ).hexdigest()[:16]
         outcomes = []
+        publication_job = None
         for channel in dict.fromkeys(channels):
+            if channel == "xhs" and self.settings.xhs_publish_mode == "browser":
+                existing = next(
+                    (
+                        item
+                        for item in self.storage.list_publications(paper_id)
+                        if item["channel"] == "xhs"
+                    ),
+                    None,
+                )
+                if existing and existing["status"] == "published":
+                    outcomes.append(existing)
+                    continue
+                if not existing or existing["status"] not in {
+                    "queued", "launching", "uploading", "filling"
+                }:
+                    self.storage.save_publication(
+                        paper_id,
+                        "xhs",
+                        "queued",
+                        message=f"小红书内容自动填充任务已进入队列。内容摘要：{approval_digest}",
+                    )
+                publication_job = self._submit(
+                    "fill_xhs",
+                    lambda progress, selected=dict(paper), folder=target: self._publish_xhs_browser(
+                        selected, folder, progress
+                    ),
+                    unique_key=f"fill:xhs:{paper_id}:{approval_digest}",
+                )
+                outcomes.append(
+                    {
+                        "channel": "xhs",
+                        "status": "queued",
+                        "message": "小红书内容自动填充任务已进入队列。",
+                        "external_id": None,
+                        "external_url": None,
+                    }
+                )
+                continue
             try:
                 outcome = publish_package(
                     self.settings, channel=channel, paper=paper, package=output
@@ -417,6 +503,7 @@ class ConsoleService:
             "download_url": f"/api/artifacts/{paper_id}/{output.name}",
             "message": "审核已通过，发布包已经准备好。",
             "outcomes": outcomes,
+            "publication_job": publication_job,
         }
 
     def confirm_published(self, paper_id: int) -> dict[str, Any]:
@@ -427,6 +514,18 @@ class ConsoleService:
             raise ValueError("只有已批准的内容才能确认发布。")
         self.storage.transition(
             paper_id, "published", detail="platform publication confirmed in console"
+        )
+        for publication in self.storage.list_publications(paper_id):
+            self.storage.save_publication(
+                paper_id,
+                publication["channel"],
+                "published",
+                external_id=publication["external_id"],
+                external_url=publication["external_url"],
+                message="用户已在控制台确认平台发布完成。",
+            )
+        self.storage.log_event(
+            "platform_publication_confirmed", paper_id=paper_id, detail="user feedback"
         )
         return {"paper_id": paper_id, "status": "published"}
 
@@ -530,7 +629,11 @@ class ConsoleHandler(BaseHTTPRequestHandler):
                 return self._json(self.service.configure_venue(int(match.group(1)), body))
             match = re.fullmatch(r"/api/papers/(\d+)/publish-package", path)
             if match:
-                return self._json(self.service.prepare_publication(int(match.group(1)), body))
+                result = self.service.prepare_publication(int(match.group(1)), body)
+                return self._json(
+                    result,
+                    HTTPStatus.ACCEPTED if result.get("publication_job") else HTTPStatus.OK,
+                )
             match = re.fullmatch(r"/api/papers/(\d+)/confirm-published", path)
             if match:
                 return self._json(self.service.confirm_published(int(match.group(1))))

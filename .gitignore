@@ -3,6 +3,7 @@
 __pycache__/
 *.py[cod]
 .pytest_cache/
+.playwright-cli/
 data/
 output/
 docs/
@@ -11,5 +12,4 @@ examples/
 output/
 templates/
 tests/
-.vscode/
-
+record.md

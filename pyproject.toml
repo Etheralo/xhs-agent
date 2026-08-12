@@ -8,6 +8,7 @@ dependencies = [
   "httpx>=0.28,<1",
   "jinja2>=3.1,<4",
   "pillow>=11.0,<13",
+  "playwright>=1.54,<2",
   "pymupdf>=1.25,<2",
   "pyyaml>=6.0,<7",
 ]

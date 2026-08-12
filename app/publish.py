@@ -26,11 +26,14 @@ class PublishResult:
 
 
 def configured_publishers(settings: Settings) -> dict[str, dict[str, Any]]:
+    xhs_mode = settings.xhs_publish_mode
     return {
         "xhs": {
             "label": CHANNEL_LABELS["xhs"],
-            "connected": bool(settings.xhs_publish_webhook_url),
-            "mode": "webhook" if settings.xhs_publish_webhook_url else "manual",
+            "connected": xhs_mode == "browser" or (
+                xhs_mode == "webhook" and bool(settings.xhs_publish_webhook_url)
+            ),
+            "mode": xhs_mode,
         },
         "wechat": {
             "label": CHANNEL_LABELS["wechat"],
@@ -42,7 +45,7 @@ def configured_publishers(settings: Settings) -> dict[str, dict[str, Any]]:
 
 def _webhook_url(settings: Settings, channel: str) -> str | None:
     if channel == "xhs":
-        return settings.xhs_publish_webhook_url
+        return settings.xhs_publish_webhook_url if settings.xhs_publish_mode == "webhook" else None
     if channel == "wechat":
         return settings.wechat_publish_webhook_url
     raise ValueError(f"Unsupported publication channel: {channel}")

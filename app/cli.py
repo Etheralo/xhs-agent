@@ -10,6 +10,7 @@ from .config import load_settings
 from .pipeline import Pipeline
 from .storage import Storage
 from .web import REVIEW_CHECKLIST, serve_console
+from .xhs_browser import open_xhs_login
 
 
 def _identifier(value: str) -> int | str:
@@ -42,6 +43,7 @@ def _parser() -> argparse.ArgumentParser:
     serve = sub.add_parser("serve", help="start the local editorial console")
     serve.add_argument("--host", default="127.0.0.1")
     serve.add_argument("--port", type=int, default=8765)
+    sub.add_parser("xhs-login", help="open the dedicated Xiaohongshu browser and save login state")
     return parser
 
 
@@ -62,6 +64,13 @@ def main(argv: list[str] | None = None) -> int:
     settings.ensure_dirs()
     if args.command == "serve":
         serve_console(settings, host=args.host, port=args.port)
+        return 0
+    if args.command == "xhs-login":
+        try:
+            open_xhs_login(settings)
+        except (RuntimeError, ValueError) as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 2
         return 0
     storage = Storage(settings.db_path)
     storage.initialize()
